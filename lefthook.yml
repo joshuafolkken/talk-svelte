@@ -41,8 +41,10 @@ pre-commit:
 
 pre-push:
   parallel: false
+  piped: true
   commands:
     check-merge-conflict:
+      priority: 1
       run: |
         current_branch=$(git rev-parse --abbrev-ref HEAD)
         if [ "$current_branch" = "main" ]; then
@@ -57,9 +59,11 @@ pre-push:
         fi
 
     build-check:
+      priority: 2
       run: npm run build
 
     test-e2e:
+      priority: 3
       run: npm run test:e2e
 
   fail_text: |
