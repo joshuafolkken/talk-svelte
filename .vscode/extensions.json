@@ -15,6 +15,20 @@
 		"pkief.material-icon-theme",
 		"formulahendry.code-runner",
 		"mhutchie.git-graph",
-		"formulahendry.auto-rename-tag"
+		"formulahendry.auto-rename-tag",
+		"usernamehw.errorlens",
+		"davidanson.vscode-markdownlint",
+		"yzhang.markdown-all-in-one",
+		"ms-azuretools.vscode-docker",
+		"anysphere.remote-ssh",
+		"shardulm94.trailing-spaces",
+		"stylelint.vscode-stylelint",
+		"naumovs.color-highlight",
+		"pranaygp.vscode-css-peek",
+		"alefragnani.bookmarks",
+		"yoavbls.pretty-ts-errors",
+		"chakrounanas.turbo-console-log",
+		"sirtori.indenticator",
+		"byi8220.indented-block-highlighting"
 	]
 }
