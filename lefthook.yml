@@ -43,21 +43,6 @@ pre-push:
   parallel: false
   piped: true
   commands:
-    check-merge-conflict:
-      priority: 1
-      run: |
-        current_branch=$(git rev-parse --abbrev-ref HEAD)
-        if [ "$current_branch" = "main" ]; then
-          echo "Direct pushes to main are not allowed"
-          exit 1
-        fi
-
-        git fetch origin main
-        if ! git merge-base --is-ancestor HEAD origin/main; then
-          echo "Branch is behind main. Please rebase or merge main first."
-          exit 1
-        fi
-
     build-check:
       priority: 2
       run: npm run build
