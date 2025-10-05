@@ -1,0 +1,83 @@
+pre-commit:
+  parallel: true
+  commands:
+    prevent-main-commit:
+      run: |
+        current_branch=$(git rev-parse --abbrev-ref HEAD)
+        if [ "$current_branch" = "main" ]; then
+          echo "🚫 Error: Direct commits to main branch are not allowed"
+          echo "   Please create a new branch and commit there:"
+          echo "   git checkout -b feature/your-feature-name"
+          exit 1
+        fi
+
+    type-check:
+      run: npm run check
+      stage_fixed: true
+
+    prettier:
+      glob: '*.{js,ts,svelte,json,css,md,html}'
+      exclude: "^\\.|/node_modules/|/dist/|/build/|/\\.svelte-kit/"
+      run: npx prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
+
+    eslint:
+      glob: '*.{js,ts,svelte}'
+      exclude: "^\\.|/node_modules/|/dist/|/build/|/\\.svelte-kit/"
+      run: npx eslint --fix {staged_files}
+      stage_fixed: true
+
+    test-unit:
+      run: npm run test:unit -- --run --reporter=verbose --coverage=false
+
+  fail_text: |
+    🚫 Commit blocked due to quality checks failure
+    Please fix the issues above and try again.
+
+    Quick fixes:
+    • Run `npm run format` to auto-format code
+    • Run `npm run lint` to check and fix linting issues
+    • Run `npm run check` to verify TypeScript types
+
+pre-push:
+  parallel: false
+  commands:
+    check-merge-conflict:
+      run: |
+        current_branch=$(git rev-parse --abbrev-ref HEAD)
+        if [ "$current_branch" = "main" ]; then
+          echo "Direct pushes to main are not allowed"
+          exit 1
+        fi
+
+        git fetch origin main
+        if ! git merge-base --is-ancestor HEAD origin/main; then
+          echo "Branch is behind main. Please rebase or merge main first."
+          exit 1
+        fi
+
+    build-check:
+      run: npm run build
+
+    test-e2e:
+      run: npm run test:e2e
+
+  fail_text: |
+    🚫 Push blocked due to build or test failures
+    Please resolve the issues above before pushing.
+
+    Troubleshooting:
+    • Check build errors: `npm run build`
+    • Run E2E tests locally: `npm run test:e2e`
+
+# commit-msg:
+#   commands:
+#     # Basic commit message format check
+#     message-format:
+#       run: |
+#         if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore|ci|build|perf)(\(.+\))?: .+" "$1"; then
+#           echo "❌ Commit message must follow conventional commits format"
+#           echo "   Example: feat(auth): add login functionality"
+#           exit 1
+#         fi
+#       stage_fixed: true
