@@ -1,0 +1,29 @@
+version: '0.2'
+language: en
+files:
+  - '**/*.{js,ts,svelte,html,css,md,json,yaml,yml}'
+  - src/**/*
+  - e2e/**/*
+  - stories/**/*
+ignorePaths:
+  - node_modules/**
+  - build/**
+  - .svelte-kit/**
+  - dist/**
+  - coverage/**
+  - test-results/**
+  - project.inlang/**
+  - '**/*.d.ts'
+  - '**/*.map'
+  - '**/*.min.js'
+  - src/lib/paraglide/*.js
+  - '**/*.svg'
+words:
+  - autodocs
+  - customise
+  - inlang
+  - mdsvex
+  - mysecretpassword
+  - oslojs
+  - paraglide
+  - pgdata
