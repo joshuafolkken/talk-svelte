@@ -20,13 +20,11 @@ pre-commit:
       stage_fixed: true
 
     prettier:
-      glob: '*.{js,ts,svelte,json,css,md,html}'
       exclude: "^\\.|/node_modules/|/dist/|/build/|/\\.svelte-kit/"
       run: npx prettier --write --ignore-unknown {staged_files}
       stage_fixed: true
 
     eslint:
-      glob: '*.{js,ts,svelte}'
       exclude: "^\\.|/node_modules/|/dist/|/build/|/\\.svelte-kit/"
       run: npx eslint --fix {staged_files}
       stage_fixed: true
