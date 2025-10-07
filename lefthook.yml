@@ -20,7 +20,7 @@ pre-commit:
       run: npx prettier --check --ignore-unknown {staged_files}
 
     eslint:
-      run: npx eslint {staged_files}
+      run: npx eslint --quiet {staged_files}
 
   fail_text: |
     🚫 Commit blocked due to quality checks failure

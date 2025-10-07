@@ -19,6 +19,7 @@ ignorePaths:
   - '**/*.min.js'
   - src/lib/paraglide/*.js
   - '**/*.svg'
+  - storybook-static/**/*
 words:
   - autodocs
   - customise
@@ -29,3 +30,5 @@ words:
   - paraglide
   - pgdata
   - octocat
+  - isready
+  - Vercel
