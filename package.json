@@ -24,7 +24,8 @@
 		"build-storybook": "storybook build",
 		"lefthook:install": "lefthook install",
 		"lefthook:uninstall": "lefthook uninstall",
-		"lefthook:run": "lefthook run pre-commit"
+		"lefthook:commit": "lefthook run pre-commit",
+		"lefthook:push": "lefthook run pre-push"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.1",

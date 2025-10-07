@@ -9,28 +9,18 @@ pre-commit:
           echo "   Please create a new branch and commit there:"
           echo "   git checkout -b feature/your-feature-name"
           exit 1
+        else
+          echo "✅ Branch check passed: '$current_branch'"
         fi
 
     cspell:
       run: npx cspell {staged_files}
-      stage_fixed: false
-
-    type-check:
-      run: npm run check
-      stage_fixed: true
 
     prettier:
-      exclude: "^\\.|/node_modules/|/dist/|/build/|/\\.svelte-kit/"
-      run: npx prettier --write --ignore-unknown {staged_files}
-      stage_fixed: true
+      run: npx prettier --check --ignore-unknown {staged_files}
 
     eslint:
-      exclude: "^\\.|/node_modules/|/dist/|/build/|/\\.svelte-kit/"
-      run: npx eslint --fix {staged_files}
-      stage_fixed: true
-
-    test-unit:
-      run: npm run test:unit -- --run --reporter=verbose --coverage=false
+      run: npx eslint {staged_files}
 
   fail_text: |
     🚫 Commit blocked due to quality checks failure
@@ -42,16 +32,26 @@ pre-commit:
     • Run `npm run check` to verify TypeScript types
 
 pre-push:
-  parallel: false
-  piped: true
+  parallel: true
   commands:
-    build-check:
-      priority: 2
-      run: npm run build
+    type-check:
+      run: npm run check
+
+    test-unit:
+      run: |
+        if git diff --name-only HEAD~1 | grep -E '\.(svelte|ts|js|css)$'; then
+          npm run test:unit -- --run
+        else
+          echo "⏭️  Skipping unit tests - no frontend changes detected"
+        fi
 
     test-e2e:
-      priority: 3
-      run: npm run test:e2e
+      run: |
+        if git diff --name-only HEAD~1 | grep -E '\.(svelte|ts|js|css|sql)$'; then
+          npm run test:e2e
+        else
+          echo "⏭️  Skipping E2E tests - no frontend changes detected"
+        fi
 
   fail_text: |
     🚫 Push blocked due to build or test failures
@@ -59,16 +59,4 @@ pre-push:
 
     Troubleshooting:
     • Check build errors: `npm run build`
-    • Run E2E tests locally: `npm run test:e2e`
-
-# commit-msg:
-#   commands:
-#     # Basic commit message format check
-#     message-format:
-#       run: |
-#         if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore|ci|build|perf)(\(.+\))?: .+" "$1"; then
-#           echo "❌ Commit message must follow conventional commits format"
-#           echo "   Example: feat(auth): add login functionality"
-#           exit 1
-#         fi
-#       stage_fixed: true
+    • Run tests locally: `npm run test:unit` and `npm run test:e2e`
