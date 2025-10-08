@@ -1,7 +1,7 @@
 version: '0.2'
 language: en
 files:
-  - '**/*.{js,ts,svelte,html,css,md,json,yaml,yml}'
+  - '**/*.{js,jsx,ts,tsx,mjs,cjs,svelte,html,css,scss,md,mdx,json,jsonc,yaml,yml}'
   - src/**/*
   - e2e/**/*
   - stories/**/*
