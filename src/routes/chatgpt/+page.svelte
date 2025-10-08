@@ -115,7 +115,7 @@
 				<div
 					class="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300"
 					style="width: {(currentQuestion / totalQuestions) * 100}%"
-				/>
+				></div>
 			</div>
 		</div>
 
@@ -142,7 +142,7 @@
 					bind:this={audioElement}
 					src={questionData.audioUrl}
 					onended={() => (isPlaying = false)}
-				/>
+				></audio>
 			</div>
 
 			<!-- Transcript Section -->

@@ -13,10 +13,11 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-8">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-4">
 	<div class="mx-auto max-w-2xl">
+		<h1 class="mb-1 text-center text-xl font-bold text-gray-800">🎧 Talk</h1>
 		<!-- Progress Bar -->
-		<div class="mb-8">
+		<div class="mb-4">
 			<div class="mb-2 flex items-center justify-between text-sm font-medium text-gray-700">
 				<span>Progress</span>
 				<span>Question {current_question} of {total_questions}</span>
