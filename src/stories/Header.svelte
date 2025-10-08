@@ -3,7 +3,7 @@
   import Button from './Button.svelte';
 
   interface Props {
-    user?: { name: string };
+    user?: { name: string } | undefined;
     onLogin?: () => void;
     onLogout?: () => void;
     onCreateAccount?: () => void;
