@@ -9,6 +9,9 @@ const config = {
 	preprocess: [vitePreprocess(), mdsvex()],
 	kit: { adapter: adapter() },
 	extensions: ['.svelte', '.svx'],
+	compilerOptions: {
+		runes: process.env.STORYBOOK ? false : true,
+	},
 }
 
 export default config
