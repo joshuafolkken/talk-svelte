@@ -14,12 +14,15 @@ pre-commit:
         fi
 
     cspell:
+      glob: '*.{js,jsx,ts,tsx,mjs,cjs,svelte,html,css,scss,md,mdx,json,jsonc,yaml,yml}'
       run: npx cspell {staged_files}
 
     prettier:
+      glob: '*.{js,jsx,ts,tsx,mjs,cjs,svelte,html,css,scss,md,mdx,json,jsonc,yaml,yml}'
       run: npx prettier --check --ignore-unknown {staged_files}
 
     eslint:
+      glob: '*.{js,jsx,ts,tsx,mjs,cjs,svelte}'
       run: npx eslint --quiet {staged_files}
 
   fail_text: |
