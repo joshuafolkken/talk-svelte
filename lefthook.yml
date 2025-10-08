@@ -38,23 +38,16 @@ pre-push:
   parallel: true
   commands:
     type-check:
+      glob: '*.{svelte,ts,js,mjs,cjs}'
       run: npm run check
 
     test-unit:
-      run: |
-        if git diff --name-only HEAD~1 | grep -E '\.(svelte|ts|js|css)$'; then
-          npm run test:unit -- --run
-        else
-          echo "⏭️  Skipping unit tests - no frontend changes detected"
-        fi
+      glob: '*.{svelte,ts,js,css}'
+      run: npm run test:unit -- --run
 
     test-e2e:
-      run: |
-        if git diff --name-only HEAD~1 | grep -E '\.(svelte|ts|js|css|sql)$'; then
-          npm run test:e2e
-        else
-          echo "⏭️  Skipping E2E tests - no frontend changes detected"
-        fi
+      glob: '*.{svelte,ts,js,css,sql}'
+      run: npm run test:e2e
 
   fail_text: |
     🚫 Push blocked due to build or test failures
