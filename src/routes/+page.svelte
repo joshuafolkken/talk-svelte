@@ -1,15 +1,52 @@
 <script lang="ts">
-	let current_question = 1;
-	let total_questions = 10;
-	let is_playing = false;
+	let current_question = 1
+	let total_questions = 10
+	let is_playing = $state(false)
+	let show_transcript = $state(false)
+	let show_translation = $state(false)
 
-	let audio_element: HTMLAudioElement;
+	let audio_element: HTMLAudioElement
+
+	type Question = {
+		audio_uri: string
+		transcript: string
+		translation: string
+	}
+
+	function create_question(audio_uri: string, transcript: string, translation: string): Question {
+		return {
+			audio_uri,
+			transcript,
+			translation,
+		}
+	}
+
+	const questions = [
+		create_question('you_nailed_it.mp3', 'You nailed it!', '完璧にやったね！'),
+		create_question('live_it.mp3', 'Love it!', 'それ好き！'),
+		create_question('awesome.mp3', 'Awesome!', '最高！'),
+	]
+
+	let question = questions[0]!
 
 	function play_audio(): void {
-		if (!audio_element) return;
+		if (!audio_element) return
 
-		audio_element.play();
-		is_playing = true;
+		if (is_playing) {
+			audio_element.pause()
+			is_playing = false
+		} else {
+			audio_element.play()
+			is_playing = true
+		}
+	}
+
+	function toggle_transcript(): void {
+		show_transcript = !show_transcript
+	}
+
+	function toggle_translation(): void {
+		show_translation = !show_translation
 	}
 </script>
 
@@ -51,9 +88,77 @@
 				</div>
 				<audio
 					bind:this={audio_element}
-					src="https://www.springin.org/wp-content/uploads/2022/07/%E5%A4%A7%E6%AD%A3%E8%A7%A32.mp3"
+					src="/audio/{question.audio_uri}"
 					onended={() => (is_playing = false)}
 				></audio>
+			</div>
+
+			<!-- Transcript Section -->
+			<div class="border-b border-gray-100 p-6">
+				<button
+					onclick={toggle_transcript}
+					class="w-full rounded-lg bg-gray-50 p-4 text-left transition-colors hover:bg-gray-100"
+				>
+					<div class="flex items-center justify-between">
+						<span class="font-semibold text-gray-800">
+							📝 Transcript {show_transcript ? '(hide)' : '(Click to show)'}
+						</span>
+						<svg
+							class="h-5 w-5 text-gray-600 transition-transform {show_transcript
+								? 'rotate-180'
+								: ''}"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 9l-7 7-7-7"
+							/>
+						</svg>
+					</div>
+				</button>
+				{#if show_transcript}
+					<div class="mt-4 rounded-lg bg-blue-50 p-4 text-lg text-gray-800">
+						{question.transcript}
+					</div>
+				{/if}
+			</div>
+
+			<!-- Translation Section -->
+			<div class="border-b border-gray-100 p-6">
+				<button
+					onclick={toggle_translation}
+					class="w-full rounded-lg bg-gray-50 p-4 text-left transition-colors hover:bg-gray-100"
+				>
+					<div class="flex items-center justify-between">
+						<span class="font-semibold text-gray-800">
+							🌐 Translation {show_translation ? '(hide)' : '(Click to show)'}
+						</span>
+						<svg
+							class="h-5 w-5 text-gray-600 transition-transform {show_translation
+								? 'rotate-180'
+								: ''}"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 9l-7 7-7-7"
+							/>
+						</svg>
+					</div>
+				</button>
+				{#if show_translation}
+					<div class="mt-4 rounded-lg bg-blue-50 p-4 text-lg text-gray-800">
+						{question.translation}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
