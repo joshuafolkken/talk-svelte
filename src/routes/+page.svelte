@@ -4,6 +4,7 @@
 	let is_playing = $state(false)
 	let show_transcript = $state(false)
 	let show_translation = $state(false)
+	let is_recording = $state(false)
 
 	let audio_element: HTMLAudioElement
 
@@ -47,6 +48,10 @@
 
 	function toggle_translation(): void {
 		show_translation = !show_translation
+	}
+
+	function toggle_recording(): void {
+		is_recording = !is_recording
 	}
 </script>
 
@@ -159,6 +164,35 @@
 						{question.translation}
 					</div>
 				{/if}
+			</div>
+
+			<!-- Recording Section -->
+			<div class="border-b border-gray-100 bg-gradient-to-br from-purple-50 to-pink-50 p-8">
+				<h3 class="mb-4 text-center text-xl font-bold text-gray-800">🎤 Your Response</h3>
+				<div class="flex flex-col items-center gap-4">
+					<button
+						onclick={toggle_recording}
+						class="flex h-20 w-20 items-center justify-center rounded-full transition-all duration-200 {is_recording
+							? 'animate-pulse bg-red-500 hover:bg-red-600'
+							: 'bg-gradient-to-br from-purple-500 to-pink-600 hover:scale-105'} text-white shadow-lg hover:shadow-xl active:scale-95"
+					>
+						<svg class="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">
+							{#if is_recording}
+								<rect x="6" y="6" width="12" height="12" rx="2" />
+							{:else}
+								<path
+									d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"
+								/>
+								<path
+									d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"
+								/>
+							{/if}
+						</svg>
+					</button>
+					<span class="text-sm font-medium text-gray-700">
+						{is_recording ? 'Recording... (Click to stop)' : 'Click to record'}
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
