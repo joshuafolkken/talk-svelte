@@ -2,103 +2,103 @@
 	// import { onMount } from 'svelte';
 
 	// State management
-	let currentQuestion = 1;
-	let totalQuestions = 10;
-	let showTranscript = false;
-	let showTranslation = false;
-	let isPlaying = false;
-	let isRecording = false;
-	let hasRecording = false;
-	let userTranscript = '';
-	let liked = false;
+	let currentQuestion = 1
+	let totalQuestions = 10
+	let showTranscript = false
+	let showTranslation = false
+	let isPlaying = false
+	let isRecording = false
+	let hasRecording = false
+	let userTranscript = 'Yay!'
+	let liked = false
 
 	// Audio elements
-	let audioElement: HTMLAudioElement;
-	let recordedAudio: HTMLAudioElement;
-	let mediaRecorder: MediaRecorder;
-	let audioChunks: Blob[] = [];
+	let audioElement: HTMLAudioElement
+	let recordedAudio: HTMLAudioElement
+	let mediaRecorder: MediaRecorder
+	let audioChunks: Blob[] = []
 
 	// Sample data (replace with real data)
 	const questionData = {
 		audioUrl: '/audio/question-1.mp3',
 		transcript: 'How are you doing today?',
-		translation: '今日の調子はどうですか？'
-	};
+		translation: '今日の調子はどうですか？',
+	}
 
 	// Play audio
 	function playAudio() {
 		if (audioElement) {
-			audioElement.play();
-			isPlaying = true;
+			audioElement.play()
+			isPlaying = true
 		}
 	}
 
 	// Toggle transcript
 	function toggleTranscript() {
-		showTranscript = !showTranscript;
+		showTranscript = !showTranscript
 	}
 
 	// Toggle translation
 	function toggleTranslation() {
-		showTranslation = !showTranslation;
+		showTranslation = !showTranslation
 	}
 
 	// Start/stop recording
 	async function toggleRecording() {
 		if (!isRecording) {
 			try {
-				const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-				mediaRecorder = new MediaRecorder(stream);
-				audioChunks = [];
+				const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+				mediaRecorder = new MediaRecorder(stream)
+				audioChunks = []
 
 				mediaRecorder.ondataavailable = (event) => {
-					audioChunks.push(event.data);
-				};
+					audioChunks.push(event.data)
+				}
 
 				mediaRecorder.onstop = () => {
-					const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-					const audioUrl = URL.createObjectURL(audioBlob);
-					recordedAudio = new Audio(audioUrl);
-					hasRecording = true;
+					const audioBlob = new Blob(audioChunks, { type: 'audio/wav' })
+					const audioUrl = URL.createObjectURL(audioBlob)
+					recordedAudio = new Audio(audioUrl)
+					hasRecording = true
 					// TODO: Send to speech recognition API
-				};
+				}
 
-				mediaRecorder.start();
-				isRecording = true;
+				mediaRecorder.start()
+				isRecording = true
 			} catch (error) {
-				console.error('Error accessing microphone:', error);
+				console.error('Error accessing microphone:', error)
 			}
 		} else {
-			mediaRecorder.stop();
-			isRecording = false;
+			mediaRecorder.stop()
+			isRecording = false
 		}
 	}
 
 	// Play recorded audio
 	function playRecording() {
 		if (recordedAudio) {
-			recordedAudio.play();
+			recordedAudio.play()
 		}
 	}
 
 	// Toggle like
 	function toggleLike() {
-		liked = !liked;
+		liked = !liked
 	}
 
 	// Retry question
 	function retry() {
-		showTranscript = false;
-		showTranslation = false;
-		hasRecording = false;
-		userTranscript = '';
+		showTranscript = false
+		showTranslation = false
+		hasRecording = false
+		userTranscript = ''
 	}
 
 	// Next question
 	function nextQuestion() {
 		if (currentQuestion < totalQuestions) {
-			currentQuestion++;
-			retry();
+			currentQuestion++
+			retry()
 		}
 	}
 </script>

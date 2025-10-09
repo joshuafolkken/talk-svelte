@@ -5,6 +5,9 @@
 	let show_transcript = $state(false)
 	let show_translation = $state(false)
 	let is_recording = $state(false)
+	let has_recording = $state(true)
+	let user_transcript = $state('Yay!')
+	let liked = $state(false)
 
 	let audio_element: HTMLAudioElement
 
@@ -52,6 +55,12 @@
 
 	function toggle_recording(): void {
 		is_recording = !is_recording
+	}
+
+	function play_recording(): void {}
+
+	function toggle_like(): void {
+		liked = !liked
 	}
 </script>
 
@@ -192,7 +201,39 @@
 					<span class="text-sm font-medium text-gray-700">
 						{is_recording ? 'Recording... (Click to stop)' : 'Click to record'}
 					</span>
+
+					{#if has_recording}
+						<button
+							onclick={play_recording}
+							class="mt-2 flex items-center gap-2 rounded-lg bg-white px-6 py-3 font-medium text-purple-600 shadow transition-colors hover:bg-purple-50"
+						>
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+								<path d="M8 5v14l11-7z" />
+							</svg>
+							Play your recording
+						</button>
+					{/if}
+
+					{#if user_transcript}
+						<div class="mt-4 w-full rounded-lg bg-white p-4 text-gray-800">
+							<p class="mb-1 text-sm font-medium text-gray-600">Your speech:</p>
+							<p class="text-lg">{user_transcript}</p>
+						</div>
+					{/if}
 				</div>
+			</div>
+
+			<!-- Action Buttons -->
+			<div class="flex flex-wrap items-center justify-center gap-3 p-6">
+				<button
+					onclick={toggle_like}
+					class="flex items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all {liked
+						? 'bg-red-500 text-white hover:bg-red-600'
+						: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+				>
+					{liked ? '❤️' : '🤍'}
+					{liked ? 'Liked' : 'Like'}
+				</button>
 			</div>
 		</div>
 	</div>
