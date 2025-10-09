@@ -83,33 +83,41 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-8">
+<div
+	class="gradient-animated min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-blue-500 px-4 py-8"
+>
 	<div class="mx-auto max-w-2xl">
 		<!-- Progress Bar -->
 		<div class="mb-8">
-			<div class="mb-2 flex items-center justify-between text-sm font-medium text-gray-700">
-				<h1 class="mb-1 text-center text-xl font-bold text-gray-800">🎧 Talk</h1>
+			<div
+				class="mb-2 flex items-center justify-between text-sm font-medium text-white/90 drop-shadow-lg"
+			>
+				<h1 class="mb-1 text-center text-xl font-bold text-white drop-shadow-lg">🎧 Talk</h1>
 				<span>{current_question} / {total_questions}</span>
 			</div>
-			<div class="h-3 overflow-hidden rounded-full bg-gray-200">
+			<div class="h-3 overflow-hidden rounded-full bg-white/20 shadow-lg backdrop-blur-sm">
 				<div
-					class="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300"
+					class="h-full rounded-full bg-gradient-to-r from-white/60 to-white/80 shadow-inner transition-all duration-300"
 					style="width: {(current_question / total_questions) * 100}%"
 				></div>
 			</div>
 		</div>
 
-		<!-- Main Card -->
-		<div class="overflow-hidden rounded-2xl bg-white shadow-xl">
+		<!-- Main Card with Liquid Glass Effect -->
+		<div
+			class="overflow-hidden rounded-3xl border border-white/20 bg-white/10 shadow-2xl backdrop-blur-xl"
+		>
 			<!-- Audio Section-->
-			<div class="border-b border-gray-100 bg-gradient-to-br from-indigo-50 to-blue-50 p-8">
-				<h2 class="mb-6 text-center text-2xl font-bold text-gray-800">🔊 Listen</h2>
+			<div
+				class="border-b border-white/10 bg-gradient-to-br from-white/5 to-white/10 p-8 backdrop-blur-lg"
+			>
+				<h2 class="mb-6 text-center text-2xl font-bold text-white drop-shadow-lg">🔊 Listen</h2>
 				<div class="mb-6 flex justify-center">
 					<button
 						onclick={play_audio}
-						class="group relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95"
+						class="group relative flex h-24 w-24 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white/30 hover:shadow-white/50 active:scale-95"
 					>
-						<svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24">
+						<svg class="h-12 w-12 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
 							{#if is_playing}
 								<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
 							{:else}
@@ -127,9 +135,9 @@
 				<!-- Transcript Section -->
 				<button
 					onclick={toggle_transcript}
-					class="mb-6 w-full rounded-xl bg-white/80 p-4 text-center text-lg shadow-lg ring-1 ring-blue-200/50 transition-all duration-300 {show_transcript
-						? 'text-gray-800'
-						: 'font-semibold text-gray-600 hover:bg-blue-50'}"
+					class="mb-6 w-full rounded-2xl border border-white/20 bg-white/15 p-4 text-center text-lg shadow-xl backdrop-blur-md transition-all duration-300 {show_transcript
+						? 'text-white'
+						: 'font-semibold text-white/90 hover:scale-[1.02] hover:bg-white/25'}"
 				>
 					{#if show_transcript}
 						📝 {question.transcript}
@@ -137,7 +145,7 @@
 						<div class="flex items-center justify-center gap-2">
 							<span>📝 Transcript</span>
 							<svg
-								class="h-5 w-5 text-gray-500"
+								class="h-5 w-5 text-white/70"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -156,9 +164,9 @@
 				<!-- Translation Section -->
 				<button
 					onclick={toggle_translation}
-					class="mb-6 w-full rounded-xl bg-white/80 p-4 text-center text-lg shadow-lg ring-1 ring-blue-200/50 transition-all duration-300 {show_translation
-						? 'text-gray-800'
-						: 'font-semibold text-gray-600 hover:bg-blue-50 '}"
+					class="mb-6 w-full rounded-2xl border border-white/20 bg-white/15 p-4 text-center text-lg shadow-xl backdrop-blur-md transition-all duration-300 {show_translation
+						? 'text-white'
+						: 'font-semibold text-white/90 hover:scale-[1.02] hover:bg-white/25'}"
 				>
 					{#if show_translation}
 						🌐 {question.translation}
@@ -166,7 +174,7 @@
 						<div class="flex items-center justify-center gap-2">
 							<span>🌐 Translation</span>
 							<svg
-								class="h-5 w-5 text-gray-500"
+								class="h-5 w-5 text-white/70"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -184,16 +192,18 @@
 			</div>
 
 			<!-- Recording Section -->
-			<div class="border-b border-gray-100 bg-gradient-to-br from-purple-50 to-pink-50 p-8">
-				<h3 class="mb-4 text-center text-xl font-bold text-gray-800">🎤 Speak</h3>
+			<div
+				class="border-b border-white/10 bg-gradient-to-br from-white/5 to-white/10 p-8 backdrop-blur-lg"
+			>
+				<h3 class="mb-4 text-center text-xl font-bold text-white drop-shadow-lg">🎤 Speak</h3>
 				<div class="flex flex-col items-center gap-6">
 					<button
 						onclick={toggle_recording}
-						class="flex h-20 w-20 items-center justify-center rounded-full transition-all duration-200 {is_recording
-							? 'animate-pulse bg-red-500 hover:bg-red-600'
-							: 'bg-gradient-to-br from-purple-500 to-pink-600 hover:scale-105'} text-white shadow-lg hover:shadow-xl active:scale-95"
+						class="flex h-20 w-20 items-center justify-center rounded-full border border-white/30 backdrop-blur-md transition-all duration-300 {is_recording
+							? 'animate-pulse bg-red-500/40 shadow-red-500/50 hover:bg-red-500/60'
+							: 'bg-white/20 hover:scale-110 hover:bg-white/30'} text-white shadow-2xl hover:shadow-white/50 active:scale-95"
 					>
-						<svg class="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">
+						<svg class="h-10 w-10 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
 							{#if is_recording}
 								<rect x="6" y="6" width="12" height="12" rx="2" />
 							{:else}
@@ -208,9 +218,9 @@
 					</button>
 
 					<div
-						class="w-full rounded-lg bg-white/80 p-4 text-center text-lg shadow ring-1 ring-purple-200/50 transition-all duration-300 {user_transcript
-							? 'text-gray-800'
-							: 'font-semibold text-gray-600 '}"
+						class="w-full rounded-2xl border border-white/20 bg-white/15 p-4 text-center text-lg shadow-xl backdrop-blur-md transition-all duration-300 {user_transcript
+							? 'text-white'
+							: 'font-semibold text-white/90'}"
 					>
 						💬 {user_transcript ? user_transcript : 'Your Speech'}
 					</div>
@@ -218,12 +228,12 @@
 			</div>
 
 			<!-- Action Buttons -->
-			<div class="flex flex-wrap items-center justify-center gap-3 p-6">
+			<div class="flex flex-wrap items-center justify-center gap-3 bg-white/5 p-6 backdrop-blur-lg">
 				<button
 					onclick={toggle_like}
-					class="flex items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all {liked
-						? 'bg-red-500 text-white hover:bg-red-600'
-						: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+					class="flex items-center gap-2 rounded-xl border border-white/20 px-6 py-3 font-semibold backdrop-blur-md transition-all duration-300 hover:scale-105 {liked
+						? 'bg-red-500/40 text-white shadow-lg shadow-red-500/30'
+						: 'bg-white/15 text-white hover:bg-white/25'}"
 				>
 					{liked ? '❤️' : '🤍'}
 					{liked ? 'Liked' : 'Like'}
@@ -231,14 +241,14 @@
 
 				<button
 					onclick={retry}
-					class="flex items-center gap-2 rounded-lg bg-gray-100 px-6 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-200"
+					class="flex items-center gap-2 rounded-xl border border-white/20 bg-white/15 px-6 py-3 font-semibold text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/25"
 				>
 					🔄 Retry
 				</button>
 
 				<button
 					onclick={next_question}
-					class="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
+					class="flex items-center gap-2 rounded-xl border border-white/30 bg-white/25 px-8 py-3 font-semibold text-white shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/35 hover:shadow-white/50 active:scale-95"
 				>
 					Next →
 				</button>
