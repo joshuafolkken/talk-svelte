@@ -83,34 +83,82 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gray-50 px-4 py-12">
+<div class="relative min-h-screen overflow-hidden px-4 py-12">
+	<!-- Background with vibrant colors and ANIMATION -->
+	<div class="absolute inset-0 -z-10">
+		<!-- アニメーションするグラデーション背景 -->
+		<div
+			class="animate-gradient absolute inset-0"
+			style="background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); background-size: 400% 400%;"
+		></div>
+
+		<!-- 浮遊するブロブ（それぞれ異なるアニメーション） -->
+		<div
+			class="animate-float absolute top-10 left-10 h-72 w-72 rounded-full bg-cyan-400 opacity-50 blur-3xl"
+		></div>
+		<div
+			class="animate-float-reverse absolute top-40 right-20 h-96 w-96 rounded-full bg-yellow-300 opacity-40 blur-3xl"
+		></div>
+		<div
+			class="animate-float-slow absolute bottom-20 left-1/3 h-80 w-80 rounded-full bg-green-400 opacity-50 blur-3xl"
+		></div>
+
+		<!-- 動く縞模様パターン -->
+		<div class="absolute inset-0 opacity-40">
+			<div
+				class="h-full w-full animate-pulse"
+				style="background: repeating-linear-gradient(
+				45deg,
+				transparent,
+				transparent 50px,
+				rgba(255,255,255,0.1) 50px,
+				rgba(255,255,255,0.1) 100px
+			);"
+			></div>
+		</div>
+	</div>
+
 	<div class="mx-auto max-w-xl">
 		<!-- Progress Bar -->
 		<div class="mb-12">
 			<div class="mb-3 flex items-center justify-between">
-				<h1 class="text-2xl font-light tracking-wide text-gray-900">Talk</h1>
-				<span class="text-sm font-medium text-gray-500">{current_question} / {total_questions}</span
+				<h1
+					class="text-3xl font-bold tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
+				>
+					Talk
+				</h1>
+				<span class="text-sm font-bold text-white drop-shadow-md"
+					>{current_question} / {total_questions}</span
 				>
 			</div>
-			<div class="h-1 overflow-hidden rounded-full bg-gray-200">
+			<div
+				class="h-2 overflow-hidden rounded-full border border-white/40 shadow-xl"
+				style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
+			>
 				<div
-					class="h-full rounded-full bg-gray-900 transition-all duration-500"
+					class="h-full rounded-full bg-white shadow-lg transition-all duration-500"
 					style="width: {(current_question / total_questions) * 100}%"
 				></div>
 			</div>
 		</div>
 
-		<!-- Main Card -->
-		<div class="overflow-hidden rounded-3xl border border-gray-200 bg-white">
+		<!-- Main Card with STRONG Glass Effect -->
+		<div
+			class="overflow-hidden rounded-3xl border-2 border-white/40 shadow-2xl"
+			style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px) saturate(180%);"
+		>
 			<!-- Audio Section-->
-			<div class="border-b border-gray-100 p-12">
-				<h2 class="mb-8 text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
+			<div class="border-b border-white/25 p-12" style="background: rgba(255, 255, 255, 0.05);">
+				<h2
+					class="mb-8 text-center text-sm font-bold tracking-widest text-white uppercase drop-shadow-md"
+				>
 					Listen
 				</h2>
 				<div class="mb-8 flex justify-center">
 					<button
 						onclick={play_audio}
-						class="group relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-gray-900 bg-white text-gray-900 transition-all duration-200 hover:bg-gray-900 hover:text-white active:scale-95"
+						class="group relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-white/50 text-white shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95"
+						style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);"
 					>
 						<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 							{#if is_playing}
@@ -130,15 +178,16 @@
 				<!-- Transcript Section -->
 				<button
 					onclick={toggle_transcript}
-					class="mb-4 w-full rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 {show_transcript
-						? 'border-gray-900 text-gray-900'
-						: 'text-gray-500 hover:border-gray-300'}"
+					class="mb-4 w-full rounded-xl border-2 p-5 text-center shadow-lg transition-all duration-300 {show_transcript
+						? 'border-white/60 text-white'
+						: 'border-white/30 text-white/90 hover:border-white/50'}"
+					style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 				>
 					{#if show_transcript}
-						<span class="text-base font-medium">{question.transcript}</span>
+						<span class="text-base font-bold drop-shadow">{question.transcript}</span>
 					{:else}
 						<div class="flex items-center justify-center gap-2">
-							<span class="text-sm font-medium">Transcript</span>
+							<span class="text-sm font-semibold">Transcript</span>
 							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
@@ -154,15 +203,16 @@
 				<!-- Translation Section -->
 				<button
 					onclick={toggle_translation}
-					class="w-full rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 {show_translation
-						? 'border-gray-900 text-gray-900'
-						: 'text-gray-500 hover:border-gray-300'}"
+					class="w-full rounded-xl border-2 p-5 text-center shadow-lg transition-all duration-300 {show_translation
+						? 'border-white/60 text-white'
+						: 'border-white/30 text-white/90 hover:border-white/50'}"
+					style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 				>
 					{#if show_translation}
-						<span class="text-base font-medium">{question.translation}</span>
+						<span class="text-base font-bold drop-shadow">{question.translation}</span>
 					{:else}
 						<div class="flex items-center justify-center gap-2">
-							<span class="text-sm font-medium">Translation</span>
+							<span class="text-sm font-semibold">Translation</span>
 							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
@@ -177,16 +227,21 @@
 			</div>
 
 			<!-- Recording Section -->
-			<div class="border-b border-gray-100 p-12">
-				<h3 class="mb-8 text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
+			<div class="border-b border-white/25 p-12" style="background: rgba(255, 255, 255, 0.05);">
+				<h3
+					class="mb-8 text-center text-sm font-bold tracking-widest text-white uppercase drop-shadow-md"
+				>
 					Speak
 				</h3>
 				<div class="flex flex-col items-center gap-6">
 					<button
 						onclick={toggle_recording}
-						class="flex h-20 w-20 items-center justify-center rounded-full transition-all duration-200 {is_recording
-							? 'bg-red-500 text-white'
-							: 'border-2 border-gray-900 bg-white text-gray-900 hover:bg-gray-900 hover:text-white'} active:scale-95"
+						class="flex h-20 w-20 items-center justify-center rounded-full shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 {is_recording
+							? 'border-2 border-red-300/60 bg-red-500 text-white'
+							: 'border-2 border-white/50 text-white'}"
+						style={is_recording
+							? ''
+							: 'background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);'}
 					>
 						<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 							{#if is_recording}
@@ -203,11 +258,12 @@
 					</button>
 
 					<div
-						class="w-full rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 {user_transcript
-							? 'border-gray-900 text-gray-900'
-							: 'text-gray-500'}"
+						class="w-full rounded-xl border-2 p-5 text-center shadow-lg transition-all duration-300 {user_transcript
+							? 'border-white/60 text-white'
+							: 'border-white/30 text-white/90'}"
+						style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 					>
-						<span class="text-base font-medium"
+						<span class="text-base font-semibold drop-shadow"
 							>{user_transcript ? user_transcript : 'Your Speech'}</span
 						>
 					</div>
@@ -215,12 +271,16 @@
 			</div>
 
 			<!-- Action Buttons -->
-			<div class="flex flex-wrap items-center justify-center gap-3 p-8">
+			<div
+				class="flex flex-wrap items-center justify-center gap-3 p-8"
+				style="background: rgba(255, 255, 255, 0.05);"
+			>
 				<button
 					onclick={toggle_like}
-					class="flex items-center gap-2 rounded-full border-2 px-6 py-2.5 text-sm font-medium transition-all {liked
-						? 'border-red-500 bg-red-500 text-white'
-						: 'border-gray-200 text-gray-700 hover:border-gray-900'}"
+					class="flex items-center gap-2 rounded-full border-2 px-6 py-2.5 text-sm font-bold shadow-xl transition-all hover:scale-105 {liked
+						? 'border-red-300/60 bg-red-500 text-white'
+						: 'border-white/40 text-white hover:border-white/60'}"
+					style={liked ? '' : 'background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);'}
 				>
 					<svg
 						class="h-4 w-4"
@@ -240,7 +300,8 @@
 
 				<button
 					onclick={retry}
-					class="flex items-center gap-2 rounded-full border-2 border-gray-200 px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:border-gray-900"
+					class="flex items-center gap-2 rounded-full border-2 border-white/40 px-6 py-2.5 text-sm font-bold text-white shadow-xl transition-all hover:scale-105 hover:border-white/60"
+					style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 				>
 					<svg
 						class="h-4 w-4"
@@ -260,7 +321,8 @@
 
 				<button
 					onclick={next_question}
-					class="flex items-center gap-2 rounded-full bg-gray-900 px-8 py-2.5 text-sm font-medium text-white transition-all hover:bg-gray-800 active:scale-95"
+					class="flex items-center gap-2 rounded-full border-2 border-white/60 px-8 py-2.5 text-sm font-bold text-white shadow-xl transition-all hover:scale-105 hover:border-white/80 active:scale-95"
+					style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px);"
 				>
 					Next
 					<svg
@@ -277,3 +339,70 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	/* グラデーション回転アニメーション */
+	@keyframes gradient-rotate {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	/* ブロブが浮遊するアニメーション */
+	@keyframes float {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		33% {
+			transform: translate(30px, -30px) scale(1.1);
+		}
+		66% {
+			transform: translate(-20px, 20px) scale(0.9);
+		}
+	}
+
+	@keyframes float-reverse {
+		0%,
+		100% {
+			transform: translate(0, 0) rotate(0deg);
+		}
+		50% {
+			transform: translate(-40px, 40px) rotate(180deg);
+		}
+	}
+
+	@keyframes float-slow {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		50% {
+			transform: translate(20px, -40px) scale(1.15);
+		}
+	}
+
+	/* 回転するグラデーション */
+	.animate-gradient {
+		background-size: 400% 400%;
+		animation: gradient-rotate 15s ease infinite;
+	}
+
+	.animate-float {
+		animation: float 20s ease-in-out infinite;
+	}
+
+	.animate-float-reverse {
+		animation: float-reverse 25s ease-in-out infinite;
+	}
+
+	.animate-float-slow {
+		animation: float-slow 30s ease-in-out infinite;
+	}
+</style>
