@@ -83,33 +83,36 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-8">
-	<div class="mx-auto max-w-2xl">
+<div class="min-h-screen bg-gray-50 px-4 py-12">
+	<div class="mx-auto max-w-xl">
 		<!-- Progress Bar -->
-		<div class="mb-8">
-			<div class="mb-2 flex items-center justify-between text-sm font-medium text-gray-700">
-				<h1 class="mb-1 text-center text-xl font-bold text-gray-800">🎧 Talk</h1>
-				<span>{current_question} / {total_questions}</span>
+		<div class="mb-12">
+			<div class="mb-3 flex items-center justify-between">
+				<h1 class="text-2xl font-light tracking-wide text-gray-900">Talk</h1>
+				<span class="text-sm font-medium text-gray-500">{current_question} / {total_questions}</span
+				>
 			</div>
-			<div class="h-3 overflow-hidden rounded-full bg-gray-200">
+			<div class="h-1 overflow-hidden rounded-full bg-gray-200">
 				<div
-					class="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-300"
+					class="h-full rounded-full bg-gray-900 transition-all duration-500"
 					style="width: {(current_question / total_questions) * 100}%"
 				></div>
 			</div>
 		</div>
 
 		<!-- Main Card -->
-		<div class="overflow-hidden rounded-2xl bg-white shadow-xl">
+		<div class="overflow-hidden rounded-3xl border border-gray-200 bg-white">
 			<!-- Audio Section-->
-			<div class="border-b border-gray-100 bg-gradient-to-br from-indigo-50 to-blue-50 p-8">
-				<h2 class="mb-6 text-center text-2xl font-bold text-gray-800">🔊 Listen</h2>
-				<div class="mb-6 flex justify-center">
+			<div class="border-b border-gray-100 p-12">
+				<h2 class="mb-8 text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
+					Listen
+				</h2>
+				<div class="mb-8 flex justify-center">
 					<button
 						onclick={play_audio}
-						class="group relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95"
+						class="group relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-gray-900 bg-white text-gray-900 transition-all duration-200 hover:bg-gray-900 hover:text-white active:scale-95"
 					>
-						<svg class="h-12 w-12" fill="currentColor" viewBox="0 0 24 24">
+						<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 							{#if is_playing}
 								<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
 							{:else}
@@ -127,21 +130,16 @@
 				<!-- Transcript Section -->
 				<button
 					onclick={toggle_transcript}
-					class="mb-6 w-full rounded-xl bg-white/80 p-4 text-center text-lg shadow-lg ring-1 ring-blue-200/50 transition-all duration-300 {show_transcript
-						? 'text-gray-800'
-						: 'font-semibold text-gray-600 hover:bg-blue-50'}"
+					class="mb-4 w-full rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 {show_transcript
+						? 'border-gray-900 text-gray-900'
+						: 'text-gray-500 hover:border-gray-300'}"
 				>
 					{#if show_transcript}
-						📝 {question.transcript}
+						<span class="text-base font-medium">{question.transcript}</span>
 					{:else}
 						<div class="flex items-center justify-center gap-2">
-							<span>📝 Transcript</span>
-							<svg
-								class="h-5 w-5 text-gray-500"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
+							<span class="text-sm font-medium">Transcript</span>
+							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -156,21 +154,16 @@
 				<!-- Translation Section -->
 				<button
 					onclick={toggle_translation}
-					class="mb-6 w-full rounded-xl bg-white/80 p-4 text-center text-lg shadow-lg ring-1 ring-blue-200/50 transition-all duration-300 {show_translation
-						? 'text-gray-800'
-						: 'font-semibold text-gray-600 hover:bg-blue-50 '}"
+					class="w-full rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 {show_translation
+						? 'border-gray-900 text-gray-900'
+						: 'text-gray-500 hover:border-gray-300'}"
 				>
 					{#if show_translation}
-						🌐 {question.translation}
+						<span class="text-base font-medium">{question.translation}</span>
 					{:else}
 						<div class="flex items-center justify-center gap-2">
-							<span>🌐 Translation</span>
-							<svg
-								class="h-5 w-5 text-gray-500"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
+							<span class="text-sm font-medium">Translation</span>
+							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -184,16 +177,18 @@
 			</div>
 
 			<!-- Recording Section -->
-			<div class="border-b border-gray-100 bg-gradient-to-br from-purple-50 to-pink-50 p-8">
-				<h3 class="mb-4 text-center text-xl font-bold text-gray-800">🎤 Speak</h3>
+			<div class="border-b border-gray-100 p-12">
+				<h3 class="mb-8 text-center text-sm font-medium tracking-wider text-gray-500 uppercase">
+					Speak
+				</h3>
 				<div class="flex flex-col items-center gap-6">
 					<button
 						onclick={toggle_recording}
 						class="flex h-20 w-20 items-center justify-center rounded-full transition-all duration-200 {is_recording
-							? 'animate-pulse bg-red-500 hover:bg-red-600'
-							: 'bg-gradient-to-br from-purple-500 to-pink-600 hover:scale-105'} text-white shadow-lg hover:shadow-xl active:scale-95"
+							? 'bg-red-500 text-white'
+							: 'border-2 border-gray-900 bg-white text-gray-900 hover:bg-gray-900 hover:text-white'} active:scale-95"
 					>
-						<svg class="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">
+						<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 							{#if is_recording}
 								<rect x="6" y="6" width="12" height="12" rx="2" />
 							{:else}
@@ -208,39 +203,75 @@
 					</button>
 
 					<div
-						class="w-full rounded-lg bg-white/80 p-4 text-center text-lg shadow ring-1 ring-purple-200/50 transition-all duration-300 {user_transcript
-							? 'text-gray-800'
-							: 'font-semibold text-gray-600 '}"
+						class="w-full rounded-xl border border-gray-200 bg-white p-5 text-center transition-all duration-300 {user_transcript
+							? 'border-gray-900 text-gray-900'
+							: 'text-gray-500'}"
 					>
-						💬 {user_transcript ? user_transcript : 'Your Speech'}
+						<span class="text-base font-medium"
+							>{user_transcript ? user_transcript : 'Your Speech'}</span
+						>
 					</div>
 				</div>
 			</div>
 
 			<!-- Action Buttons -->
-			<div class="flex flex-wrap items-center justify-center gap-3 p-6">
+			<div class="flex flex-wrap items-center justify-center gap-3 p-8">
 				<button
 					onclick={toggle_like}
-					class="flex items-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all {liked
-						? 'bg-red-500 text-white hover:bg-red-600'
-						: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+					class="flex items-center gap-2 rounded-full border-2 px-6 py-2.5 text-sm font-medium transition-all {liked
+						? 'border-red-500 bg-red-500 text-white'
+						: 'border-gray-200 text-gray-700 hover:border-gray-900'}"
 				>
-					{liked ? '❤️' : '🤍'}
+					<svg
+						class="h-4 w-4"
+						fill={liked ? 'currentColor' : 'none'}
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+						/>
+					</svg>
 					{liked ? 'Liked' : 'Like'}
 				</button>
 
 				<button
 					onclick={retry}
-					class="flex items-center gap-2 rounded-lg bg-gray-100 px-6 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-200"
+					class="flex items-center gap-2 rounded-full border-2 border-gray-200 px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:border-gray-900"
 				>
-					🔄 Retry
+					<svg
+						class="h-4 w-4"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+						/>
+					</svg>
+					Retry
 				</button>
 
 				<button
 					onclick={next_question}
-					class="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
+					class="flex items-center gap-2 rounded-full bg-gray-900 px-8 py-2.5 text-sm font-medium text-white transition-all hover:bg-gray-800 active:scale-95"
 				>
-					Next →
+					Next
+					<svg
+						class="h-4 w-4"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+					</svg>
 				</button>
 			</div>
 		</div>
