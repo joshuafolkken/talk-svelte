@@ -1,5 +1,11 @@
 <script lang="ts">
-	let current_question = 1
+	const questions = [
+		create_question('you_nailed_it.mp3', 'You nailed it!', '完璧にやったね！'),
+		create_question('live_it.mp3', 'Love it!', 'それ好き！'),
+		create_question('awesome.mp3', 'Awesome!', '最高！'),
+	]
+
+	let current_question = $state(1)
 	let total_questions = 10
 	let is_playing = $state(false)
 	let show_transcript = $state(false)
@@ -8,6 +14,7 @@
 	let has_recording = $state(true)
 	let user_transcript = $state('Yay!')
 	let liked = $state(false)
+	let question = $state(questions[0]!)
 
 	let audio_element: HTMLAudioElement
 
@@ -24,14 +31,6 @@
 			translation,
 		}
 	}
-
-	const questions = [
-		create_question('you_nailed_it.mp3', 'You nailed it!', '完璧にやったね！'),
-		create_question('live_it.mp3', 'Love it!', 'それ好き！'),
-		create_question('awesome.mp3', 'Awesome!', '最高！'),
-	]
-
-	let question = questions[0]!
 
 	function play_audio(): void {
 		if (!audio_element) return
@@ -62,13 +61,28 @@
 	function toggle_like(): void {
 		liked = !liked
 	}
+
+	function retry(): void {
+		show_transcript = false
+		show_translation = false
+		has_recording = false
+		user_transcript = ''
+	}
+
+	function next_question(): void {
+		if (current_question < total_questions) {
+			current_question++
+			question = questions[current_question - 1]!
+			retry()
+		}
+	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-4">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-8">
 	<div class="mx-auto max-w-2xl">
 		<h1 class="mb-1 text-center text-xl font-bold text-gray-800">🎧 Talk</h1>
 		<!-- Progress Bar -->
-		<div class="mb-4">
+		<div class="mb-8">
 			<div class="mb-2 flex items-center justify-between text-sm font-medium text-gray-700">
 				<span>Progress</span>
 				<span>Question {current_question} of {total_questions}</span>
@@ -234,7 +248,31 @@
 					{liked ? '❤️' : '🤍'}
 					{liked ? 'Liked' : 'Like'}
 				</button>
+
+				<button
+					onclick={retry}
+					class="flex items-center gap-2 rounded-lg bg-gray-100 px-6 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-200"
+				>
+					🔄 Retry
+				</button>
+
+				<button
+					onclick={next_question}
+					class="flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
+				>
+					Next Question →
+				</button>
 			</div>
+		</div>
+
+		<!-- Tips Section (Optional) -->
+		<div class="mt-6 rounded-xl bg-white/80 p-6 shadow">
+			<h4 class="mb-2 font-bold text-gray-800">💡 Tips:</h4>
+			<ul class="spacy-y-1 text-sm text-gray-600">
+				<li>• Listen to the audio as many times as you need</li>
+				<li>• Try to repeat what you hear before checking the transcript</li>
+				<li>• Record your pronunciation and compare with the original</li>
+			</ul>
 		</div>
 	</div>
 </div>
