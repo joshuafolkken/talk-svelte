@@ -129,7 +129,7 @@
 				>
 					<div class="flex items-center justify-between">
 						<span class="font-semibold text-gray-800">
-							📝 Transcript {show_transcript ? '(hide)' : '(Click to show)'}
+							📝 Transcript {show_transcript ? '(Hide)' : '(Click to show)'}
 						</span>
 						<svg
 							class="h-5 w-5 text-gray-600 transition-transform {show_transcript
@@ -163,7 +163,7 @@
 				>
 					<div class="flex items-center justify-between">
 						<span class="font-semibold text-gray-800">
-							🌐 Translation {show_translation ? '(hide)' : '(Click to show)'}
+							🌐 Translation {show_translation ? '(Hide)' : '(Click to show)'}
 						</span>
 						<svg
 							class="h-5 w-5 text-gray-600 transition-transform {show_translation
@@ -183,7 +183,7 @@
 					</div>
 				</button>
 				{#if show_translation}
-					<div class="mt-4 rounded-lg bg-blue-50 p-4 text-lg text-gray-800">
+					<div class="mt-4 rounded-lg bg-green-50 p-4 text-lg text-gray-800">
 						{question.translation}
 					</div>
 				{/if}
@@ -268,7 +268,7 @@
 		<!-- Tips Section (Optional) -->
 		<div class="mt-6 rounded-xl bg-white/80 p-6 shadow">
 			<h4 class="mb-2 font-bold text-gray-800">💡 Tips:</h4>
-			<ul class="spacy-y-1 text-sm text-gray-600">
+			<ul class="space-y-1 text-sm text-gray-600">
 				<li>• Listen to the audio as many times as you need</li>
 				<li>• Try to repeat what you hear before checking the transcript</li>
 				<li>• Record your pronunciation and compare with the original</li>
