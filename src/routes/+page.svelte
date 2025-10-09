@@ -37,9 +37,11 @@
 		if (is_playing) {
 			audio_element.pause()
 			is_playing = false
+			console.log('pause')
 		} else {
 			audio_element.play()
 			is_playing = true
+			console.log('play')
 		}
 	}
 
@@ -59,7 +61,7 @@
 		liked = !liked
 	}
 
-	function retry(): void {
+	async function retry(): Promise<void> {
 		show_transcript = false
 		show_translation = false
 		user_transcript = ''
@@ -67,8 +69,12 @@
 
 		if (audio_element && is_playing) {
 			audio_element.pause()
+			audio_element.currentTime = 0
 		}
 		is_playing = false
+
+		await new Promise((resolve) => setTimeout(resolve, 500))
+		play_audio()
 	}
 
 	function next_question(): void {
@@ -123,7 +129,7 @@
 		<div class="mb-12">
 			<div class="mb-3 flex items-center justify-between">
 				<h1
-					class="text-3xl font-bold tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
+					class="text-sm font-bold tracking-wide text-white uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
 				>
 					Talk
 				</h1>
@@ -144,7 +150,7 @@
 
 		<!-- Main Card with STRONG Glass Effect -->
 		<div
-			class="overflow-hidden rounded-3xl border-2 border-white/40 shadow-2xl"
+			class="overflow-hidden rounded-3xl border border-white/40 shadow-2xl"
 			style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px) saturate(180%);"
 		>
 			<!-- Audio Section-->
@@ -157,7 +163,7 @@
 				<div class="mb-8 flex justify-center">
 					<button
 						onclick={play_audio}
-						class="group relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-white/50 text-white shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95"
+						class="group relative flex h-20 w-20 items-center justify-center rounded-full border border-white/30 text-white shadow-lg transition-all duration-200 hover:scale-110 hover:border-white/60 hover:shadow-2xl active:scale-95"
 						style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);"
 					>
 						<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
@@ -178,16 +184,16 @@
 				<!-- Transcript Section -->
 				<button
 					onclick={toggle_transcript}
-					class="mb-4 w-full rounded-xl border-2 p-5 text-center shadow-lg transition-all duration-300 {show_transcript
+					class="mb-4 w-full rounded-xl border p-5 text-center shadow-lg transition-all duration-200 {show_transcript
 						? 'border-white/60 text-white'
-						: 'border-white/30 text-white/90 hover:border-white/50'}"
-					style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
+						: 'border-white/30 text-white/80 hover:scale-[1.02] hover:border-white/60 hover:bg-white/25 hover:shadow-2xl'}"
+					style="background: rgba(255, 255, 255, 0.15); back8drop-filter: blur(10px);"
 				>
 					{#if show_transcript}
 						<span class="text-base font-bold drop-shadow">{question.transcript}</span>
 					{:else}
 						<div class="flex items-center justify-center gap-2">
-							<span class="text-sm font-semibold">Transcript</span>
+							<span class="text-base font-semibold">Transcript</span>
 							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
@@ -203,16 +209,16 @@
 				<!-- Translation Section -->
 				<button
 					onclick={toggle_translation}
-					class="w-full rounded-xl border-2 p-5 text-center shadow-lg transition-all duration-300 {show_translation
+					class="w-full rounded-xl border p-5 text-center shadow-lg transition-all duration-200 {show_translation
 						? 'border-white/60 text-white'
-						: 'border-white/30 text-white/90 hover:border-white/50'}"
+						: 'border-white/30 text-white/80 hover:scale-[1.02] hover:border-white/60 hover:bg-white/25 hover:shadow-2xl'}"
 					style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 				>
 					{#if show_translation}
 						<span class="text-base font-bold drop-shadow">{question.translation}</span>
 					{:else}
 						<div class="flex items-center justify-center gap-2">
-							<span class="text-sm font-semibold">Translation</span>
+							<span class="text-base font-semibold">Translation</span>
 							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"
@@ -236,9 +242,9 @@
 				<div class="flex flex-col items-center gap-6">
 					<button
 						onclick={toggle_recording}
-						class="flex h-20 w-20 items-center justify-center rounded-full shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 {is_recording
-							? 'border-2 border-red-300/60 bg-red-500 text-white'
-							: 'border-2 border-white/50 text-white'}"
+						class="flex h-20 w-20 items-center justify-center rounded-full shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-2xl active:scale-95 {is_recording
+							? 'animate-pulse border border-red-300/30 bg-red-500 text-white hover:border-red-300/60'
+							: 'border border-white/30 text-white hover:border-white/60'}"
 						style={is_recording
 							? ''
 							: 'background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);'}
@@ -258,14 +264,26 @@
 					</button>
 
 					<div
-						class="w-full rounded-xl border-2 p-5 text-center shadow-lg transition-all duration-300 {user_transcript
+						class="w-full rounded-xl border p-5 text-center shadow-lg transition-all duration-200 {user_transcript
 							? 'border-white/60 text-white'
-							: 'border-white/30 text-white/90'}"
+							: 'border-white/30 text-white/80'}"
 						style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 					>
-						<span class="text-base font-semibold drop-shadow"
-							>{user_transcript ? user_transcript : 'Your Speech'}</span
-						>
+						{#if user_transcript}
+							<span class="text-base font-bold drop-shadow">{user_transcript}</span>
+						{:else}
+							<div class="flex items-center justify-center gap-2">
+								<span class="text-base font-semibold">Your Speech...</span>
+								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M19 9l-7 7-7-7"
+									/>
+								</svg>
+							</div>
+						{/if}
 					</div>
 				</div>
 			</div>
@@ -277,9 +295,9 @@
 			>
 				<button
 					onclick={toggle_like}
-					class="flex items-center gap-2 rounded-full border-2 px-6 py-2.5 text-sm font-bold shadow-xl transition-all hover:scale-105 {liked
+					class="flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-bold shadow-lg transition-all hover:scale-105 hover:shadow-2xl active:scale-95 {liked
 						? 'border-red-300/60 bg-red-500 text-white'
-						: 'border-white/40 text-white hover:border-white/60'}"
+						: 'border-white/30 text-white hover:border-white/60'}"
 					style={liked ? '' : 'background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);'}
 				>
 					<svg
@@ -300,7 +318,7 @@
 
 				<button
 					onclick={retry}
-					class="flex items-center gap-2 rounded-full border-2 border-white/40 px-6 py-2.5 text-sm font-bold text-white shadow-xl transition-all hover:scale-105 hover:border-white/60"
+					class="flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95"
 					style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
 				>
 					<svg
@@ -321,7 +339,7 @@
 
 				<button
 					onclick={next_question}
-					class="flex items-center gap-2 rounded-full border-2 border-white/60 px-8 py-2.5 text-sm font-bold text-white shadow-xl transition-all hover:scale-105 hover:border-white/80 active:scale-95"
+					class="flex items-center gap-2 rounded-full border border-white/30 px-8 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95"
 					style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px);"
 				>
 					Next
