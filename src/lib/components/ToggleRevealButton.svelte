@@ -10,14 +10,9 @@
 	let { revealed, label, content, on_toggle, class: class_name = '' }: Props = $props()
 </script>
 
-<button
-	onclick={on_toggle}
-	class="content-box {class_name} {revealed
-		? 'border-white/60 text-white'
-		: 'hover:scale-[1.02] hover:border-white/60 hover:shadow-2xl'}"
->
+<button onclick={on_toggle} class="btn-content-glass {class_name} {revealed ? 'text-white' : ''}">
 	{#if revealed}
-		<span class="text-base font-bold drop-shadow">{content}</span>
+		<span class="text-base font-bold whitespace-pre-line drop-shadow">{content}</span>
 	{:else}
 		<div class="flex items-center justify-center gap-2">
 			<span class="text-base font-semibold">{label}</span>

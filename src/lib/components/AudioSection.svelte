@@ -45,7 +45,7 @@
 
 	<ToggleRevealButton
 		revealed={show_transcript}
-		label="Transcript"
+		label="Script"
 		content={question.transcript}
 		on_toggle={on_toggle_transcript}
 		class="mb-4"
@@ -53,7 +53,7 @@
 
 	<ToggleRevealButton
 		revealed={show_translation}
-		label="Translation"
+		label="Meaning"
 		content={question.translation}
 		on_toggle={on_toggle_translation}
 	/>

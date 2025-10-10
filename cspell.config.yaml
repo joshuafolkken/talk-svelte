@@ -20,6 +20,7 @@ ignorePaths:
   - src/lib/paraglide/*.js
   - '**/*.svg'
   - storybook-static/**/*
+  - src/lib/components/AnimatedBackground.svelte
 words:
   - autodocs
   - customise
