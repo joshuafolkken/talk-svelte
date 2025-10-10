@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import ActionButtons from '$lib/components/ActionButtons.svelte'
-	import AnimatedBackground from '$lib/components/AnimatedBackground.svelte'
+	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { questions } from '$lib/data/questions'
 	import AudioSection from '$lib/components/AudioSection.svelte'
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
@@ -79,7 +79,7 @@
 </script>
 
 <div class="relative min-h-screen overflow-hidden px-4 py-12">
-	<AnimatedBackground />
+	<YoutubeBackground />
 
 	<div class="mx-auto max-w-xl">
 		<ProgressBar current={current_question} total={total_questions} {title} />

@@ -9,7 +9,7 @@
 	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
 </script>
 
-<div class="flex flex-wrap items-center justify-center gap-3 p-8">
+<div class="flex flex-wrap items-center justify-center gap-4 p-8">
 	<!-- Like Button -->
 	<button
 		onclick={on_toggle_like}

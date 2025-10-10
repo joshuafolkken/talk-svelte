@@ -17,27 +17,34 @@
 
 	/* Common button styles */
 	.btn-glass {
-		@apply flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-white shadow-lg transition-all;
-		@apply hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95;
+		@apply flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-white shadow-lg transition-all duration-200;
+		@apply hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95 active:shadow;
 		background: rgba(255, 255, 255, 0.15);
 		backdrop-filter: blur(10px);
 	}
 
 	.btn-icon-glass {
-		@apply flex items-center justify-center rounded-full border border-white/30 text-white shadow-lg;
-		@apply transition-all duration-200 hover:scale-110 hover:border-white/60 hover:shadow-2xl active:scale-95;
+		@apply flex items-center justify-center rounded-full border border-white/30 text-white shadow-lg transition-all duration-200;
+		@apply hover:scale-110 hover:border-white/60 hover:shadow-2xl active:scale-95 active:shadow;
 		background: rgba(255, 255, 255, 0.15);
 		backdrop-filter: blur(10px);
 	}
 
 	/* Section header */
 	.section-header {
-		@apply mb-8 text-center text-sm font-bold tracking-widest text-white uppercase drop-shadow-md;
+		@apply text-center text-sm font-bold tracking-widest text-white uppercase drop-shadow-md;
 	}
 
 	/* Content box */
-	.content-box {
-		@apply w-full rounded-xl border border-white/30 p-5 text-center text-white/80 shadow-lg transition-all duration-200;
+	.btn-content-glass {
+		@apply w-full rounded-3xl border border-white/30 px-6 py-2.5 text-center text-white/70 shadow-lg transition-all duration-200;
+		@apply hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95 active:shadow;
+		background: rgba(255, 255, 255, 0.15);
+		backdrop-filter: blur(10px);
+	}
+
+	.content-glass {
+		@apply w-full rounded-3xl border border-white/30 px-6 py-2.5 text-center text-white/70 shadow-lg;
 		background: rgba(255, 255, 255, 0.15);
 		backdrop-filter: blur(10px);
 	}
