@@ -10,8 +10,8 @@
 
 <!-- Recording Section -->
 <div class="border-b border-white/25 p-12">
-	<h3 class="section-header">Speak</h3>
-	<div class="flex flex-col items-center gap-6">
+	<div class="flex flex-col items-center gap-8">
+		<h3 class="section-header">Speak</h3>
 		<button
 			onclick={on_toggle_recording}
 			class="btn-icon-glass h-20 w-20 {is_recording
@@ -30,12 +30,12 @@
 			</svg>
 		</button>
 
-		<div class="content-box {user_transcript ? 'border-white/60 text-white' : ''}">
+		<div class="content-glass {user_transcript ? 'text-white' : ''}">
 			{#if user_transcript}
 				<span class="text-base font-bold drop-shadow">{user_transcript}</span>
 			{:else}
 				<div class="flex items-center justify-center gap-2">
-					<span class="text-base font-semibold">Your Speech...</span>
+					<span class="text-base font-semibold">You …</span>
 					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							stroke-linecap="round"
