@@ -1,0 +1,67 @@
+<script lang="ts">
+	interface Props {
+		liked: boolean
+		on_toggle_like: () => void
+		on_retry: () => void
+		on_next: () => void
+	}
+
+	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
+</script>
+
+<div
+	class="flex flex-wrap items-center justify-center gap-3 p-8"
+	style="background: rgba(255, 255, 255, 0.05);"
+>
+	<!-- Like Button -->
+	<button
+		onclick={on_toggle_like}
+		class="flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-bold shadow-lg transition-all hover:scale-105 hover:shadow-2xl active:scale-95 {liked
+			? 'border-red-300/60 bg-red-500 text-white'
+			: 'border-white/30 text-white hover:border-white/60'}"
+		style={liked ? '' : 'background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);'}
+	>
+		<svg
+			class="h-4 w-4"
+			fill={liked ? 'currentColor' : 'none'}
+			stroke="currentColor"
+			stroke-width="2"
+			viewBox="0 0 24 24"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+			/>
+		</svg>
+		{liked ? 'Liked' : 'Like'}
+	</button>
+
+	<!-- Retry Button -->
+	<button
+		onclick={on_retry}
+		class="flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95"
+		style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
+	>
+		<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+			/>
+		</svg>
+		Retry
+	</button>
+
+	<!-- Next Button -->
+	<button
+		onclick={on_next}
+		class="flex items-center gap-2 rounded-full border border-white/30 px-8 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95"
+		style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px);"
+	>
+		Next
+		<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+		</svg>
+	</button>
+</div>
