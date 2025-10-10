@@ -27,19 +27,10 @@
 	}: Props = $props()
 </script>
 
-<!-- Audio Section-->
-<div class="border-b border-white/25 p-12" style="background: rgba(255, 255, 255, 0.05);">
-	<h2
-		class="mb-8 text-center text-sm font-bold tracking-widest text-white uppercase drop-shadow-md"
-	>
-		Listen
-	</h2>
+<div class="border-b border-white/25 p-12">
+	<h2 class="section-header">Listen</h2>
 	<div class="mb-8 flex justify-center">
-		<button
-			onclick={on_play_audio}
-			class="group relative flex h-20 w-20 items-center justify-center rounded-full border border-white/30 text-white shadow-lg transition-all duration-200 hover:scale-110 hover:border-white/60 hover:shadow-2xl active:scale-95"
-			style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);"
-		>
+		<button onclick={on_play_audio} class="btn-icon-glass h-20 w-20">
 			<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 				{#if is_playing}
 					<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />

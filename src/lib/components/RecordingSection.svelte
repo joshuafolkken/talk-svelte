@@ -9,21 +9,14 @@
 </script>
 
 <!-- Recording Section -->
-<div class="border-b border-white/25 p-12" style="background: rgba(255, 255, 255, 0.05);">
-	<h3
-		class="mb-8 text-center text-sm font-bold tracking-widest text-white uppercase drop-shadow-md"
-	>
-		Speak
-	</h3>
+<div class="border-b border-white/25 p-12">
+	<h3 class="section-header">Speak</h3>
 	<div class="flex flex-col items-center gap-6">
 		<button
 			onclick={on_toggle_recording}
-			class="flex h-20 w-20 items-center justify-center rounded-full shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-2xl active:scale-95 {is_recording
-				? 'animate-pulse border border-red-300/30 bg-red-500 text-white hover:border-red-300/60'
-				: 'border border-white/30 text-white hover:border-white/60'}"
-			style={is_recording
-				? ''
-				: 'background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);'}
+			class="btn-icon-glass h-20 w-20 {is_recording
+				? 'animate-pulse border border-red-300/30 bg-red-500 hover:border-red-300/60'
+				: ''}"
 		>
 			<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 				{#if is_recording}
@@ -37,12 +30,7 @@
 			</svg>
 		</button>
 
-		<div
-			class="w-full rounded-xl border p-5 text-center shadow-lg transition-all duration-200 {user_transcript
-				? 'border-white/60 text-white'
-				: 'border-white/30 text-white/80'}"
-			style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
-		>
+		<div class="content-box {user_transcript ? 'border-white/60 text-white' : ''}">
 			{#if user_transcript}
 				<span class="text-base font-bold drop-shadow">{user_transcript}</span>
 			{:else}

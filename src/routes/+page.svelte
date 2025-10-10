@@ -85,10 +85,7 @@
 		<ProgressBar current={current_question} total={total_questions} {title} />
 
 		<!-- Main Card with STRONG Glass Effect -->
-		<div
-			class="overflow-hidden rounded-3xl border border-white/40 shadow-2xl"
-			style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px) saturate(180%);"
-		>
+		<div class="card-glass">
 			<AudioSection
 				{question}
 				{is_playing}

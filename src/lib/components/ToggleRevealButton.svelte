@@ -12,10 +12,9 @@
 
 <button
 	onclick={on_toggle}
-	class="w-full rounded-xl border p-5 text-center shadow-lg transition-all duration-200 {revealed
+	class="content-box {class_name} {revealed
 		? 'border-white/60 text-white'
-		: 'border-white/30 text-white/80 hover:scale-[1.02] hover:border-white/60 hover:bg-white/25 hover:shadow-2xl'} {class_name}"
-	style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
+		: 'hover:scale-[1.02] hover:border-white/60 hover:shadow-2xl'}"
 >
 	{#if revealed}
 		<span class="text-base font-bold drop-shadow">{content}</span>

@@ -19,10 +19,7 @@
 			{current} / {total}
 		</span>
 	</div>
-	<div
-		class="h-2 overflow-hidden rounded-full border border-white/40 shadow-xl"
-		style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
-	>
+	<div class="glass-content h-2 overflow-hidden rounded-full border border-white/40 shadow-xl">
 		<div
 			class="h-full rounded-full bg-white shadow-lg transition-all duration-500"
 			style="width: {(current / total) * 100}%"

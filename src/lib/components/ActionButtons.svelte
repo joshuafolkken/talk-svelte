@@ -9,17 +9,11 @@
 	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
 </script>
 
-<div
-	class="flex flex-wrap items-center justify-center gap-3 p-8"
-	style="background: rgba(255, 255, 255, 0.05);"
->
+<div class="flex flex-wrap items-center justify-center gap-3 p-8">
 	<!-- Like Button -->
 	<button
 		onclick={on_toggle_like}
-		class="flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-bold shadow-lg transition-all hover:scale-105 hover:shadow-2xl active:scale-95 {liked
-			? 'border-red-300/60 bg-red-500 text-white'
-			: 'border-white/30 text-white hover:border-white/60'}"
-		style={liked ? '' : 'background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);'}
+		class="btn-glass {liked ? 'border-red-300/60 bg-red-500 text-white' : ''}"
 	>
 		<svg
 			class="h-4 w-4"
@@ -38,11 +32,7 @@
 	</button>
 
 	<!-- Retry Button -->
-	<button
-		onclick={on_retry}
-		class="flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95"
-		style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);"
-	>
+	<button onclick={on_retry} class="btn-glass">
 		<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 			<path
 				stroke-linecap="round"
@@ -54,11 +44,7 @@
 	</button>
 
 	<!-- Next Button -->
-	<button
-		onclick={on_next}
-		class="flex items-center gap-2 rounded-full border border-white/30 px-8 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95"
-		style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px);"
-	>
+	<button onclick={on_next} class="btn-glass">
 		Next
 		<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 			<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
