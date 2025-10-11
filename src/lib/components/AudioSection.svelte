@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { VoidCallback } from '$lib/types'
 	import type { Question } from '$lib/types/question'
 	import ToggleRevealButton from './ToggleRevealButton.svelte'
 
@@ -7,10 +8,10 @@
 		is_playing: boolean
 		show_transcript: boolean
 		show_translation: boolean
-		on_play_audio: () => void
-		on_toggle_transcript: () => void
-		on_toggle_translation: () => void
-		on_audio_ended: () => void
+		on_play_audio: VoidCallback
+		on_toggle_transcript: VoidCallback
+		on_toggle_translation: VoidCallback
+		on_audio_ended: VoidCallback
 		audio_element: HTMLAudioElement | undefined
 	}
 

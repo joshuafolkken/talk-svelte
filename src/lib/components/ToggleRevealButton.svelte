@@ -1,9 +1,11 @@
 <script lang="ts">
+	import type { VoidCallback } from '$lib/types'
+
 	interface Props {
 		revealed: boolean
 		label: string
 		content: string
-		on_toggle: () => void
+		on_toggle: VoidCallback
 		class?: string
 	}
 

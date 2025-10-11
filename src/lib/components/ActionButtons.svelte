@@ -1,9 +1,11 @@
 <script lang="ts">
+	import type { VoidCallback } from '$lib/types'
+
 	interface Props {
 		liked: boolean
-		on_toggle_like: () => void
-		on_retry: () => void
-		on_next: () => void
+		on_toggle_like: VoidCallback
+		on_retry: VoidCallback
+		on_next: VoidCallback
 	}
 
 	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()

@@ -1,8 +1,10 @@
 <script lang="ts">
+	import type { VoidCallback } from '$lib/types'
+
 	interface Props {
 		is_recording: boolean
 		user_transcript: string
-		on_toggle_recording: () => void
+		on_toggle_recording: VoidCallback
 	}
 
 	let { is_recording, user_transcript, on_toggle_recording }: Props = $props()
