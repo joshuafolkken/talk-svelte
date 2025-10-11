@@ -33,33 +33,30 @@
 		}
 	}
 
-	function on_toggle_transcript(): void {
-		show_transcript = !show_transcript
-	}
-
-	function on_toggle_translation(): void {
-		show_translation = !show_translation
-	}
-
-	function on_toggle_recording(): void {
-		is_recording = !is_recording
-	}
-
-	function on_toggle_like(): void {
-		liked = !liked
-	}
-
-	function on_retry(): void {
-		show_transcript = false
-		show_translation = false
-		user_transcript = ''
-		liked = false
-
+	function reset_audio(): void {
 		if (audio_element && is_playing) {
 			audio_element.pause()
 			audio_element.currentTime = 0
 		}
 		is_playing = false
+		is_recording = false
+	}
+
+	function reset_recording(): void {
+		is_recording = false
+		user_transcript = ''
+	}
+
+	function reset_user_state(): void {
+		show_transcript = false
+		show_translation = false
+		liked = false
+	}
+
+	function on_retry(): void {
+		reset_audio()
+		reset_recording()
+		reset_user_state()
 
 		setTimeout(() => {
 			on_play_audio()
@@ -81,7 +78,6 @@
 	<div class="mx-auto max-w-xl">
 		<ProgressBar current={current_question} total={total_questions} {title} />
 
-		<!-- Main Card with STRONG Glass Effect -->
 		<div class="card-glass">
 			<AudioSection
 				{question}
@@ -89,15 +85,19 @@
 				{show_transcript}
 				{show_translation}
 				{on_play_audio}
-				{on_toggle_transcript}
-				{on_toggle_translation}
+				on_toggle_transcript={() => (show_transcript = !show_transcript)}
+				on_toggle_translation={() => (show_translation = !show_translation)}
 				on_audio_ended={() => (is_playing = false)}
 				bind:audio_element
 			/>
 
-			<RecordingSection {is_recording} {user_transcript} {on_toggle_recording} />
+			<RecordingSection
+				{is_recording}
+				{user_transcript}
+				on_toggle_recording={() => (is_recording = !is_recording)}
+			/>
 
-			<ActionButtons {liked} {on_toggle_like} {on_retry} {on_next} />
+			<ActionButtons {liked} {on_retry} {on_next} on_toggle_like={() => (liked = !liked)} />
 		</div>
 	</div>
 </div>
