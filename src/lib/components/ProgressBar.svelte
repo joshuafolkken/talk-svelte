@@ -6,6 +6,8 @@
 	}
 
 	let { current, total, title }: Props = $props()
+
+	let progress_percentage = $derived((current / total) * 100)
 </script>
 
 <div class="mb-12">
@@ -22,7 +24,7 @@
 	<div class="glass-content h-2 overflow-hidden rounded-full border border-white/40 shadow-xl">
 		<div
 			class="h-full rounded-full bg-white shadow-lg transition-all duration-500"
-			style="width: {(current / total) * 100}%"
+			style="width: {progress_percentage}%"
 		></div>
 	</div>
 </div>

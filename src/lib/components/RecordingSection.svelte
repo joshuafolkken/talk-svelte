@@ -6,18 +6,19 @@
 	}
 
 	let { is_recording, user_transcript, on_toggle_recording }: Props = $props()
+
+	let recording_styles = $derived(
+		is_recording ? 'border border-red-300/30 bg-red-500 hover:border-red-300/60' : '',
+	)
+
+	let transcript_styles = $derived(user_transcript ? 'text-white' : '')
 </script>
 
 <!-- Recording Section -->
 <div class="border-b border-white/25 p-12">
 	<div class="flex flex-col items-center gap-8">
 		<h3 class="section-header">Speak</h3>
-		<button
-			onclick={on_toggle_recording}
-			class="btn-icon-glass h-20 w-20 {is_recording
-				? 'animate-pulse border border-red-300/30 bg-red-500 hover:border-red-300/60'
-				: ''}"
-		>
+		<button onclick={on_toggle_recording} class="btn-icon-glass h-20 w-20 {recording_styles}">
 			<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 				{#if is_recording}
 					<rect x="6" y="6" width="12" height="12" rx="2" />
@@ -30,7 +31,7 @@
 			</svg>
 		</button>
 
-		<div class="content-glass {user_transcript ? 'text-white' : ''}">
+		<div class="content-glass {transcript_styles}">
 			{#if user_transcript}
 				<span class="text-base font-bold drop-shadow">{user_transcript}</span>
 			{:else}

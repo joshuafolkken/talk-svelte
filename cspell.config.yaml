@@ -23,12 +23,14 @@ ignorePaths:
 words:
   - autodocs
   - customise
+  - enablejsapi
   - inlang
+  - isready
   - mdsvex
+  - modestbranding
   - mysecretpassword
+  - octocat
   - oslojs
   - paraglide
   - pgdata
-  - octocat
-  - isready
   - Vercel

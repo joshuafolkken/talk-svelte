@@ -7,17 +7,18 @@
 	}
 
 	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
+
+	let like_button_styles = $derived(liked ? 'border-red-300/60 bg-red-500 text-white' : '')
+	let like_icon_fill = $derived(liked ? 'currentColor' : 'none')
+	let like_button_text = $derived(liked ? 'Liked' : 'Like')
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-4 p-8">
 	<!-- Like Button -->
-	<button
-		onclick={on_toggle_like}
-		class="btn-glass {liked ? 'border-red-300/60 bg-red-500 text-white' : ''}"
-	>
+	<button onclick={on_toggle_like} class="btn-glass {like_button_styles}">
 		<svg
 			class="h-4 w-4"
-			fill={liked ? 'currentColor' : 'none'}
+			fill={like_icon_fill}
 			stroke="currentColor"
 			stroke-width="2"
 			viewBox="0 0 24 24"
@@ -28,7 +29,7 @@
 				d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
 			/>
 		</svg>
-		{liked ? 'Liked' : 'Like'}
+		{like_button_text}
 	</button>
 
 	<!-- Retry Button -->

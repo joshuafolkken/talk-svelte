@@ -7,6 +7,7 @@
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 
 	const title = 'Talk'
+	const AUDIO_RESTART_DELAY_MS = 50
 
 	let current_question = $state(1)
 	let total_questions = $derived(questions.length)
@@ -26,11 +27,9 @@
 		if (is_playing) {
 			audio_element.pause()
 			is_playing = false
-			console.log('pause')
 		} else {
 			audio_element.play()
 			is_playing = true
-			console.log('play')
 		}
 	}
 
@@ -50,7 +49,7 @@
 		liked = !liked
 	}
 
-	async function on_retry(): Promise<void> {
+	function on_retry(): void {
 		show_transcript = false
 		show_translation = false
 		user_transcript = ''
@@ -62,16 +61,14 @@
 		}
 		is_playing = false
 
-		await new Promise((resolve) => setTimeout(resolve, 100))
-		on_play_audio()
+		setTimeout(() => {
+			on_play_audio()
+		}, AUDIO_RESTART_DELAY_MS)
 	}
 
 	function on_next(): void {
 		if (current_question < total_questions) {
-			const next = questions[current_question]
-			if (!next) return
-
-			question = next
+			question = questions[current_question]!
 			current_question++
 			on_retry()
 		}
