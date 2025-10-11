@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { VoidCallback } from '$lib/types'
+	import IconButton from './IconButton.svelte'
 
 	interface Props {
 		is_recording: boolean
@@ -20,7 +21,7 @@
 <div class="border-b border-white/25 p-12">
 	<div class="flex flex-col items-center gap-8">
 		<h3 class="section-header">Speak</h3>
-		<button onclick={on_toggle_recording} class="btn-icon-glass h-20 w-20 {recording_styles}">
+		<IconButton onclick={on_toggle_recording} class={recording_styles}>
 			<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
 				{#if is_recording}
 					<rect x="6" y="6" width="12" height="12" rx="2" />
@@ -31,7 +32,7 @@
 					/>
 				{/if}
 			</svg>
-		</button>
+		</IconButton>
 
 		<div class="content-glass {transcript_styles}">
 			{#if user_transcript}

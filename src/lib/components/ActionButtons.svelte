@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { VoidCallback } from '$lib/types'
+	import Button from './Button.svelte'
 
 	interface Props {
 		liked: boolean
@@ -17,7 +18,7 @@
 
 <div class="flex flex-wrap items-center justify-center gap-4 p-8">
 	<!-- Like Button -->
-	<button onclick={on_toggle_like} class="btn-glass {like_button_styles}">
+	<Button onclick={on_toggle_like} class={like_button_styles}>
 		<svg
 			class="h-4 w-4"
 			fill={like_icon_fill}
@@ -32,10 +33,10 @@
 			/>
 		</svg>
 		{like_button_text}
-	</button>
+	</Button>
 
 	<!-- Retry Button -->
-	<button onclick={on_retry} class="btn-glass">
+	<Button onclick={on_retry}>
 		<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 			<path
 				stroke-linecap="round"
@@ -44,13 +45,13 @@
 			/>
 		</svg>
 		Retry
-	</button>
+	</Button>
 
 	<!-- Next Button -->
-	<button onclick={on_next} class="btn-glass">
+	<Button onclick={on_next}>
 		Next
 		<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 			<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
 		</svg>
-	</button>
+	</Button>
 </div>
