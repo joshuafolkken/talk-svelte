@@ -9,15 +9,17 @@
 	const title = 'Talk'
 	const AUDIO_RESTART_DELAY_MS = 50
 
-	let current_question = $state(1)
+	let current_index = $state(0)
 	let total_questions = $derived(questions.length)
+	let current_question_number = $derived(current_index + 1)
+	let question = $derived(questions[current_index]!)
+
 	let is_playing = $state(false)
 	let show_transcript = $state(false)
 	let show_translation = $state(false)
 	let is_recording = $state(false)
-	let user_transcript = $state('Yay!')
+	let user_transcript = $state('')
 	let liked = $state(false)
-	let question = $state(questions[0]!)
 
 	let audio_element = $state<HTMLAudioElement>()
 
@@ -39,7 +41,6 @@
 			audio_element.currentTime = 0
 		}
 		is_playing = false
-		is_recording = false
 	}
 
 	function reset_recording(): void {
@@ -64,9 +65,8 @@
 	}
 
 	function on_next(): void {
-		if (current_question < total_questions) {
-			question = questions[current_question]!
-			current_question++
+		if (current_index < total_questions - 1) {
+			current_index++
 			on_retry()
 		}
 	}
@@ -76,7 +76,7 @@
 	<YoutubeBackground />
 
 	<div class="mx-auto max-w-xl">
-		<ProgressBar current={current_question} total={total_questions} {title} />
+		<ProgressBar current={current_question_number} total={total_questions} {title} />
 
 		<div class="card-glass">
 			<AudioSection
