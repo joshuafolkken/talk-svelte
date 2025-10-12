@@ -8,6 +8,7 @@
 
 	// sonar cloud test
 	console.log('sonar cloud test')
+	console.log('sonar cloud test2')
 
 	const TITLE = 'Talk'
 	const AUDIO_RESTART_DELAY_MS = 50
