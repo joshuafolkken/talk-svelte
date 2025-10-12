@@ -34,10 +34,10 @@
 
 	<div class="content-glass {transcript_styles}">
 		{#if user_transcript}
-			<span class="text-base font-bold drop-shadow">{user_transcript}</span>
+			<span class="text-content-bold">{user_transcript}</span>
 		{:else}
-			<div class="flex items-center justify-center gap-2">
-				<span class="text-base font-semibold">You …</span>
+			<div class="flex-center">
+				<span class="text-content-semibold">You …</span>
 				<ChevronDownIcon />
 			</div>
 		{/if}

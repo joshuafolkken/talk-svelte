@@ -55,4 +55,18 @@
 		background: var(--glass-bg);
 		backdrop-filter: var(--glass-blur);
 	}
+
+	/* Text styles */
+	.text-content-bold {
+		@apply text-base font-bold drop-shadow;
+	}
+
+	.text-content-semibold {
+		@apply text-base font-semibold;
+	}
+
+	/* Layout utilities */
+	.flex-center {
+		@apply flex items-center justify-center gap-2;
+	}
 }

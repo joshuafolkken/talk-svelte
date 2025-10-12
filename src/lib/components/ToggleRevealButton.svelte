@@ -24,10 +24,10 @@
 	aria-expanded={revealed}
 >
 	{#if revealed}
-		<span class="text-base font-bold whitespace-pre-line drop-shadow">{content}</span>
+		<span class="text-content-bold whitespace-pre-line">{content}</span>
 	{:else}
-		<div class="flex items-center justify-center gap-2">
-			<span class="text-base font-semibold">{label}</span>
+		<div class="flex-center">
+			<span class="text-content-semibold">{label}</span>
 			<ChevronDownIcon />
 		</div>
 	{/if}
