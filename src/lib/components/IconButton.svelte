@@ -9,7 +9,7 @@
 		children: Snippet
 	}
 
-	let { onclick, size = 'lg', class: class_names, children }: Props = $props()
+	let { onclick, size = 'lg', class: class_names = '', children }: Props = $props()
 
 	const size_classes = $derived(size === 'lg' ? 'h-20 w-20' : 'h-12 w-12')
 </script>

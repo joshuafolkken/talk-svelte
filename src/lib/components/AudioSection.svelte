@@ -2,6 +2,7 @@
 	import type { VoidCallback } from '$lib/types'
 	import type { Question } from '$lib/types/question'
 	import IconButton from './IconButton.svelte'
+	import { PauseIcon, PlayIcon } from './icons'
 	import ToggleRevealButton from './ToggleRevealButton.svelte'
 
 	interface Props {
@@ -33,13 +34,11 @@
 	<div class="flex flex-col items-center gap-8">
 		<h2 class="section-header">Listen</h2>
 		<IconButton onclick={on_play_audio}>
-			<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-				{#if is_playing}
-					<path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-				{:else}
-					<path d="M8 5v14l11-7z" />
-				{/if}
-			</svg>
+			{#if is_playing}
+				<PauseIcon />
+			{:else}
+				<PlayIcon />
+			{/if}
 		</IconButton>
 
 		<div class="flex w-full flex-col items-center gap-4">

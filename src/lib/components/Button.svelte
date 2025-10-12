@@ -8,7 +8,7 @@
 		children: Snippet
 	}
 
-	let { onclick, class: class_names, children }: Props = $props()
+	let { onclick, class: class_names = '', children }: Props = $props()
 </script>
 
 <button {onclick} class="btn-glass {class_names}">
