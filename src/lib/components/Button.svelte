@@ -11,6 +11,6 @@
 	let { onclick, class: class_names = '', children }: Props = $props()
 </script>
 
-<button {onclick} class="btn-glass {class_names}">
+<button type="button" {onclick} class="btn-glass {class_names}">
 	{@render children()}
 </button>

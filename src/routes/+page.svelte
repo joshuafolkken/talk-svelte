@@ -30,7 +30,10 @@
 			audio_element.pause()
 			is_playing = false
 		} else {
-			audio_element.play()
+			audio_element.play().catch((error) => {
+				console.error('Failed to play audio: ', error)
+				is_playing = false
+			})
 			is_playing = true
 		}
 	}

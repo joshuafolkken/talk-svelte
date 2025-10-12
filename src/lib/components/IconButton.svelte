@@ -14,6 +14,6 @@
 	let size_classes = $derived(size === 'lg' ? 'h-20 w-20' : 'h-12 w-12')
 </script>
 
-<button {onclick} class="btn-icon-glass {size_classes} {class_names}">
+<button type="button" {onclick} class="btn-icon-glass {size_classes} {class_names}">
 	{@render children()}
 </button>
