@@ -12,7 +12,7 @@
 
 	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
 
-	let like_button_style = $derived(liked ? 'border-red-300/60 bg-red-500 text-white' : '')
+	let like_button_style = $derived(liked ? 'liked-active' : '')
 	let like_button_text = $derived(liked ? 'Liked' : 'Like')
 </script>
 

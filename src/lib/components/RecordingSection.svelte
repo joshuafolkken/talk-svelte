@@ -5,8 +5,8 @@
 	import Section from './Section.svelte'
 
 	interface Props {
-		is_recording: boolean
 		user_transcript: string
+		is_recording: boolean
 		on_toggle_recording: VoidCallback
 	}
 

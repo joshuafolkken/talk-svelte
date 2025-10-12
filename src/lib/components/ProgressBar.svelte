@@ -13,9 +13,7 @@
 <div class="mb-12">
 	<div class="mb-3 flex items-center justify-between">
 		{#if title}
-			<h1
-				class="text-sm font-bold tracking-wide text-white uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
-			>
+			<h1 class="text-sm font-bold tracking-wide text-white uppercase drop-shadow-md">
 				{title}
 			</h1>
 		{/if}

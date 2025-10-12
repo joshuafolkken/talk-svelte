@@ -73,4 +73,8 @@
 	.recording-active {
 		@apply border border-red-300/30 bg-red-500 hover:border-red-300/60;
 	}
+
+	.liked-active {
+		@apply border-red-300/60 bg-red-500 text-white;
+	}
 }
