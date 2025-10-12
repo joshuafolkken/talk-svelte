@@ -69,4 +69,8 @@
 	.flex-center {
 		@apply flex items-center justify-center gap-2;
 	}
+
+	.recording-active {
+		@apply border border-red-300/30 bg-red-500 hover:border-red-300/60;
+	}
 }

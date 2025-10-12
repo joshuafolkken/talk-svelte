@@ -12,17 +12,14 @@
 
 	let { is_recording, user_transcript, on_toggle_recording }: Props = $props()
 
-	let recording_styles = $derived(
-		is_recording ? 'border border-red-300/30 bg-red-500 hover:border-red-300/60' : '',
-	)
-
-	let transcript_styles = $derived(user_transcript ? 'text-white' : '')
+	let recording_style = $derived(is_recording ? 'recording-active' : '')
+	let transcript_style = $derived(user_transcript ? 'text-white' : '')
 </script>
 
 <Section heading="Speak">
 	<IconButton
 		onclick={on_toggle_recording}
-		class={recording_styles}
+		class={recording_style}
 		label={is_recording ? 'Stop' : 'Record'}
 	>
 		{#if is_recording}
@@ -32,7 +29,7 @@
 		{/if}
 	</IconButton>
 
-	<div class="content-glass {transcript_styles}">
+	<div class="content-glass {transcript_style}">
 		{#if user_transcript}
 			<span class="text-content-bold">{user_transcript}</span>
 		{:else}

@@ -12,8 +12,8 @@
 
 	let { revealed, label, content, on_toggle, class: class_names = '' }: Props = $props()
 
-	let revealed_styles = $derived(revealed ? 'text-white' : '')
-	let button_classes = $derived(`btn-content-glass ${class_names} ${revealed_styles}`)
+	let revealed_style = $derived(revealed ? 'text-white' : '')
+	let button_classes = $derived(`btn-content-glass ${class_names} ${revealed_style}`)
 </script>
 
 <button

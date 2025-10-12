@@ -12,22 +12,22 @@
 
 	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
 
-	let like_button_styles = $derived(liked ? 'border-red-300/60 bg-red-500 text-white' : '')
+	let like_button_style = $derived(liked ? 'border-red-300/60 bg-red-500 text-white' : '')
 	let like_button_text = $derived(liked ? 'Liked' : 'Like')
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-4 p-8">
-	<Button onclick={on_toggle_like} class={like_button_styles} label={like_button_text}>
+	<Button onclick={on_toggle_like} class={like_button_style}>
 		<HeartIcon {liked} />
 		{like_button_text}
 	</Button>
 
-	<Button onclick={on_retry} label="Retry">
+	<Button onclick={on_retry}>
 		<RetryIcon />
 		Retry
 	</Button>
 
-	<Button onclick={on_next} label="Next">
+	<Button onclick={on_next}>
 		Next
 		<ArrowRightIcon />
 	</Button>
