@@ -6,6 +6,9 @@
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { questions } from '$lib/data/questions'
 
+	// sonar cloud test
+	console.log('sonar cloud test')
+
 	const TITLE = 'Talk'
 	const AUDIO_RESTART_DELAY_MS = 50
 
