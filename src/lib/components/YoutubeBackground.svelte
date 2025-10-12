@@ -28,6 +28,7 @@
 			title="Background video"
 			allow="autoplay; encrypted-media"
 			allowfullscreen
+			aria-hidden="true"
 		></iframe>
 
 		<div class="absolute inset-0 bg-black/40"></div>

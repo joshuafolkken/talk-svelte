@@ -20,7 +20,11 @@
 </script>
 
 <Section heading="Speak">
-	<IconButton onclick={on_toggle_recording} class={recording_styles}>
+	<IconButton
+		onclick={on_toggle_recording}
+		class={recording_styles}
+		label={is_recording ? 'Stop' : 'Record'}
+	>
 		{#if is_recording}
 			<StopIcon />
 		{:else}

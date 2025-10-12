@@ -35,7 +35,7 @@
 	<audio bind:this={audio_element} src="/audio/{question.audio_uri}" onended={on_audio_ended}
 	></audio>
 
-	<IconButton onclick={on_play_audio}>
+	<IconButton onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
 		{#if is_playing}
 			<PauseIcon />
 		{:else}

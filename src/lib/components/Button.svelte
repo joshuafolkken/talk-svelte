@@ -5,12 +5,13 @@
 	interface Props {
 		onclick: VoidCallback
 		class?: string
+		label?: string
 		children: Snippet
 	}
 
-	let { onclick, class: class_names = '', children }: Props = $props()
+	let { onclick, class: class_names = '', label, children }: Props = $props()
 </script>
 
-<button type="button" {onclick} class="btn-glass {class_names}">
+<button type="button" {onclick} class="btn-glass {class_names}" aria-label={label}>
 	{@render children()}
 </button>
