@@ -3,6 +3,7 @@
 	import type { Question } from '$lib/types/question'
 	import IconButton from './IconButton.svelte'
 	import { PauseIcon, PlayIcon } from './icons'
+	import Section from './Section.svelte'
 	import ToggleRevealButton from './ToggleRevealButton.svelte'
 
 	interface Props {
@@ -30,33 +31,31 @@
 	}: Props = $props()
 </script>
 
-<div class="border-b border-white/25 p-12">
-	<div class="flex flex-col items-center gap-8">
-		<h2 class="section-header">Listen</h2>
-		<IconButton onclick={on_play_audio}>
-			{#if is_playing}
-				<PauseIcon />
-			{:else}
-				<PlayIcon />
-			{/if}
-		</IconButton>
-
-		<div class="flex w-full flex-col items-center gap-4">
-			<ToggleRevealButton
-				revealed={show_transcript}
-				label="Script"
-				content={question.transcript}
-				on_toggle={on_toggle_transcript}
-			/>
-
-			<ToggleRevealButton
-				revealed={show_translation}
-				label="Meaning"
-				content={question.translation}
-				on_toggle={on_toggle_translation}
-			/>
-		</div>
-	</div>
+<Section heading="Listen">
 	<audio bind:this={audio_element} src="/audio/{question.audio_uri}" onended={on_audio_ended}
 	></audio>
-</div>
+
+	<IconButton onclick={on_play_audio}>
+		{#if is_playing}
+			<PauseIcon />
+		{:else}
+			<PlayIcon />
+		{/if}
+	</IconButton>
+
+	<div class="flex w-full flex-col items-center gap-4">
+		<ToggleRevealButton
+			revealed={show_transcript}
+			label="Script"
+			content={question.transcript}
+			on_toggle={on_toggle_transcript}
+		/>
+
+		<ToggleRevealButton
+			revealed={show_translation}
+			label="Meaning"
+			content={question.translation}
+			on_toggle={on_toggle_translation}
+		/>
+	</div>
+</Section>

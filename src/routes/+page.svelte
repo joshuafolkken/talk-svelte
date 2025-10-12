@@ -6,7 +6,7 @@
 	import AudioSection from '$lib/components/AudioSection.svelte'
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 
-	const TITLE = 'Talk'
+	const title = 'Talk'
 	const AUDIO_RESTART_DELAY_MS = 50
 
 	let current_index = $state(0)
@@ -76,7 +76,7 @@
 	<YoutubeBackground />
 
 	<div class="mx-auto max-w-xl">
-		<ProgressBar current={current_question_number} total={total_questions} title={TITLE} />
+		<ProgressBar current={current_question_number} total={total_questions} {title} />
 
 		<div class="card-glass">
 			<AudioSection

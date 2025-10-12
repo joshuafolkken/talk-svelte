@@ -2,6 +2,7 @@
 	import type { VoidCallback } from '$lib/types'
 	import IconButton from './IconButton.svelte'
 	import { ChevronDownIcon, MicrophoneIcon, StopIcon } from './icons'
+	import Section from './Section.svelte'
 
 	interface Props {
 		is_recording: boolean
@@ -18,27 +19,23 @@
 	let transcript_styles = $derived(user_transcript ? 'text-white' : '')
 </script>
 
-<!-- Recording Section -->
-<div class="border-b border-white/25 p-12">
-	<div class="flex flex-col items-center gap-8">
-		<h3 class="section-header">Speak</h3>
-		<IconButton onclick={on_toggle_recording} class={recording_styles}>
-			{#if is_recording}
-				<StopIcon />
-			{:else}
-				<MicrophoneIcon />
-			{/if}
-		</IconButton>
+<Section heading="Speak">
+	<IconButton onclick={on_toggle_recording} class={recording_styles}>
+		{#if is_recording}
+			<StopIcon />
+		{:else}
+			<MicrophoneIcon />
+		{/if}
+	</IconButton>
 
-		<div class="content-glass {transcript_styles}">
-			{#if user_transcript}
-				<span class="text-base font-bold drop-shadow">{user_transcript}</span>
-			{:else}
-				<div class="flex items-center justify-center gap-2">
-					<span class="text-base font-semibold">You …</span>
-					<ChevronDownIcon />
-				</div>
-			{/if}
-		</div>
+	<div class="content-glass {transcript_styles}">
+		{#if user_transcript}
+			<span class="text-base font-bold drop-shadow">{user_transcript}</span>
+		{:else}
+			<div class="flex items-center justify-center gap-2">
+				<span class="text-base font-semibold">You …</span>
+				<ChevronDownIcon />
+			</div>
+		{/if}
 	</div>
-</div>
+</Section>
