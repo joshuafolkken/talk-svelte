@@ -8,7 +8,7 @@
 	"bracketSpacing": true,
 	"endOfLine": "lf",
 	"plugins": [
-		"prettier-plugin-organize-imports",
+		"@ianvs/prettier-plugin-sort-imports",
 		"prettier-plugin-svelte",
 		"prettier-plugin-tailwindcss"
 	],

@@ -1,51 +1,42 @@
 <script lang="ts">
+	import type { VoidCallback } from '$lib/types'
+	import IconButton from './IconButton.svelte'
+	import { ChevronDownIcon, MicrophoneIcon, StopIcon } from './icons'
+	import Section from './Section.svelte'
+
 	interface Props {
-		is_recording: boolean
 		user_transcript: string
-		on_toggle_recording: () => void
+		is_recording: boolean
+		on_toggle_recording: VoidCallback
 	}
 
 	let { is_recording, user_transcript, on_toggle_recording }: Props = $props()
+
+	let recording_style = $derived(is_recording ? 'recording-active' : '')
+	let transcript_style = $derived(user_transcript ? 'text-white' : '')
 </script>
 
-<!-- Recording Section -->
-<div class="border-b border-white/25 p-12">
-	<div class="flex flex-col items-center gap-8">
-		<h3 class="section-header">Speak</h3>
-		<button
-			onclick={on_toggle_recording}
-			class="btn-icon-glass h-20 w-20 {is_recording
-				? 'animate-pulse border border-red-300/30 bg-red-500 hover:border-red-300/60'
-				: ''}"
-		>
-			<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-				{#if is_recording}
-					<rect x="6" y="6" width="12" height="12" rx="2" />
-				{:else}
-					<path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
-					<path
-						d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"
-					/>
-				{/if}
-			</svg>
-		</button>
+<Section heading="Speak">
+	<IconButton
+		onclick={on_toggle_recording}
+		class={recording_style}
+		label={is_recording ? 'Stop' : 'Record'}
+	>
+		{#if is_recording}
+			<StopIcon />
+		{:else}
+			<MicrophoneIcon />
+		{/if}
+	</IconButton>
 
-		<div class="content-glass {user_transcript ? 'text-white' : ''}">
-			{#if user_transcript}
-				<span class="text-base font-bold drop-shadow">{user_transcript}</span>
-			{:else}
-				<div class="flex items-center justify-center gap-2">
-					<span class="text-base font-semibold">You …</span>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 9l-7 7-7-7"
-						/>
-					</svg>
-				</div>
-			{/if}
-		</div>
+	<div class="content-glass {transcript_style}">
+		{#if user_transcript}
+			<span class="text-content-bold">{user_transcript}</span>
+		{:else}
+			<div class="flex-center">
+				<span class="text-content-semibold">You …</span>
+				<ChevronDownIcon />
+			</div>
+		{/if}
 	</div>
-</div>
+</Section>

@@ -1,7 +1,7 @@
-import { paraglideMiddleware } from '$lib/paraglide/server'
-import * as auth from '$lib/server/auth'
 import type { Handle } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
+import { paraglideMiddleware } from '$lib/paraglide/server'
+import * as auth from '$lib/server/auth'
 
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) => {
