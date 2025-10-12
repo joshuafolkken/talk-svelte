@@ -17,17 +17,17 @@
 </script>
 
 <div class="flex flex-wrap items-center justify-center gap-4 p-8">
-	<Button onclick={on_toggle_like} class={like_button_styles}>
+	<Button onclick={on_toggle_like} class={like_button_styles} label={like_button_text}>
 		<HeartIcon {liked} />
 		{like_button_text}
 	</Button>
 
-	<Button onclick={on_retry}>
+	<Button onclick={on_retry} label="Retry">
 		<RetryIcon />
 		Retry
 	</Button>
 
-	<Button onclick={on_next}>
+	<Button onclick={on_next} label="Next">
 		Next
 		<ArrowRightIcon />
 	</Button>

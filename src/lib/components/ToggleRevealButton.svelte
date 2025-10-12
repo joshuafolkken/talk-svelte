@@ -16,7 +16,13 @@
 	let button_classes = $derived(`btn-content-glass ${class_names} ${revealed_styles}`)
 </script>
 
-<button type="button" onclick={on_toggle} class={button_classes} aria-label="Toggle {label}">
+<button
+	type="button"
+	onclick={on_toggle}
+	class={button_classes}
+	aria-label="Toggle {label}"
+	aria-expanded={revealed}
+>
 	{#if revealed}
 		<span class="text-base font-bold whitespace-pre-line drop-shadow">{content}</span>
 	{:else}
