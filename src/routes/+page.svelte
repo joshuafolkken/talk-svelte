@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state'
 	import ActionButtons from '$lib/components/ActionButtons.svelte'
 	import AudioSection from '$lib/components/AudioSection.svelte'
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
@@ -25,6 +26,9 @@
 	let liked = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
+
+	let v = $derived(page.url.searchParams.get('v') || undefined)
+	let t = $derived(page.url.searchParams.get('t') || undefined)
 
 	function on_play_audio(): void {
 		if (!audio_element) return
@@ -79,7 +83,7 @@
 </script>
 
 <div class="relative min-h-screen overflow-hidden px-4 py-12">
-	<YoutubeBackground />
+	<YoutubeBackground {v} {t} />
 
 	<div class="mx-auto max-w-xl">
 		<ProgressBar current={current_question_number} total={total_questions} title={TITLE} />
