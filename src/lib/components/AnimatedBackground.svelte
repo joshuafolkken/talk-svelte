@@ -1,9 +1,6 @@
-<!-- Background with vibrant colors and ANIMATION -->
 <div class="absolute inset-0 -z-10">
-	<!-- アニメーションするグラデーション背景 -->
 	<div class="animate-gradient absolute inset-0"></div>
 
-	<!-- 浮遊するブロブ（それぞれ異なるアニメーション） -->
 	<div
 		class="animate-float absolute top-10 left-10 h-72 w-72 rounded-full bg-cyan-400 opacity-50 blur-3xl"
 	></div>
@@ -14,14 +11,13 @@
 		class="animate-float-slow absolute bottom-20 left-1/3 h-80 w-80 rounded-full bg-green-400 opacity-50 blur-3xl"
 	></div>
 
-	<!-- 動く縞模様パターン -->
 	<div class="absolute inset-0 opacity-40">
 		<div class="stripe-pattern h-full w-full animate-pulse"></div>
 	</div>
 </div>
 
 <style>
-	/* グラデーション回転アニメーション */
+	/* Gradient rotation animation */
 	@keyframes gradient-rotate {
 		0% {
 			background-position: 0% 50%;
@@ -34,7 +30,7 @@
 		}
 	}
 
-	/* ブロブが浮遊するアニメーション */
+	/* Floating blob animations */
 	@keyframes float {
 		0%,
 		100% {
@@ -68,7 +64,7 @@
 		}
 	}
 
-	/* 回転するグラデーション */
+	/* Rotating gradient */
 	.animate-gradient {
 		background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 		background-size: 400% 400%;

@@ -21,9 +21,7 @@
 </script>
 
 <div class="absolute inset-0 -z-10 overflow-hidden">
-	<!-- YouTube背景 -->
 	<div class="absolute inset-0">
-		<!-- iframeを画面全体にフィット -->
 		<iframe
 			class="absolute top-1/2 left-1/2 h-[56.25vw] min-h-screen w-[177.77vh] min-w-full -translate-x-1/2 -translate-y-1/2"
 			src={youtube_url}
@@ -32,10 +30,8 @@
 			allowfullscreen
 		></iframe>
 
-		<!-- オーバーレイ（コンテンツを見やすくする） -->
 		<div class="absolute inset-0 bg-black/40"></div>
 
-		<!-- オプション：グラデーションオーバーレイ -->
 		<div
 			class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20"
 		></div>
@@ -43,6 +39,7 @@
 </div>
 
 <style>
+	/* Disable pointer events and remove border for background iframe */
 	iframe {
 		pointer-events: none;
 		border: none;

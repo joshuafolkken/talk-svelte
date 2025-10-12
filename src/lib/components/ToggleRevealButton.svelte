@@ -13,9 +13,10 @@
 	let { revealed, label, content, on_toggle, class: class_names = '' }: Props = $props()
 
 	let revealed_styles = $derived(revealed ? 'text-white' : '')
+	let button_classes = $derived(`btn-content-glass ${class_names} ${revealed_styles}`)
 </script>
 
-<button onclick={on_toggle} class="btn-content-glass {class_names} {revealed_styles}">
+<button onclick={on_toggle} class={button_classes}>
 	{#if revealed}
 		<span class="text-base font-bold whitespace-pre-line drop-shadow">{content}</span>
 	{:else}
