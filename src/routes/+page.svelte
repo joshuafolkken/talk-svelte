@@ -1,10 +1,10 @@
 <script lang="ts">
-	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import ActionButtons from '$lib/components/ActionButtons.svelte'
+	import AudioSection from '$lib/components/AudioSection.svelte'
+	import ProgressBar from '$lib/components/ProgressBar.svelte'
+	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { questions } from '$lib/data/questions'
-	import AudioSection from '$lib/components/AudioSection.svelte'
-	import RecordingSection from '$lib/components/RecordingSection.svelte'
 
 	const TITLE = 'Talk'
 	const AUDIO_RESTART_DELAY_MS = 50
