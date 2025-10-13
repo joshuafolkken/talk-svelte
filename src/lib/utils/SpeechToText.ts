@@ -105,6 +105,12 @@ export class SpeechToText {
 		}
 	}
 
+	restart(): void {
+		if (!this._recognition) return
+
+		this._recognition.stop()
+	}
+
 	destroy(): void {
 		this.stop()
 	}

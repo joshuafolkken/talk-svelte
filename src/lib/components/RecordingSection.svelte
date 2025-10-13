@@ -1,19 +1,20 @@
 <script lang="ts">
 	import type { VoidCallback } from '$lib/types'
 	import IconButton from './IconButton.svelte'
-	import { ChevronDownIcon, MicrophoneIcon, StopIcon } from './icons'
+	import { MicrophoneIcon, StopIcon } from './icons'
 	import Section from './Section.svelte'
+	import UserTranscriptButton from './UserTranscriptButton.svelte'
 
 	interface Props {
 		user_transcript: string
 		is_recording: boolean
 		on_toggle_recording: VoidCallback
+		on_clear_transcript: VoidCallback
 	}
 
-	let { is_recording, user_transcript, on_toggle_recording }: Props = $props()
+	let { is_recording, user_transcript, on_toggle_recording, on_clear_transcript }: Props = $props()
 
 	let recording_style = $derived(is_recording ? 'recording-active' : '')
-	let transcript_style = $derived(user_transcript ? 'text-white' : '')
 </script>
 
 <Section heading="Speak">
@@ -29,14 +30,5 @@
 		{/if}
 	</IconButton>
 
-	<div class="content-glass {transcript_style}">
-		{#if user_transcript}
-			<span class="text-content-bold">{user_transcript}</span>
-		{:else}
-			<div class="flex-center">
-				<span class="text-content-semibold">You …</span>
-				<ChevronDownIcon />
-			</div>
-		{/if}
-	</div>
+	<UserTranscriptButton {user_transcript} onclick={on_clear_transcript} />
 </Section>
