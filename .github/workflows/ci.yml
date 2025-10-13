@@ -214,7 +214,7 @@ jobs:
         run: npm ci
 
       - name: Run spell check
-        run: npx cspell .
+        run: npx cspell . --dot
 
   # integration-test:
   #   name: Integration Test with Database
