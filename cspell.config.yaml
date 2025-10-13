@@ -21,6 +21,8 @@ ignorePaths:
   - '**/*.svg'
   - storybook-static/**/*
   - .git/**/*
+  - .gitignore
+  - .scannerwork/**/*
 words:
   - autodocs
   - customise
@@ -43,3 +45,4 @@ words:
   - Qube
   - Vite
   - Stylesheet
+  - scannerwork

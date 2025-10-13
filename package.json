@@ -25,7 +25,8 @@
 		"lefthook:install": "lefthook install",
 		"lefthook:uninstall": "lefthook uninstall",
 		"lefthook:commit": "lefthook run pre-commit",
-		"lefthook:push": "lefthook run pre-push"
+		"lefthook:push": "lefthook run pre-push",
+		"sonar": "source .env && sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dsonar.branch.name=$(git branch --show-current)"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.1",
@@ -50,6 +51,7 @@
 		"@types/node": "^22",
 		"@vitest/browser": "^3.2.4",
 		"cspell": "^9.2.1",
+		"dotenv-cli": "^10.0.0",
 		"drizzle-kit": "^0.31.4",
 		"drizzle-orm": "^0.44.5",
 		"eslint": "^9.36.0",
