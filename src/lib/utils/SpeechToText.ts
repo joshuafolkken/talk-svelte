@@ -28,12 +28,12 @@ declare global {
 }
 
 export class SpeechToText {
-	private _recognition: SpeechRecognition | null = null
+	private readonly _recognition: SpeechRecognition | null = null
 	private _is_active: boolean = false
 
 	constructor(
-		private on_transcript_update: TranscriptCallback,
-		private _on_error: ErrorCallback = console.error,
+		private readonly on_transcript_update: TranscriptCallback,
+		private readonly _on_error: ErrorCallback = console.error,
 	) {
 		if (typeof globalThis === 'undefined') return
 
@@ -107,6 +107,5 @@ export class SpeechToText {
 
 	destroy(): void {
 		this.stop()
-		this._recognition = null
 	}
 }
