@@ -20,6 +20,7 @@ ignorePaths:
   - src/lib/paraglide/*.js
   - '**/*.svg'
   - storybook-static/**/*
+  - .git/**/*
 words:
   - autodocs
   - customise
@@ -38,3 +39,7 @@ words:
   - sonarcloud
   - Dsonar
   - joshuafolkken
+  - sonarqube
+  - Qube
+  - Vite
+  - Stylesheet
