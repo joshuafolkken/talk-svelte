@@ -105,6 +105,14 @@
 			on_retry()
 		}
 	}
+
+	function on_clear_transcript(): void {
+		user_transcript = ''
+
+		if (is_recording && speech_to_text) {
+			speech_to_text.restart()
+		}
+	}
 </script>
 
 <div class="relative min-h-screen overflow-hidden px-4 py-12">
@@ -130,6 +138,7 @@
 				{is_recording}
 				{user_transcript}
 				on_toggle_recording={() => (is_recording = !is_recording)}
+				{on_clear_transcript}
 			/>
 
 			<ActionButtons {liked} {on_retry} {on_next} on_toggle_like={() => (liked = !liked)} />
