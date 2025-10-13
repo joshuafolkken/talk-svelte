@@ -22,8 +22,8 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"allowUnusedLabels": false,
 		"allowUnreachableCode": false,
-		"isolatedModules": true,
-		"noUncheckedSideEffectImports": true
+		"isolatedModules": true
+		// "noUncheckedSideEffectImports": true // TypeScript 5.10+ // SonarCube Warning
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
