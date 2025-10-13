@@ -6,6 +6,7 @@
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { questions } from '$lib/data/questions'
+	import { SpeechToText } from '$lib/utils/SpeechToText'
 
 	// sonar cloud test
 	console.log('sonar cloud test')
@@ -26,9 +27,36 @@
 	let liked = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
+	let speech_to_text: SpeechToText | null = null
 
+	let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
 	let v = $derived(page.url.searchParams.get('v') || undefined)
 	let t = $derived(page.url.searchParams.get('t') || undefined)
+
+	$effect(() => {
+		speech_to_text = new SpeechToText(
+			(transcript) => {
+				user_transcript = transcript
+			},
+			(error) => {
+				console.error('Speech recognition error:', error)
+				is_recording = false
+			},
+		)
+
+		return () => {
+			speech_to_text?.destroy()
+		}
+	})
+
+	$effect(() => {
+		if (is_recording) {
+			user_transcript = ''
+			speech_to_text?.start(lang)
+		} else {
+			speech_to_text?.stop()
+		}
+	})
 
 	function on_play_audio(): void {
 		if (!audio_element) return
