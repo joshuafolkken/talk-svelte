@@ -8,9 +8,6 @@
 	import { questions } from '$lib/data/questions'
 	import { SpeechToText } from '$lib/utils/SpeechToText'
 
-	// sonar cloud test
-	console.log('sonar cloud test')
-
 	const TITLE = 'Talk'
 	const AUDIO_RESTART_DELAY_MS = 50
 

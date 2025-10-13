@@ -22,12 +22,8 @@ interface SpeechRecognitionErrorEvent extends Event {
 
 declare global {
 	interface Window {
-		SpeechRecognition?: {
-			new (): SpeechRecognition
-		}
-		webkitSpeechRecognition?: {
-			new (): SpeechRecognition
-		}
+		SpeechRecognition?: new () => SpeechRecognition
+		webkitSpeechRecognition?: new () => SpeechRecognition
 	}
 }
 
@@ -39,8 +35,9 @@ export class SpeechToText {
 		private on_transcript_update: TranscriptCallback,
 		private _on_error: ErrorCallback = console.error,
 	) {
-		if (typeof window === 'undefined') return
+		if (typeof globalThis === 'undefined') return
 
+		const window = globalThis as unknown as Window
 		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
 		if (!SpeechRecognition) {
@@ -54,8 +51,8 @@ export class SpeechToText {
 
 		this._recognition.onresult = (event: SpeechRecognitionEvent) => {
 			let transcript = ''
-			for (let i = 0; i < event.results.length; i++) {
-				transcript += event.results[i]?.[0]?.transcript || ''
+			for (const result of event.results) {
+				transcript += result[0]?.transcript || ''
 			}
 			this.on_transcript_update(transcript)
 		}
