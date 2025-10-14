@@ -8,21 +8,17 @@
 	interface Props {
 		user_transcript: string
 		is_recording: boolean
-		on_toggle_recording: VoidCallback
+		on_record: VoidCallback
 		on_clear_transcript: VoidCallback
 	}
 
-	let { is_recording, user_transcript, on_toggle_recording, on_clear_transcript }: Props = $props()
+	let { is_recording, user_transcript, on_record, on_clear_transcript }: Props = $props()
 
 	let recording_style = $derived(is_recording ? 'recording-active' : '')
 </script>
 
 <Section heading="Speak">
-	<IconButton
-		onclick={on_toggle_recording}
-		class={recording_style}
-		label={is_recording ? 'Stop' : 'Record'}
-	>
+	<IconButton onclick={on_record} class={recording_style} label={is_recording ? 'Stop' : 'Record'}>
 		{#if is_recording}
 			<StopIcon />
 		{:else}
