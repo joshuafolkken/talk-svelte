@@ -58,6 +58,10 @@
 	function on_play_audio(): void {
 		if (!audio_element) return
 
+		if (is_recording) {
+			is_recording = false
+		}
+
 		if (is_playing) {
 			audio_element.pause()
 			is_playing = false
@@ -113,6 +117,11 @@
 			speech_to_text.restart()
 		}
 	}
+
+	function on_record(): void {
+		reset_audio()
+		is_recording = !is_recording
+	}
 </script>
 
 <div class="relative min-h-screen overflow-hidden px-4 py-12">
@@ -134,12 +143,7 @@
 				bind:audio_element
 			/>
 
-			<RecordingSection
-				{is_recording}
-				{user_transcript}
-				on_toggle_recording={() => (is_recording = !is_recording)}
-				{on_clear_transcript}
-			/>
+			<RecordingSection {is_recording} {user_transcript} {on_record} {on_clear_transcript} />
 
 			<ActionButtons {liked} {on_retry} {on_next} on_toggle_like={() => (liked = !liked)} />
 		</div>
