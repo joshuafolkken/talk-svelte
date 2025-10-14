@@ -9,7 +9,6 @@
 	import { SpeechToText } from '$lib/utils/SpeechToText'
 
 	const TITLE = 'Talk'
-	const AUDIO_RESTART_DELAY_MS = 50
 
 	let current_index = $state(0)
 	let total_questions = $derived(questions.length)
@@ -93,20 +92,21 @@
 		liked = false
 	}
 
-	function on_retry(): void {
+	function reset_state(): void {
 		reset_audio()
 		reset_recording()
 		reset_user_state()
+	}
 
-		setTimeout(() => {
-			on_play_audio()
-		}, AUDIO_RESTART_DELAY_MS)
+	function on_retry(): void {
+		reset_state()
+		on_play_audio()
 	}
 
 	function on_next(): void {
 		if (current_index < total_questions - 1) {
 			current_index++
-			on_retry()
+			reset_state()
 		}
 	}
 
@@ -121,6 +121,11 @@
 	function on_record(): void {
 		reset_audio()
 		is_recording = !is_recording
+	}
+
+	function on_can_play_through(): void {
+		if (is_playing || is_recording) return
+		on_play_audio()
 	}
 </script>
 
@@ -137,6 +142,7 @@
 				{show_transcript}
 				{show_translation}
 				{on_play_audio}
+				{on_can_play_through}
 				on_toggle_transcript={() => (show_transcript = !show_transcript)}
 				on_toggle_translation={() => (show_translation = !show_translation)}
 				on_audio_ended={() => (is_playing = false)}

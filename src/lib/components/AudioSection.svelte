@@ -12,6 +12,7 @@
 		show_transcript: boolean
 		show_translation: boolean
 		on_play_audio: VoidCallback
+		on_can_play_through: VoidCallback
 		on_toggle_transcript: VoidCallback
 		on_toggle_translation: VoidCallback
 		on_audio_ended: VoidCallback
@@ -24,6 +25,7 @@
 		show_transcript,
 		show_translation,
 		on_play_audio,
+		on_can_play_through,
 		on_toggle_transcript,
 		on_toggle_translation,
 		on_audio_ended,
@@ -36,6 +38,7 @@
 		bind:this={audio_element}
 		src="/audio/{question.audio_uri}"
 		onended={on_audio_ended}
+		oncanplaythrough={on_can_play_through}
 		aria-label="Question Audio"
 	></audio>
 
