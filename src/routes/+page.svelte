@@ -6,7 +6,7 @@
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { questions } from '$lib/data/questions'
-	import { SpeechToText } from '$lib/utils/SpeechToText'
+	import { SpeechToText } from '$lib/utils/speech-to-text'
 
 	const TITLE = 'Talk'
 
@@ -54,7 +54,7 @@
 		}
 	})
 
-	function on_play_audio(): void {
+	function handle_play_audio(): void {
 		if (!audio_element) return
 
 		if (is_recording) {
@@ -100,7 +100,7 @@
 
 	function on_retry(): void {
 		reset_state()
-		on_play_audio()
+		handle_play_audio()
 	}
 
 	function on_next(): void {
@@ -123,9 +123,9 @@
 		is_recording = !is_recording
 	}
 
-	function on_can_play_through(): void {
+	function handle_can_play_through(): void {
 		if (is_playing || is_recording) return
-		on_play_audio()
+		handle_play_audio()
 	}
 </script>
 
@@ -141,8 +141,8 @@
 				{is_playing}
 				{show_transcript}
 				{show_translation}
-				{on_play_audio}
-				{on_can_play_through}
+				on_play_audio={handle_play_audio}
+				on_can_play_through={handle_can_play_through}
 				on_toggle_transcript={() => (show_transcript = !show_transcript)}
 				on_toggle_translation={() => (show_translation = !show_translation)}
 				on_audio_ended={() => (is_playing = false)}
