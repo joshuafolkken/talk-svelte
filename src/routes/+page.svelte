@@ -129,7 +129,7 @@
 	}
 </script>
 
-<div class="relative min-h-screen overflow-hidden px-4 py-12">
+<div class="relative min-h-screen overflow-hidden px-4 py-4">
 	<YoutubeBackground {v} {t} />
 
 	<div class="mx-auto max-w-xl">
@@ -150,8 +150,8 @@
 			/>
 
 			<RecordingSection {is_recording} {user_transcript} {on_record} {on_clear_transcript} />
-
-			<ActionButtons {liked} {on_retry} {on_next} on_toggle_like={() => (liked = !liked)} />
 		</div>
+
+		<ActionButtons {liked} {on_retry} {on_next} on_toggle_like={() => (liked = !liked)} />
 	</div>
 </div>
