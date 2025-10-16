@@ -3,7 +3,7 @@ import adapter_static from '@sveltejs/adapter-static'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 import { mdsvex } from 'mdsvex'
 
-const runes = process.env.STORYBOOK ? false : true
+const runes = !process.env.STORYBOOK
 const is_static = process.env.ADAPTER === 'static'
 
 /** @type {import('@sveltejs/kit').Config} */
