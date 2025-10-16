@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment'
 	import { page } from '$app/state'
 	import ActionButtons from '$lib/components/ActionButtons.svelte'
 	import AudioSection from '$lib/components/AudioSection.svelte'
@@ -25,9 +26,21 @@
 	let audio_element = $state<HTMLAudioElement>()
 	let speech_to_text: SpeechToText | null = null
 
-	let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
-	let v = $derived(page.url.searchParams.get('v') || undefined)
-	let t = $derived(page.url.searchParams.get('t') || undefined)
+	// let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
+	// let v = $derived(page.url.searchParams.get('v') || undefined)
+	// let t = $derived(page.url.searchParams.get('t') || undefined)
+
+	let lang = $state('en-US')
+	let v = $state<string | undefined>()
+	let t = $state<string | undefined>()
+
+	$effect(() => {
+		if (!browser) return
+
+		lang = page.url.searchParams.get('lang') || 'en-US'
+		v = page.url.searchParams.get('v') || undefined
+		t = page.url.searchParams.get('t') || undefined
+	})
 
 	$effect(() => {
 		speech_to_text = new SpeechToText(
