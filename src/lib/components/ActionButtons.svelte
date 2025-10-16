@@ -1,34 +1,36 @@
 <script lang="ts">
 	import type { VoidCallback } from '$lib/types'
-	import Button from './Button.svelte'
+	import IconButton from './IconButton.svelte'
 	import { ArrowRightIcon, HeartIcon, RetryIcon } from './icons'
+	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte'
 
 	interface Props {
 		liked: boolean
 		on_toggle_like: VoidCallback
 		on_retry: VoidCallback
 		on_next: VoidCallback
+		on_preview: VoidCallback
 	}
 
-	let { liked, on_toggle_like, on_retry, on_next }: Props = $props()
+	let { liked, on_toggle_like, on_retry, on_next, on_preview }: Props = $props()
 
 	let like_button_style = $derived(liked ? 'liked-active' : '')
-	let like_button_text = $derived(liked ? 'Liked' : 'Like')
 </script>
 
-<div class="mt-5 flex flex-wrap items-center justify-center gap-3">
-	<Button onclick={on_toggle_like} class={like_button_style}>
+<div class="mt-5 flex flex-wrap items-center justify-center gap-4">
+	<IconButton onclick={on_toggle_like} class={like_button_style}>
 		<HeartIcon {liked} />
-		{like_button_text}
-	</Button>
+	</IconButton>
 
-	<Button onclick={on_retry}>
+	<IconButton onclick={on_retry}>
 		<RetryIcon />
-		Retry
-	</Button>
+	</IconButton>
 
-	<Button onclick={on_next}>
-		Next
+	<IconButton onclick={on_preview}>
+		<ArrowLeftIcon />
+	</IconButton>
+
+	<IconButton onclick={on_next}>
 		<ArrowRightIcon />
-	</Button>
+	</IconButton>
 </div>

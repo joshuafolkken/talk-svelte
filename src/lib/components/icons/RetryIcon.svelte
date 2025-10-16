@@ -2,7 +2,7 @@
 	import Icon from './Icon.svelte'
 </script>
 
-<Icon>
+<Icon size="md">
 	<path
 		stroke-linecap="round"
 		stroke-linejoin="round"
