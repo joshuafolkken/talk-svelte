@@ -10,7 +10,7 @@ export interface CheckResult {
 export function getCurrentBranch(): string {
 	try {
 		if (os.platform() === 'win32') {
-			return execSync('"C:\\Program Files\\Git\\bin\\git.exe" rev-parse --abbrev-ref HEAD', {
+			return execSync(String.raw`"C:\Program Files\Git\bin\git.exe" rev-parse --abbrev-ref HEAD`, {
 				encoding: 'utf8',
 			}).trim()
 		} else {
