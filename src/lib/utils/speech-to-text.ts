@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE } from '../constants'
 import type {
 	ErrorCallback,
 	SpeechRecognition,
@@ -8,8 +9,6 @@ import type {
 import { is_android } from './device'
 
 export class SpeechToText {
-	public static readonly DEFAULT_LANG = 'en-US'
-
 	private readonly _recognition: SpeechRecognition | null = null
 	private _is_active: boolean = false
 	private _final_transcript: string = ''
@@ -132,7 +131,7 @@ export class SpeechToText {
 		this._interim_transcript = ''
 	}
 
-	start(lang: string = SpeechToText.DEFAULT_LANG): void {
+	start(lang: string = DEFAULT_LANGUAGE): void {
 		if (!this._recognition) {
 			this._on_error('SpeechRecognition is not initialized')
 			return

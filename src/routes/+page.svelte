@@ -6,6 +6,7 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
+	import { DEFAULT_LANGUAGE } from '$lib/constants'
 	import { questions } from '$lib/data/questions'
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 
@@ -30,14 +31,14 @@
 	// let v = $derived(page.url.searchParams.get('v') || undefined)
 	// let t = $derived(page.url.searchParams.get('t') || undefined)
 
-	let lang = $state('en-US')
+	let lang = $state(DEFAULT_LANGUAGE)
 	let v = $state<string | undefined>()
 	let t = $state<string | undefined>()
 
 	$effect(() => {
 		if (!browser) return
 
-		lang = page.url.searchParams.get('lang') || 'en-US'
+		lang = page.url.searchParams.get('lang') || DEFAULT_LANGUAGE
 		v = page.url.searchParams.get('v') || undefined
 		t = page.url.searchParams.get('t') || undefined
 	})
