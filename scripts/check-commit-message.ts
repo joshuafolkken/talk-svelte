@@ -1,27 +1,6 @@
 #!/usr/bin/env node
-import { execSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
-import * as os from 'node:os'
-
-interface CommitCheckResult {
-	success: boolean
-	message: string
-}
-
-function getCurrentBranch(): string {
-	try {
-		if (os.platform() === 'win32') {
-			return execSync('"C:\\Program Files\\Git\\bin\\git.exe" rev-parse --abbrev-ref HEAD', {
-				encoding: 'utf8',
-			}).trim()
-		} else {
-			return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
-		}
-	} catch (error) {
-		console.error('Failed to get current branch:', error)
-		process.exit(1)
-	}
-}
+import { executeCheck, getCurrentBranch, type CheckResult } from './common.js'
 
 function getCommitMessage(): string {
 	// 引数からコミットメッセージファイルのパスを取得
@@ -38,7 +17,7 @@ function getCommitMessage(): string {
 	}
 }
 
-function checkCommitMessage(): CommitCheckResult {
+function checkCommitMessage(): CheckResult {
 	const currentBranch = getCurrentBranch()
 
 	// ブランチ名が数字-xxxx-yyyの形式かチェック
@@ -74,12 +53,7 @@ function checkCommitMessage(): CommitCheckResult {
 }
 
 function main(): void {
-	const result = checkCommitMessage()
-	console.log(result.message)
-
-	if (!result.success) {
-		process.exit(1)
-	}
+	executeCheck(checkCommitMessage)
 }
 
 main()
