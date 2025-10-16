@@ -1,28 +1,7 @@
 #!/usr/bin/env node
-import { execSync } from 'node:child_process'
-import * as os from 'node:os'
+import { executeCheck, getCurrentBranch, type CheckResult } from './common.js'
 
-interface BranchCheckResult {
-	success: boolean
-	message: string
-}
-
-function getCurrentBranch(): string {
-	try {
-		if (os.platform() === 'win32') {
-			return execSync('"C:\\Program Files\\Git\\bin\\git.exe" rev-parse --abbrev-ref HEAD', {
-				encoding: 'utf8',
-			}).trim()
-		} else {
-			return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
-		}
-	} catch (error) {
-		console.error('Failed to get current branch:', error)
-		process.exit(1)
-	}
-}
-
-function checkMainBranch(): BranchCheckResult {
+function checkMainBranch(): CheckResult {
 	const currentBranch = getCurrentBranch()
 
 	if (currentBranch === 'main') {
@@ -42,12 +21,7 @@ function checkMainBranch(): BranchCheckResult {
 }
 
 function main(): void {
-	const result = checkMainBranch()
-	console.log(result.message)
-
-	if (!result.success) {
-		process.exit(1)
-	}
+	executeCheck(checkMainBranch)
 }
 
 main()
