@@ -28,7 +28,9 @@
 		"lefthook:uninstall": "lefthook uninstall",
 		"lefthook:commit": "lefthook run pre-commit",
 		"lefthook:push": "lefthook run pre-push",
-		"sonar": "source .env && sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dsonar.branch.name=$(git branch --show-current)"
+		"sonar": "source .env && sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dsonar.branch.name=$(git branch --show-current)",
+		"check-commit-message": "tsx scripts/check-commit-message.ts",
+		"prevent-main-commit": "tsx scripts/prevent-main-commit.ts"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.1",
@@ -72,6 +74,7 @@
 		"svelte": "^5.39.12",
 		"svelte-check": "^4.3.3",
 		"tailwindcss": "^4.1.14",
+		"tsx": "^4.20.6",
 		"typescript": "5.9.2",
 		"typescript-eslint": "^8.46.1",
 		"vite": "^7.1.9",
