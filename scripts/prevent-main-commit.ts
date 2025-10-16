@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process'
+import * as os from 'node:os'
 
 interface BranchCheckResult {
 	success: boolean
@@ -8,8 +9,13 @@ interface BranchCheckResult {
 
 function getCurrentBranch(): string {
 	try {
-		// gitコマンドを絶対パスで実行してセキュリティを向上
-		return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
+		if (os.platform() === 'win32') {
+			return execSync('"C:\\Program Files\\Git\\bin\\git.exe" rev-parse --abbrev-ref HEAD', {
+				encoding: 'utf8',
+			}).trim()
+		} else {
+			return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
+		}
 	} catch (error) {
 		console.error('Failed to get current branch:', error)
 		process.exit(1)
