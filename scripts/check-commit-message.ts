@@ -9,7 +9,15 @@ interface CommitCheckResult {
 
 function getCurrentBranch(): string {
 	try {
-		return execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
+		// PATH環境変数を制限してセキュリティを向上
+		const env = {
+			...process.env,
+			PATH: '/usr/bin:/bin:/usr/sbin:/sbin', // 固定の安全なPATH
+		}
+		return execSync('git rev-parse --abbrev-ref HEAD', {
+			encoding: 'utf8',
+			env,
+		}).trim()
 	} catch (error) {
 		console.error('Failed to get current branch:', error)
 		process.exit(1)
