@@ -8,46 +8,15 @@ interface CommitCheckResult {
 	message: string
 }
 
-function getGitCommand(): string {
-	const platform = os.platform()
-
-	if (platform === 'win32') {
-		// Windows環境での一般的なGitパス
-		const possiblePaths = [
-			'C:\\Program Files\\Git\\bin\\git.exe',
-			'C:\\Program Files (x86)\\Git\\bin\\git.exe',
-			'C:\\Program Files\\Git\\cmd\\git.exe',
-			'C:\\Program Files (x86)\\Git\\cmd\\git.exe',
-		]
-
-		// 利用可能なパスを探す
-		for (const path of possiblePaths) {
-			try {
-				execSync(`"${path}" --version`, { stdio: 'ignore' })
-				return path
-			} catch {
-				continue
-			}
-		}
-
-		// 見つからない場合はPATHから探す
-		try {
-			execSync('git --version', { stdio: 'ignore' })
-			return 'git'
-		} catch {
-			throw new Error('Gitが見つかりません。Gitをインストールしてください。')
-		}
-	} else {
-		// Linux/macOS環境
-		return '/usr/bin/git'
-	}
-}
-
 function getCurrentBranch(): string {
 	try {
-		const gitCommand = getGitCommand()
-		const command = `"${gitCommand}" rev-parse --abbrev-ref HEAD`
-		return execSync(command, { encoding: 'utf8' }).trim()
+		if (os.platform() === 'win32') {
+			return execSync('"C:\\Program Files\\Git\\bin\\git.exe" rev-parse --abbrev-ref HEAD', {
+				encoding: 'utf8',
+			}).trim()
+		} else {
+			return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
+		}
 	} catch (error) {
 		console.error('Failed to get current branch:', error)
 		process.exit(1)
