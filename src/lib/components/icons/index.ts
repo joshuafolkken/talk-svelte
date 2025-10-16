@@ -1,3 +1,4 @@
+export { default as ArrowLeftIcon } from './ArrowLeftIcon.svelte'
 export { default as ArrowRightIcon } from './ArrowRightIcon.svelte'
 export { default as ChevronDownIcon } from './ChevronDownIcon.svelte'
 export { default as HeartIcon } from './HeartIcon.svelte'

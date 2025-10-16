@@ -42,7 +42,7 @@
 		aria-label="Question Audio"
 	></audio>
 
-	<IconButton onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
+	<IconButton size="lg" onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
 		{#if is_playing}
 			<PauseIcon />
 		{:else}

@@ -8,7 +8,7 @@
 	let { liked: filled = false }: Props = $props()
 </script>
 
-<Icon {filled}>
+<Icon {filled} size="md">
 	<path
 		stroke-linecap="round"
 		stroke-linejoin="round"

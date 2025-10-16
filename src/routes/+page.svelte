@@ -123,6 +123,13 @@
 		}
 	}
 
+	function on_preview(): void {
+		if (current_index > 0) {
+			current_index--
+			reset_state()
+		}
+	}
+
 	function on_clear_transcript(): void {
 		user_transcript = ''
 
@@ -165,6 +172,12 @@
 			<RecordingSection {is_recording} {user_transcript} {on_record} {on_clear_transcript} />
 		</div>
 
-		<ActionButtons {liked} {on_retry} {on_next} on_toggle_like={() => (liked = !liked)} />
+		<ActionButtons
+			{liked}
+			{on_retry}
+			{on_next}
+			{on_preview}
+			on_toggle_like={() => (liked = !liked)}
+		/>
 	</div>
 </div>
