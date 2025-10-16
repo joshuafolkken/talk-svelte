@@ -14,6 +14,12 @@ export default defineConfig({
 			outdir: './src/lib/paraglide',
 		}),
 	],
+	server: {
+		allowedHosts: [
+			'outspoken-angelique-sepulchrally.ngrok-free.dev',
+			'.ngrok-free.dev', // すべてのngrok-free.devサブドメインを許可
+		],
+	},
 	test: {
 		expect: { requireAssertions: true },
 		projects: [
