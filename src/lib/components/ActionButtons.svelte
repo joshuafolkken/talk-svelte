@@ -16,7 +16,7 @@
 	let like_button_text = $derived(liked ? 'Liked' : 'Like')
 </script>
 
-<div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+<div class="mt-5 flex flex-wrap items-center justify-center gap-3">
 	<Button onclick={on_toggle_like} class={like_button_style}>
 		<HeartIcon {liked} />
 		{like_button_text}
