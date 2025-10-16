@@ -10,6 +10,9 @@
 		--glass-bg-base: rgba(255, 255, 255, 0.1);
 		--glass-blur-strong: blur(20px) saturate(180%);
 	}
+	html {
+		@apply min-h-screen bg-gray-900 text-white;
+	}
 
 	.glass-content {
 		background: var(--glass-bg);
