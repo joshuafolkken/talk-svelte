@@ -96,6 +96,7 @@ export class SpeechToText {
 
 	private _handle_error(event: SpeechRecognitionErrorEvent): void {
 		this._on_error(`Speech Recognition error: ${event.error}`)
+		this._on_error(`Additional information: ${event.message}`)
 		this._is_active = false
 	}
 

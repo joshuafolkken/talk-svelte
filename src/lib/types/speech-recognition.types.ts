@@ -19,6 +19,7 @@ export interface SpeechRecognitionEvent extends Event {
 
 export interface SpeechRecognitionErrorEvent extends Event {
 	error: string
+	message: string
 }
 
 declare global {
