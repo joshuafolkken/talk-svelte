@@ -68,6 +68,54 @@
 		}
 	})
 
+	let scale_factor = $state(1)
+
+	$effect(() => {
+		if (!browser) return
+
+		const updateScale = () => {
+			const viewportWidth = window.innerWidth
+			const viewportHeight = window.innerHeight
+
+			const userAgent = navigator.userAgent.toLowerCase()
+			const isIOS = /iphone|ipod/.test(userAgent)
+			const isAndroid = /android/.test(userAgent)
+			const isTablet =
+				/ipad/.test(userAgent) ||
+				((window.innerWidth >= 1024 || window.innerHeight >= 1024) &&
+					(window.innerWidth >= 600 || window.innerHeight >= 600))
+
+			if ((isIOS || isAndroid) && !isTablet) {
+				scale_factor = 1
+				return
+			}
+
+			// 36
+			const baseWidth = 404
+			const baseHeight = 710
+
+			const scaleX = viewportWidth / baseWidth
+			const scaleY = viewportHeight / baseHeight
+
+			// スケールを制限（0.7〜1.5倍）
+			scale_factor = Math.max(0.1, Math.min(scaleX, scaleY, 3))
+		}
+
+		let resizeTimeout: ReturnType<typeof setTimeout> | undefined
+
+		const debouncedUpdateScale = () => {
+			clearTimeout(resizeTimeout)
+			resizeTimeout = setTimeout(updateScale, 200)
+		}
+
+		updateScale()
+		window.addEventListener('resize', debouncedUpdateScale)
+
+		return () => {
+			window.removeEventListener('resize', debouncedUpdateScale)
+		}
+	})
+
 	function handle_play_audio(): void {
 		if (!audio_element) return
 
@@ -150,10 +198,13 @@
 	}
 </script>
 
-<div class="relative min-h-screen overflow-hidden px-4 py-4">
+<div class="relative min-h-screen overflow-hidden">
 	<YoutubeBackground {v} {t} />
 
-	<div class="mx-auto max-w-xl">
+	<div
+		class="m-4 mx-auto max-w-sm transition-transform"
+		style="transform: scale({scale_factor}); transform-origin: top center;"
+	>
 		<ProgressBar current={current_question_number} total={total_questions} title={TITLE} />
 
 		<div class="card-glass">
