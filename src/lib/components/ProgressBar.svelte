@@ -10,7 +10,7 @@
 	let progress_percentage = $derived((current / total) * 100)
 </script>
 
-<div class="mb-6">
+<div class="mb-5">
 	<div class="mb-2 flex items-center justify-between">
 		{#if title}
 			<h1 class="text-sm font-bold tracking-wide text-white uppercase drop-shadow-md">
