@@ -2,16 +2,8 @@ pre-commit:
   parallel: true
   commands:
     prevent-main-commit:
-      run: |
-        current_branch=$(git rev-parse --abbrev-ref HEAD)
-        if [ "$current_branch" = "main" ]; then
-          echo "🚫 Error: Direct commits to main branch are not allowed"
-          echo "   Please create a new branch and commit there:"
-          echo "   git checkout -b feature/your-feature-name"
-          exit 1
-        else
-          echo "✅ Branch check passed: '$current_branch'"
-        fi
+      skip: git diff --cached --quiet
+      run: npm run prevent-main-commit
 
     cspell:
       glob: '*.{js,jsx,ts,tsx,mjs,cjs,svelte,html,css,scss,md,mdx,json,jsonc,yaml,yml}'
@@ -33,6 +25,11 @@ pre-commit:
     • Run `npm run format` to auto-format code
     • Run `npm run lint` to check and fix linting issues
     • Run `npm run check` to verify TypeScript types
+
+commit-msg:
+  commands:
+    check-commit-message:
+      run: npm run check-commit-message {1}
 
 pre-push:
   parallel: true
