@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { asset } from '$app/paths'
+	import { AUDIO_PATH } from '$lib/constants'
 	import type { VoidCallback } from '$lib/types'
 	import type { Question } from '$lib/types/question'
 	import IconButton from './IconButton.svelte'
@@ -31,12 +33,14 @@
 		on_audio_ended,
 		audio_element = $bindable(),
 	}: Props = $props()
+
+	const audio_path = asset(`${AUDIO_PATH}/${question.audio_uri}`)
 </script>
 
 <Section heading="Listen">
 	<audio
 		bind:this={audio_element}
-		src="/audio/{question.audio_uri}"
+		src={audio_path}
 		onended={on_audio_ended}
 		oncanplaythrough={on_can_play_through}
 		aria-label="Question Audio"
