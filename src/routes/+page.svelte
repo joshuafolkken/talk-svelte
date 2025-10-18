@@ -22,6 +22,7 @@
 	let show_translation = $state(false)
 	let is_recording = $state(false)
 	let user_transcript = $state('')
+	let is_correct = $state(false)
 	let liked = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
@@ -61,7 +62,7 @@
 
 	$effect(() => {
 		if (is_recording) {
-			user_transcript = ''
+			reset_transcript()
 			speech_to_text?.start(lang)
 		} else {
 			speech_to_text?.stop()
@@ -143,9 +144,14 @@
 		is_playing = false
 	}
 
+	function reset_transcript(): void {
+		user_transcript = ''
+		is_correct = false
+	}
+
 	function reset_recording(): void {
 		is_recording = false
-		user_transcript = ''
+		reset_transcript()
 	}
 
 	function reset_user_state(): void {
@@ -180,7 +186,7 @@
 	}
 
 	function on_clear_transcript(): void {
-		user_transcript = ''
+		reset_transcript()
 
 		if (is_recording && speech_to_text) {
 			speech_to_text.restart()
@@ -196,6 +202,23 @@
 		if (is_playing || is_recording) return
 		handle_play_audio()
 	}
+
+	function is_transcript_correct(): boolean {
+		const cleaned_transcript = question.transcript.replace(/[,.!]/g, '').trim().toLowerCase()
+		const cleaned_user_transcript = user_transcript.replace(/[,.!]/g, '').trim().toLowerCase()
+
+		return cleaned_transcript === cleaned_user_transcript
+	}
+
+	function handle_correct_transcript() {
+		user_transcript = question.transcript
+		is_correct = true
+		is_recording = false
+	}
+
+	$effect(() => {
+		if (is_transcript_correct()) handle_correct_transcript()
+	})
 </script>
 
 <div class="relative min-h-screen overflow-hidden">
@@ -221,7 +244,13 @@
 				bind:audio_element
 			/>
 
-			<RecordingSection {is_recording} {user_transcript} {on_record} {on_clear_transcript} />
+			<RecordingSection
+				{is_recording}
+				{user_transcript}
+				{is_correct}
+				{on_record}
+				{on_clear_transcript}
+			/>
 		</div>
 
 		<ActionButtons
