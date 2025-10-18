@@ -6,13 +6,15 @@
 	import UserTranscriptButton from './UserTranscriptButton.svelte'
 
 	interface Props {
-		user_transcript: string
 		is_recording: boolean
+		user_transcript: string
+		is_correct: boolean
 		on_record: VoidCallback
 		on_clear_transcript: VoidCallback
 	}
 
-	let { is_recording, user_transcript, on_record, on_clear_transcript }: Props = $props()
+	let { is_recording, user_transcript, is_correct, on_record, on_clear_transcript }: Props =
+		$props()
 
 	let recording_style = $derived(is_recording ? 'recording-active' : '')
 </script>
@@ -31,5 +33,5 @@
 		{/if}
 	</IconButton>
 
-	<UserTranscriptButton {user_transcript} onclick={on_clear_transcript} />
+	<UserTranscriptButton {user_transcript} {is_correct} onclick={on_clear_transcript} />
 </Section>
