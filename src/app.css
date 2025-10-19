@@ -80,4 +80,8 @@
 	.liked-active {
 		@apply border-red-300/60 bg-red-500 text-white;
 	}
+
+	.trophy-active {
+		@apply border-green-300/60 bg-green-600 text-white;
+	}
 }
