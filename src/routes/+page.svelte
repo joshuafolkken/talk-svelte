@@ -23,7 +23,8 @@
 	let is_recording = $state(false)
 	let user_transcript = $state('')
 	let is_correct = $state(false)
-	let liked = $state(false)
+	let is_liked = $state(false)
+	let is_completed = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
 	let speech_to_text: SpeechToText | null = null
@@ -157,7 +158,8 @@
 	function reset_user_state(): void {
 		show_transcript = false
 		show_translation = false
-		liked = false
+		is_liked = false
+		is_completed = false
 	}
 
 	function reset_state(): void {
@@ -213,6 +215,7 @@
 	function handle_correct_transcript() {
 		user_transcript = question.transcript
 		is_correct = true
+		is_completed = true
 		is_recording = false
 	}
 
@@ -254,11 +257,15 @@
 		</div>
 
 		<ActionButtons
-			{liked}
+			liked={is_liked}
+			completed={is_completed}
 			{on_retry}
 			{on_next}
 			{on_preview}
-			on_toggle_like={() => (liked = !liked)}
+			on_toggle_completed={() => {
+				is_completed = !is_completed
+			}}
+			on_toggle_like={() => (is_liked = !is_liked)}
 		/>
 	</div>
 </div>
