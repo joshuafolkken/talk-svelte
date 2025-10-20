@@ -9,58 +9,59 @@ import type {
 import { is_android } from './device'
 
 export class SpeechToText {
-	private readonly _recognition: SpeechRecognition | null = null
-	private _is_active: boolean = false
-	private _final_transcript: string = ''
-	private _interim_transcript: string = ''
+	readonly #recognition: SpeechRecognition | null = null
+	#is_active: boolean = false
+	#final_transcript: string = ''
+	#interim_transcript: string = ''
+	readonly #on_transcript_update: TranscriptCallback
+	readonly #on_error: ErrorCallback
 
-	constructor(
-		private readonly _on_transcript_update: TranscriptCallback,
-		private readonly _on_error: ErrorCallback = console.error,
-	) {
-		this._recognition = this._initialize_recognition()
+	constructor(on_transcript_update: TranscriptCallback, on_error: ErrorCallback = console.error) {
+		this.#on_transcript_update = on_transcript_update
+		this.#on_error = on_error
+		this.#recognition = this.#initialize_recognition()
 	}
 
-	private _initialize_recognition(): SpeechRecognition | null {
+	#initialize_recognition(): SpeechRecognition | null {
 		if (typeof globalThis === 'undefined') return null
 
 		const window = globalThis as unknown as Window
 		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
 		if (!SpeechRecognition) {
-			this._on_error('Speech Recognition API is not supported in this browser')
+			this.#on_error('Speech Recognition API is not supported in this browser')
 			return null
 		}
 
 		const recognition = new SpeechRecognition()
 		recognition.continuous = true
 		recognition.interimResults = true
-		recognition.onerror = this._handle_error.bind(this)
+		recognition.onerror = this.#handle_error.bind(this)
 
 		if (is_android()) {
-			recognition.onresult = this._handle_result_android.bind(this)
-			recognition.onend = this._handle_end_android.bind(this)
+			recognition.onresult = this.#handle_result_android.bind(this)
+			recognition.onend = this.#handle_end_android.bind(this)
 		} else {
-			recognition.onresult = this._handle_result.bind(this)
-			recognition.onend = this._handle_end.bind(this)
+			recognition.onresult = this.#handle_result.bind(this)
+			recognition.onend = this.#handle_end.bind(this)
 		}
 
 		return recognition
 	}
 
-	private _add_transcript(transcript: string): void {
-		this._final_transcript = this._get_full_transcript(transcript)
+	#add_transcript(transcript: string): void {
+		this.#final_transcript = this.#get_full_transcript(transcript)
 	}
 
-	private _get_full_transcript(interim_transcript: string): string {
-		if (!this._final_transcript || !interim_transcript) {
-			return this._final_transcript + interim_transcript
+	#get_full_transcript(interim_transcript: string): string {
+		if (!this.#final_transcript || !interim_transcript) {
+			return this.#final_transcript + interim_transcript
 		}
 
-		return `${this._final_transcript} ${interim_transcript}`
+		return `${this.#final_transcript} ${interim_transcript}`
 	}
 
-	private _handle_result_common(event: SpeechRecognitionEvent, is_android: boolean): void {
+	#handle_result_common(event: SpeechRecognitionEvent, is_android: boolean): void {
 		let interim_transcript = ''
 
 		for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -73,101 +74,101 @@ export class SpeechToText {
 			if (is_android || !result.isFinal) {
 				interim_transcript += transcript
 			} else {
-				this._add_transcript(transcript)
+				this.#add_transcript(transcript)
 			}
 		}
 
 		if (is_android) {
-			this._interim_transcript = interim_transcript
+			this.#interim_transcript = interim_transcript
 		}
 
-		const full_transcript = this._get_full_transcript(interim_transcript)
-		this._on_transcript_update(full_transcript)
+		const full_transcript = this.#get_full_transcript(interim_transcript)
+		this.#on_transcript_update(full_transcript)
 	}
 
-	private _handle_result(event: SpeechRecognitionEvent): void {
-		this._handle_result_common(event, false)
+	#handle_result(event: SpeechRecognitionEvent): void {
+		this.#handle_result_common(event, false)
 	}
 
-	private _handle_result_android(event: SpeechRecognitionEvent): void {
-		this._handle_result_common(event, true)
+	#handle_result_android(event: SpeechRecognitionEvent): void {
+		this.#handle_result_common(event, true)
 	}
 
-	private _handle_error(event: SpeechRecognitionErrorEvent): void {
-		this._on_error(`Speech Recognition error: ${event.error}`)
-		this._on_error(`Additional information: ${event.message}`)
-		this._is_active = false
+	#handle_error(event: SpeechRecognitionErrorEvent): void {
+		this.#on_error(`Speech Recognition error: ${event.error}`)
+		this.#on_error(`Additional information: ${event.message}`)
+		this.#is_active = false
 	}
 
-	private _should_restart(): boolean {
-		return this._is_active && this._recognition !== null
+	#should_restart(): boolean {
+		return this.#is_active && this.#recognition !== null
 	}
 
-	private _restart_recognition(): void {
-		if (!this._recognition) return
+	#restart_recognition(): void {
+		if (!this.#recognition) return
 
 		try {
-			this._recognition.start()
+			this.#recognition.start()
 		} catch (error) {
-			this._on_error(`Failed to restart recognition: ${error}`)
+			this.#on_error(`Failed to restart recognition: ${error}`)
 		}
 	}
 
-	private _handle_end(): void {
-		if (!this._should_restart()) return
-		this._restart_recognition()
+	#handle_end(): void {
+		if (!this.#should_restart()) return
+		this.#restart_recognition()
 	}
 
-	private _handle_end_android(): void {
-		if (!this._should_restart()) return
+	#handle_end_android(): void {
+		if (!this.#should_restart()) return
 
-		this._add_transcript(this._interim_transcript)
-		this._interim_transcript = ''
-		this._restart_recognition()
+		this.#add_transcript(this.#interim_transcript)
+		this.#interim_transcript = ''
+		this.#restart_recognition()
 	}
 
-	private _reset_transcripts(): void {
-		this._final_transcript = ''
-		this._interim_transcript = ''
+	#reset_transcripts(): void {
+		this.#final_transcript = ''
+		this.#interim_transcript = ''
 	}
 
 	start(lang: string = DEFAULT_LANGUAGE): void {
-		if (!this._recognition) {
-			this._on_error('SpeechRecognition is not initialized')
+		if (!this.#recognition) {
+			this.#on_error('SpeechRecognition is not initialized')
 			return
 		}
 
-		if (this._is_active) return
+		if (this.#is_active) return
 
-		this._recognition.lang = lang
-		this._reset_transcripts()
+		this.#recognition.lang = lang
+		this.#reset_transcripts()
 
 		try {
-			this._is_active = true
-			this._recognition.start()
+			this.#is_active = true
+			this.#recognition.start()
 		} catch (error) {
-			this._on_error(`Failed to start recognition: ${error}`)
-			this._is_active = false
+			this.#on_error(`Failed to start recognition: ${error}`)
+			this.#is_active = false
 		}
 	}
 
 	stop(): void {
-		if (!this._recognition) return
-		if (!this._is_active) return
+		if (!this.#recognition) return
+		if (!this.#is_active) return
 
 		try {
-			this._is_active = false
-			this._recognition.stop()
+			this.#is_active = false
+			this.#recognition.stop()
 		} catch (error) {
-			this._on_error(`Failed to stop recognition: ${error}`)
+			this.#on_error(`Failed to stop recognition: ${error}`)
 		}
 	}
 
 	restart(): void {
-		if (!this._recognition) return
+		if (!this.#recognition) return
 
-		this._reset_transcripts()
-		this._recognition.stop()
+		this.#reset_transcripts()
+		this.#recognition.stop()
 	}
 
 	destroy(): void {
