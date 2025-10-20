@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { BUTTON_SIZES, BUTTON_STYLES } from '$lib/constants'
 	import type { VoidCallback } from '$lib/types'
 	import IconButton from './IconButton.svelte'
 	import { MicrophoneIcon, StopIcon } from './icons'
@@ -16,12 +17,12 @@
 	let { is_recording, user_transcript, is_correct, on_record, on_clear_transcript }: Props =
 		$props()
 
-	let recording_style = $derived(is_recording ? 'recording-active' : '')
+	let recording_style = $derived(is_recording ? BUTTON_STYLES.RECORDING_ACTIVE : '')
 </script>
 
 <Section heading="Speak">
 	<IconButton
-		size="lg"
+		size={BUTTON_SIZES.LG}
 		onclick={on_record}
 		class={recording_style}
 		label={is_recording ? 'Stop' : 'Record'}

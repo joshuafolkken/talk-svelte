@@ -22,3 +22,24 @@ export const VIEWPORT = {
 	TABLET_MIN_WIDTH: 600,
 	TABLET_MIN_HEIGHT: 1024,
 }
+
+export const ICON_SIZES = {
+	SM: 'sm',
+	MD: 'md',
+	LG: 'lg',
+}
+
+export type IconSize = (typeof ICON_SIZES)[keyof typeof ICON_SIZES]
+
+export const BUTTON_SIZES = {
+	MD: 'md',
+	LG: 'lg',
+}
+
+export type ButtonSize = (typeof BUTTON_SIZES)[keyof typeof BUTTON_SIZES]
+
+export const BUTTON_STYLES = {
+	RECORDING_ACTIVE: 'recording-active',
+	LIKED_ACTIVE: 'liked-active',
+	TROPHY_ACTIVE: 'trophy-active',
+}
