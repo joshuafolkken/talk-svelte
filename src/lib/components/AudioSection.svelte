@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { asset } from '$app/paths'
-	import { AUDIO_PATH } from '$lib/constants'
+	import { AUDIO_PATH, BUTTON_SIZES } from '$lib/constants'
 	import type { VoidCallback } from '$lib/types'
 	import type { Question } from '$lib/types/question'
 	import IconButton from './IconButton.svelte'
@@ -46,7 +46,7 @@
 		aria-label="Question Audio"
 	></audio>
 
-	<IconButton size="lg" onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
+	<IconButton size={BUTTON_SIZES.LG} onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
 		{#if is_playing}
 			<PauseIcon />
 		{:else}

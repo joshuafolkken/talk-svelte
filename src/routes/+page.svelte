@@ -6,11 +6,12 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
-	import { DEFAULT_LANGUAGE } from '$lib/constants'
+	import { APP_TITLE, DEFAULT_LANGUAGE } from '$lib/constants'
 	import { questions } from '$lib/data/questions'
+	import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
+	import { calculate_scale_factor, create_debounced_resize_handler } from '$lib/utils/responsive'
 	import { SpeechToText } from '$lib/utils/speech-to-text'
-
-	const TITLE = 'Talk'
+	import { is_transcript_correct } from '$lib/utils/transcript'
 
 	let current_index = $state(0)
 	let total_questions = $derived(questions.length)
@@ -36,6 +37,8 @@
 	let lang = $state(DEFAULT_LANGUAGE)
 	let v = $state<string | undefined>()
 	let t = $state<string | undefined>()
+
+	let scale_factor = $state(1)
 
 	$effect(() => {
 		if (!browser) return
@@ -70,51 +73,26 @@
 		}
 	})
 
-	let scale_factor = $state(1)
-
 	$effect(() => {
 		if (!browser) return
 
-		const updateScale = () => {
-			const viewportWidth = window.innerWidth
-			const viewportHeight = window.innerHeight
-
-			const userAgent = navigator.userAgent.toLowerCase()
-			const isIOS = /iphone|ipod/.test(userAgent)
-			const isAndroid = /android/.test(userAgent)
-			const isTablet =
-				/ipad/.test(userAgent) ||
-				((window.innerWidth >= 1024 || window.innerHeight >= 1024) &&
-					(window.innerWidth >= 600 || window.innerHeight >= 600))
-
-			if ((isIOS || isAndroid) && !isTablet) {
-				scale_factor = 1
-				return
-			}
-
-			// 36
-			const baseWidth = 404
-			const baseHeight = 710
-
-			const scaleX = viewportWidth / baseWidth
-			const scaleY = viewportHeight / baseHeight
-
-			// スケールを制限（0.7〜1.5倍）
-			scale_factor = Math.max(0.1, Math.min(scaleX, scaleY, 3))
+		const update_scale = () => {
+			scale_factor = calculate_scale_factor()
 		}
 
-		let resizeTimeout: ReturnType<typeof setTimeout> | undefined
+		const debounced_update_scale = create_debounced_resize_handler(update_scale)
 
-		const debouncedUpdateScale = () => {
-			clearTimeout(resizeTimeout)
-			resizeTimeout = setTimeout(updateScale, 200)
-		}
-
-		updateScale()
-		window.addEventListener('resize', debouncedUpdateScale)
+		update_scale()
+		window.addEventListener('resize', debounced_update_scale)
 
 		return () => {
-			window.removeEventListener('resize', debouncedUpdateScale)
+			window.removeEventListener('resize', debounced_update_scale)
+		}
+	})
+
+	$effect(() => {
+		if (is_transcript_correct(question.transcript, user_transcript)) {
+			handle_correct_transcript()
 		}
 	})
 
@@ -126,22 +104,17 @@
 		}
 
 		if (is_playing) {
-			audio_element.pause()
+			pause_audio(audio_element)
 			is_playing = false
 		} else {
-			audio_element.play().catch((error) => {
-				console.error('Failed to play audio: ', error)
-				is_playing = false
-			})
-			is_playing = true
+			play_audio(audio_element)
+				.then(() => (is_playing = true))
+				.catch(() => (is_playing = false))
 		}
 	}
 
-	function reset_audio(): void {
-		if (audio_element && is_playing) {
-			audio_element.pause()
-			audio_element.currentTime = 0
-		}
+	function reset_audio_state(): void {
+		reset_audio(audio_element)
 		is_playing = false
 	}
 
@@ -163,31 +136,31 @@
 	}
 
 	function reset_state(): void {
-		reset_audio()
+		reset_audio_state()
 		reset_recording()
 		reset_user_state()
 	}
 
-	function on_retry(): void {
+	function handle_retry(): void {
 		reset_state()
 		handle_play_audio()
 	}
 
-	function on_next(): void {
+	function handle_next(): void {
 		if (current_index < total_questions - 1) {
 			current_index++
 			reset_state()
 		}
 	}
 
-	function on_preview(): void {
+	function handle_preview(): void {
 		if (current_index > 0) {
 			current_index--
 			reset_state()
 		}
 	}
 
-	function on_clear_transcript(): void {
+	function handle_clear_transcript(): void {
 		reset_transcript()
 
 		if (is_recording && speech_to_text) {
@@ -195,8 +168,11 @@
 		}
 	}
 
-	function on_record(): void {
-		reset_audio()
+	function handle_record(): void {
+		if (is_playing) {
+			reset_audio_state()
+		}
+
 		is_recording = !is_recording
 	}
 
@@ -205,23 +181,12 @@
 		handle_play_audio()
 	}
 
-	function is_transcript_correct(): boolean {
-		const cleaned_transcript = question.transcript.replace(/[,.!]/g, '').trim().toLowerCase()
-		const cleaned_user_transcript = user_transcript.replace(/[,.!]/g, '').trim().toLowerCase()
-
-		return cleaned_transcript === cleaned_user_transcript
-	}
-
-	function handle_correct_transcript() {
+	function handle_correct_transcript(): void {
 		user_transcript = question.transcript
 		is_correct = true
 		is_completed = true
 		is_recording = false
 	}
-
-	$effect(() => {
-		if (is_transcript_correct()) handle_correct_transcript()
-	})
 </script>
 
 <div class="relative min-h-screen overflow-hidden">
@@ -231,7 +196,7 @@
 		class="m-4 mx-auto max-w-sm transition-transform"
 		style="transform: scale({scale_factor}); transform-origin: top center;"
 	>
-		<ProgressBar current={current_question_number} total={total_questions} title={TITLE} />
+		<ProgressBar current={current_question_number} total={total_questions} title={APP_TITLE} />
 
 		<div class="card-glass">
 			<AudioSection
@@ -251,17 +216,17 @@
 				{is_recording}
 				{user_transcript}
 				{is_correct}
-				{on_record}
-				{on_clear_transcript}
+				on_record={handle_record}
+				on_clear_transcript={handle_clear_transcript}
 			/>
 		</div>
 
 		<ActionButtons
 			liked={is_liked}
 			completed={is_completed}
-			{on_retry}
-			{on_next}
-			{on_preview}
+			on_retry={handle_retry}
+			on_next={handle_next}
+			on_preview={handle_preview}
 			on_toggle_completed={() => {
 				is_completed = !is_completed
 			}}

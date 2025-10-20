@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { BUTTON_STYLES } from '$lib/constants'
 	import type { VoidCallback } from '$lib/types'
 	import IconButton from './IconButton.svelte'
 	import { ArrowRightIcon, HeartIcon, RetryIcon, TrophyIcon } from './icons'
@@ -24,8 +25,8 @@
 		on_toggle_completed,
 	}: Props = $props()
 
-	let like_button_style = $derived(liked ? 'liked-active' : '')
-	let trophy_button_style = $derived(completed ? 'trophy-active' : '')
+	let like_button_style = $derived(liked ? BUTTON_STYLES.LIKED_ACTIVE : '')
+	let trophy_button_style = $derived(completed ? BUTTON_STYLES.TROPHY_ACTIVE : '')
 </script>
 
 <div class="mt-5 flex flex-wrap items-center justify-center gap-4">
