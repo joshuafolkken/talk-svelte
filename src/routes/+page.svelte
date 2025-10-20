@@ -169,7 +169,10 @@
 	}
 
 	function handle_record(): void {
-		reset_audio_state()
+		if (is_playing) {
+			reset_audio_state()
+		}
+
 		is_recording = !is_recording
 	}
 

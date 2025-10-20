@@ -1,10 +1,10 @@
 import { DEBOUNCE_TIME, DEVICE_REGEX, SCALE_LIMITS, VIEWPORT } from '../constants'
 
 export function calculate_scale_factor(): number {
-	if (typeof window === 'undefined') return 1
+	if (typeof globalThis === 'undefined') return 1
 
-	const viewport_width = window.innerWidth
-	const viewport_height = window.innerHeight
+	const viewport_width = globalThis.innerWidth
+	const viewport_height = globalThis.innerHeight
 	const user_agent = navigator.userAgent.toLowerCase()
 
 	const is_ios = DEVICE_REGEX.IOS.test(user_agent)

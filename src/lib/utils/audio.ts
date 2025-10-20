@@ -6,7 +6,7 @@ export function reset_audio(audioElement?: HTMLAudioElement): void {
 }
 
 export async function play_audio(audioElement?: HTMLAudioElement): Promise<void> {
-	if (!audioElement) return Promise.resolve()
+	if (!audioElement) return
 
 	return audioElement.play().catch((error) => {
 		console.error('Failed to play audio:', error)
