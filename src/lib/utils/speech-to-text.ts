@@ -35,7 +35,7 @@ export class SpeechToText {
 
 		const recognition = new speech_recognition()
 		recognition.continuous = true
-		recognition.interim_results = true
+		recognition.interimResults = true
 		recognition.onerror = this.#handle_error.bind(this)
 
 		if (is_android()) {
