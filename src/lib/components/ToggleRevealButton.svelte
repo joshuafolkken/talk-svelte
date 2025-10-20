@@ -3,17 +3,17 @@
 	import { ChevronDownIcon } from './icons'
 
 	interface Props {
-		revealed: boolean
+		is_revealed: boolean
 		label: string
 		content: string
 		on_toggle: VoidCallback
 		class?: string
 	}
 
-	let { revealed, label, content, on_toggle, class: class_names = '' }: Props = $props()
+	const { is_revealed, label, content, on_toggle, class: class_names = '' }: Props = $props()
 
-	let revealed_style = $derived(revealed ? 'text-white' : '')
-	let button_classes = $derived(`btn-content-glass ${class_names} ${revealed_style}`)
+	const revealed_style = $derived(is_revealed ? 'text-white' : '')
+	const button_classes = $derived(`btn-content-glass ${class_names} ${revealed_style}`)
 </script>
 
 <button
@@ -21,9 +21,9 @@
 	onclick={on_toggle}
 	class={button_classes}
 	aria-label="Toggle {label}"
-	aria-expanded={revealed}
+	aria-expanded={is_revealed}
 >
-	{#if revealed}
+	{#if is_revealed}
 		<span class="text-content-bold whitespace-pre-line">{content}</span>
 	{:else}
 		<div class="flex-center">

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-import { executeCheck, getCurrentBranch, type CheckResult } from './common.js'
+import { execute_check, get_current_branch, type CheckResult } from './common.js'
 
-function checkMainBranch(): CheckResult {
-	const currentBranch = getCurrentBranch()
+function check_main_branch(): CheckResult {
+	const current_branch = get_current_branch()
 
-	if (currentBranch === 'main') {
+	if (current_branch === 'main') {
 		return {
 			success: false,
 			message:
@@ -16,12 +16,12 @@ function checkMainBranch(): CheckResult {
 
 	return {
 		success: true,
-		message: `✅ Branch check passed: '${currentBranch}'`,
+		message: `✅ Branch check passed: '${current_branch}'`,
 	}
 }
 
 function main(): void {
-	executeCheck(checkMainBranch)
+	execute_check(check_main_branch)
 }
 
 main()

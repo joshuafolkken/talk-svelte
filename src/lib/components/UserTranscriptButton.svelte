@@ -9,11 +9,11 @@
 		class?: string
 	}
 
-	let { user_transcript, is_correct, onclick: onclick, class: class_names = '' }: Props = $props()
+	const { user_transcript, is_correct, onclick: onclick, class: class_names = '' }: Props = $props()
 
-	let transcript_style = $derived(user_transcript ? 'text-white' : '')
-	let correct_style = $derived(is_correct ? 'bg-green-600' : '')
-	let button_classes = $derived(
+	const transcript_style = $derived(user_transcript !== '' ? 'text-white' : '')
+	const correct_style = $derived(is_correct ? 'bg-green-600' : '')
+	const button_classes = $derived(
 		`btn-content-glass ${class_names} ${transcript_style} ${correct_style}`,
 	)
 </script>

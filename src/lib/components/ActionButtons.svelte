@@ -6,8 +6,8 @@
 	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte'
 
 	interface Props {
-		liked: boolean
-		completed: boolean
+		is_liked: boolean
+		is_completed: boolean
 		on_toggle_like: VoidCallback
 		on_retry: VoidCallback
 		on_next: VoidCallback
@@ -15,9 +15,9 @@
 		on_toggle_completed: VoidCallback
 	}
 
-	let {
-		liked,
-		completed,
+	const {
+		is_liked,
+		is_completed,
 		on_toggle_like,
 		on_retry,
 		on_next,
@@ -25,13 +25,13 @@
 		on_toggle_completed,
 	}: Props = $props()
 
-	let like_button_style = $derived(liked ? BUTTON_STYLES.LIKED_ACTIVE : '')
-	let trophy_button_style = $derived(completed ? BUTTON_STYLES.TROPHY_ACTIVE : '')
+	const like_button_style = $derived(is_liked ? BUTTON_STYLES.liked_active : '')
+	const trophy_button_style = $derived(is_completed ? BUTTON_STYLES.trophy_active : '')
 </script>
 
 <div class="mt-5 flex flex-wrap items-center justify-center gap-4">
 	<IconButton onclick={on_toggle_like} class={like_button_style}>
-		<HeartIcon {liked} />
+		<HeartIcon {is_liked} />
 	</IconButton>
 
 	<IconButton onclick={on_retry}>

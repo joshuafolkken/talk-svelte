@@ -1,59 +1,58 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs'
-import { executeCheck, getCurrentBranch, type CheckResult } from './common.js'
+import { execute_check, get_current_branch, type CheckResult } from './common.js'
 
-function getCommitMessage(): string {
+function get_commit_message(): string {
 	// 引数からコミットメッセージファイルのパスを取得
-	const commitMsgFile = process.argv[2]
+	const commit_msg_file = process.argv[2]
 
 	// 引数がない場合は、デフォルトのパスを試す
-	const defaultPath = commitMsgFile || '.git/COMMIT_EDITMSG'
+	const default_path = commit_msg_file ?? '.git/COMMIT_EDITMSG'
 
 	try {
-		return readFileSync(defaultPath, 'utf8').trim()
+		return readFileSync(default_path, 'utf8').trim()
 	} catch (error) {
-		console.error(`Failed to read commit message file: ${defaultPath}`, error)
-		process.exit(1)
+		throw new Error(`Failed to read commit message file: ${default_path}`, { cause: error })
 	}
 }
 
-function checkCommitMessage(): CheckResult {
-	const currentBranch = getCurrentBranch()
+function check_commit_message(): CheckResult {
+	const current_branch = get_current_branch()
 
 	// ブランチ名が数字-xxxx-yyyの形式かチェック
-	const branchPattern = /^(\d+)-[a-z0-9-]+$/
-	const match = currentBranch.match(branchPattern)
+	const branch_pattern = /^(\d+)-[a-z0-9-]+$/
+	const match = branch_pattern.exec(current_branch)
 
-	if (!match) {
+	if (match === null) {
 		return {
 			success: true,
-			message: `✅ Branch format check passed: '${currentBranch}' (no issue number required)`,
+			message: `✅ Branch format check passed: '${current_branch}' (no issue number required)`,
 		}
 	}
 
-	const issueNumber = match[1]
-	const commitMessage = getCommitMessage()
+	const issue_number = match[1] ?? '999999'
+	const commit_message = get_commit_message()
 
 	// コミットメッセージに#数字が含まれているかチェック
-	if (!commitMessage.includes(`#${issueNumber}`)) {
+	if (!commit_message.includes(`#${issue_number}`)) {
 		return {
 			success: false,
 			message:
-				`🚫 Error: Commit message must include #${issueNumber}\n` +
-				`   Current branch: ${currentBranch}\n` +
-				`   Commit message: ${commitMessage}\n` +
-				`   Please include #${issueNumber} in your commit message\n`,
+				`🚫 Error: Commit message must include #${issue_number}\n` +
+				`   Current branch: ${current_branch}\n` +
+				`   Commit message: ${commit_message}\n` +
+				`   Please include #${issue_number} in your commit message\n`,
 		}
 	}
 
 	return {
 		success: true,
-		message: `✅ Commit message check passed: Found #${issueNumber}`,
+		message: `✅ Commit message check passed: Found #${issue_number}`,
 	}
 }
 
 function main(): void {
-	executeCheck(checkCommitMessage)
+	execute_check(check_commit_message)
 }
 
 main()

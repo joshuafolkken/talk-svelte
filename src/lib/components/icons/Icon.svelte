@@ -4,18 +4,18 @@
 
 	interface Props {
 		size?: IconSize
-		filled?: boolean
+		is_filled?: boolean
 		children: Snippet
 	}
 
-	let { size = ICON_SIZES.SM, filled = false, children }: Props = $props()
+	const { size = ICON_SIZES.sm, is_filled = false, children }: Props = $props()
 
-	let size_classes = $derived(
-		size === ICON_SIZES.LG ? 'h-8 w-8' : size === ICON_SIZES.MD ? 'h-6 w-6' : 'h-4 w-4',
+	const size_classes = $derived(
+		size === ICON_SIZES.lg ? 'h-8 w-8' : size === ICON_SIZES.md ? 'h-6 w-6' : 'h-4 w-4',
 	)
-	let fill = $derived(filled ? 'currentColor' : 'none')
-	let stroke = $derived(filled ? undefined : 'currentColor')
-	let stroke_width = $derived(filled ? undefined : 2)
+	const fill = $derived(is_filled ? 'currentColor' : 'none')
+	const stroke = $derived(is_filled ? undefined : 'currentColor')
+	const stroke_width = $derived(is_filled ? undefined : 2)
 </script>
 
 <svg class={size_classes} {fill} {stroke} stroke-width={stroke_width} viewBox="0 0 24 24">

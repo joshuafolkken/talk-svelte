@@ -5,9 +5,9 @@
 		title?: string
 	}
 
-	let { current, total, title }: Props = $props()
+	const { current, total, title }: Props = $props()
 
-	let progress_percentage = $derived((current / total) * 100)
+	const progress_percentage = $derived((current / total) * 100)
 </script>
 
 <div class="mb-5">

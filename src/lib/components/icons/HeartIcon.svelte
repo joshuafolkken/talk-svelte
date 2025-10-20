@@ -2,13 +2,13 @@
 	import Icon from './Icon.svelte'
 
 	interface Props {
-		liked?: boolean
+		is_liked?: boolean
 	}
 
-	let { liked: filled = false }: Props = $props()
+	const { is_liked = false }: Props = $props()
 </script>
 
-<Icon {filled} size="md">
+<Icon is_filled={is_liked} size="md">
 	<path
 		stroke-linecap="round"
 		stroke-linejoin="round"

@@ -14,13 +14,19 @@
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
 	let current_index = $state(0)
-	let total_questions = $derived(questions.length)
-	let current_question_number = $derived(current_index + 1)
-	let question = $derived(questions[current_index]!)
+	const total_questions = $derived(questions.length)
+	const current_question_number = $derived(current_index + 1)
+	const question = $derived.by(() => {
+		const q = questions[current_index]
+		if (q === undefined) {
+			throw new Error(`Question at index ${String(current_index)} not found`)
+		}
+		return q
+	})
 
 	let is_playing = $state(false)
-	let show_transcript = $state(false)
-	let show_translation = $state(false)
+	let is_transcript_visible = $state(false)
+	let is_translation_visible = $state(false)
 	let is_recording = $state(false)
 	let user_transcript = $state('')
 	let is_correct = $state(false)
@@ -28,24 +34,24 @@
 	let is_completed = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
-	let speech_to_text: SpeechToText | null = null
+	let speech_to_text: SpeechToText | undefined
 
 	// let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
 	// let v = $derived(page.url.searchParams.get('v') || undefined)
 	// let t = $derived(page.url.searchParams.get('t') || undefined)
 
 	let lang = $state(DEFAULT_LANGUAGE)
-	let v = $state<string | undefined>()
-	let t = $state<string | undefined>()
+	let video_id = $state<string | undefined>()
+	let time = $state<string | undefined>()
 
 	let scale_factor = $state(1)
 
 	$effect(() => {
 		if (!browser) return
 
-		lang = page.url.searchParams.get('lang') || DEFAULT_LANGUAGE
-		v = page.url.searchParams.get('v') || undefined
-		t = page.url.searchParams.get('t') || undefined
+		lang = page.url.searchParams.get('lang') ?? DEFAULT_LANGUAGE
+		video_id = page.url.searchParams.get('v') ?? undefined
+		time = page.url.searchParams.get('t') ?? undefined
 	})
 
 	$effect(() => {
@@ -59,7 +65,7 @@
 			},
 		)
 
-		return () => {
+		return (): void => {
 			speech_to_text?.destroy()
 		}
 	})
@@ -74,9 +80,9 @@
 	})
 
 	$effect(() => {
-		if (!browser) return
+		if (!browser) return undefined
 
-		const update_scale = () => {
+		const update_scale = (): void => {
 			scale_factor = calculate_scale_factor()
 		}
 
@@ -85,7 +91,7 @@
 		update_scale()
 		window.addEventListener('resize', debounced_update_scale)
 
-		return () => {
+		return (): void => {
 			window.removeEventListener('resize', debounced_update_scale)
 		}
 	})
@@ -97,7 +103,7 @@
 	})
 
 	function handle_play_audio(): void {
-		if (!audio_element) return
+		if (audio_element === undefined) return
 
 		if (is_recording) {
 			is_recording = false
@@ -129,8 +135,8 @@
 	}
 
 	function reset_user_state(): void {
-		show_transcript = false
-		show_translation = false
+		is_transcript_visible = false
+		is_translation_visible = false
 		is_liked = false
 		is_completed = false
 	}
@@ -163,7 +169,7 @@
 	function handle_clear_transcript(): void {
 		reset_transcript()
 
-		if (is_recording && speech_to_text) {
+		if (is_recording && speech_to_text !== undefined) {
 			speech_to_text.restart()
 		}
 	}
@@ -190,7 +196,7 @@
 </script>
 
 <div class="relative min-h-screen overflow-hidden">
-	<YoutubeBackground {v} {t} />
+	<YoutubeBackground {video_id} {time} />
 
 	<div
 		class="m-4 mx-auto max-w-sm transition-transform"
@@ -202,13 +208,19 @@
 			<AudioSection
 				{question}
 				{is_playing}
-				{show_transcript}
-				{show_translation}
+				{is_transcript_visible}
+				{is_translation_visible}
 				on_play_audio={handle_play_audio}
 				on_can_play_through={handle_can_play_through}
-				on_toggle_transcript={() => (show_transcript = !show_transcript)}
-				on_toggle_translation={() => (show_translation = !show_translation)}
-				on_audio_ended={() => (is_playing = false)}
+				on_toggle_transcript={(): void => {
+					is_transcript_visible = !is_transcript_visible
+				}}
+				on_toggle_translation={(): void => {
+					is_translation_visible = !is_translation_visible
+				}}
+				on_audio_ended={(): void => {
+					is_playing = false
+				}}
 				bind:audio_element
 			/>
 
@@ -222,15 +234,17 @@
 		</div>
 
 		<ActionButtons
-			liked={is_liked}
-			completed={is_completed}
+			{is_liked}
+			{is_completed}
 			on_retry={handle_retry}
 			on_next={handle_next}
 			on_preview={handle_preview}
-			on_toggle_completed={() => {
+			on_toggle_completed={(): void => {
 				is_completed = !is_completed
 			}}
-			on_toggle_like={() => (is_liked = !is_liked)}
+			on_toggle_like={(): void => {
+				is_liked = !is_liked
+			}}
 		/>
 	</div>
 </div>

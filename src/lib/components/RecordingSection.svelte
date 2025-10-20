@@ -14,15 +14,15 @@
 		on_clear_transcript: VoidCallback
 	}
 
-	let { is_recording, user_transcript, is_correct, on_record, on_clear_transcript }: Props =
+	const { is_recording, user_transcript, is_correct, on_record, on_clear_transcript }: Props =
 		$props()
 
-	let recording_style = $derived(is_recording ? BUTTON_STYLES.RECORDING_ACTIVE : '')
+	const recording_style = $derived(is_recording ? BUTTON_STYLES.recording_active : '')
 </script>
 
 <Section heading="Speak">
 	<IconButton
-		size={BUTTON_SIZES.LG}
+		size={BUTTON_SIZES.lg}
 		onclick={on_record}
 		class={recording_style}
 		label={is_recording ? 'Stop' : 'Record'}

@@ -11,15 +11,15 @@
 		children: Snippet
 	}
 
-	let {
+	const {
 		onclick,
-		size = BUTTON_SIZES.MD,
+		size = BUTTON_SIZES.md,
 		class: class_names = '',
 		label,
 		children,
 	}: Props = $props()
 
-	let size_classes = $derived(size === BUTTON_SIZES.LG ? 'h-20 w-20' : 'h-12 w-12')
+	const size_classes = $derived(size === BUTTON_SIZES.lg ? 'h-20 w-20' : 'h-12 w-12')
 </script>
 
 <button

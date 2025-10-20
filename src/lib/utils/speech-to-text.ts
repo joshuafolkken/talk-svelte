@@ -9,10 +9,10 @@ import type {
 import { is_android } from './device'
 
 export class SpeechToText {
-	readonly #recognition: SpeechRecognition | null = null
-	#is_active: boolean = false
-	#final_transcript: string = ''
-	#interim_transcript: string = ''
+	readonly #recognition: SpeechRecognition | undefined
+	#is_active = false
+	#final_transcript = ''
+	#interim_transcript = ''
 	readonly #on_transcript_update: TranscriptCallback
 	readonly #on_error: ErrorCallback
 
@@ -22,20 +22,20 @@ export class SpeechToText {
 		this.#recognition = this.#initialize_recognition()
 	}
 
-	#initialize_recognition(): SpeechRecognition | null {
-		if (typeof globalThis === 'undefined') return null
+	#initialize_recognition(): SpeechRecognition | undefined {
+		if (typeof globalThis === 'undefined') return undefined
 
 		const window = globalThis as unknown as Window
-		const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+		const speech_recognition = window.SpeechRecognition ?? window.webkitSpeechRecognition
 
-		if (!SpeechRecognition) {
+		if (speech_recognition === undefined) {
 			this.#on_error('Speech Recognition API is not supported in this browser')
-			return null
+			return undefined
 		}
 
-		const recognition = new SpeechRecognition()
+		const recognition = new speech_recognition()
 		recognition.continuous = true
-		recognition.interimResults = true
+		recognition.interim_results = true
 		recognition.onerror = this.#handle_error.bind(this)
 
 		if (is_android()) {
@@ -54,7 +54,7 @@ export class SpeechToText {
 	}
 
 	#get_full_transcript(interim_transcript: string): string {
-		if (!this.#final_transcript || !interim_transcript) {
+		if (this.#final_transcript === '' || interim_transcript === '') {
 			return this.#final_transcript + interim_transcript
 		}
 
@@ -66,10 +66,10 @@ export class SpeechToText {
 
 		for (let i = event.resultIndex; i < event.results.length; i++) {
 			const result = event.results[i]
-			if (!result) continue
+			if (result === undefined) continue
 
 			const transcript = result[0]?.transcript
-			if (!transcript) continue
+			if (transcript === undefined) continue
 
 			if (is_android || !result.isFinal) {
 				interim_transcript += transcript
@@ -101,16 +101,16 @@ export class SpeechToText {
 	}
 
 	#should_restart(): boolean {
-		return this.#is_active && this.#recognition !== null
+		return this.#is_active && this.#recognition !== undefined
 	}
 
 	#restart_recognition(): void {
-		if (!this.#recognition) return
+		if (this.#recognition === undefined) return
 
 		try {
 			this.#recognition.start()
-		} catch (error) {
-			this.#on_error(`Failed to restart recognition: ${error}`)
+		} catch (error: unknown) {
+			this.#on_error(`Failed to restart recognition: ${String(error)}`)
 		}
 	}
 
@@ -133,7 +133,7 @@ export class SpeechToText {
 	}
 
 	start(lang: string = DEFAULT_LANGUAGE): void {
-		if (!this.#recognition) {
+		if (this.#recognition === undefined) {
 			this.#on_error('SpeechRecognition is not initialized')
 			return
 		}
@@ -146,26 +146,26 @@ export class SpeechToText {
 		try {
 			this.#is_active = true
 			this.#recognition.start()
-		} catch (error) {
-			this.#on_error(`Failed to start recognition: ${error}`)
+		} catch (error: unknown) {
+			this.#on_error(`Failed to start recognition: ${String(error)}`)
 			this.#is_active = false
 		}
 	}
 
 	stop(): void {
-		if (!this.#recognition) return
+		if (this.#recognition === undefined) return
 		if (!this.#is_active) return
 
 		try {
 			this.#is_active = false
 			this.#recognition.stop()
-		} catch (error) {
-			this.#on_error(`Failed to stop recognition: ${error}`)
+		} catch (error: unknown) {
+			this.#on_error(`Failed to stop recognition: ${String(error)}`)
 		}
 	}
 
 	restart(): void {
-		if (!this.#recognition) return
+		if (this.#recognition === undefined) return
 
 		this.#reset_transcripts()
 		this.#recognition.stop()

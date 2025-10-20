@@ -7,24 +7,22 @@ export interface CheckResult {
 	message: string
 }
 
-export function getCurrentBranch(): string {
+export function get_current_branch(): string {
 	try {
 		if (os.platform() === 'win32') {
 			return execSync(String.raw`"C:\Program Files\Git\bin\git.exe" rev-parse --abbrev-ref HEAD`, {
 				encoding: 'utf8',
 			}).trim()
-		} else {
-			return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
 		}
+		return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
 	} catch (error) {
-		console.error('Failed to get current branch:', error)
-		process.exit(1)
+		throw new Error('Failed to get current branch', { cause: error })
 	}
 }
 
-export function executeCheck(checkFunction: () => CheckResult): void {
-	const result = checkFunction()
-	console.log(result.message)
+export function execute_check(check_function: () => CheckResult): void {
+	const result = check_function()
+	console.log(result.message) // eslint-disable-line no-console
 
 	if (!result.success) {
 		process.exit(1)

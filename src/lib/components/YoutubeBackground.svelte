@@ -1,26 +1,26 @@
 <script lang="ts">
 	interface Props {
-		v?: string | undefined
-		t?: string | undefined
+		video_id?: string | undefined
+		time?: string | undefined
 	}
 
-	let { v = 'dQw4w9WgXcQ', t = '0' }: Props = $props()
-	t = t.endsWith('s') ? t.slice(0, -1) : t
+	const { video_id = 'dQw4w9WgXcQ', time = '0' }: Props = $props()
+	const time_in_seconds = time.endsWith('s') ? time.slice(0, -1) : time
 
 	const youtube_params = [
 		'autoplay=1',
 		'mute=1',
 		'loop=1',
-		`playlist=${v}`,
+		`playlist=${video_id}`,
 		'controls=0',
 		'rel=0',
 		'modestbranding=1',
 		'playsinline=1',
 		'enablejsapi=1',
-		`start=${t}`,
+		`start=${time_in_seconds}`,
 	].join('&')
 
-	const youtube_url = `https://www.youtube.com/embed/${v}?${youtube_params}`
+	const youtube_url = `https://www.youtube.com/embed/${video_id}?${youtube_params}`
 </script>
 
 <div class="fixed inset-0 -z-10 overflow-hidden">

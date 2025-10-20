@@ -7,23 +7,23 @@ export function calculate_scale_factor(): number {
 	const viewport_height = globalThis.innerHeight
 	const user_agent = navigator.userAgent.toLowerCase()
 
-	const is_ios = DEVICE_REGEX.IOS.test(user_agent)
-	const is_android = DEVICE_REGEX.ANDROID.test(user_agent)
+	const is_ios = DEVICE_REGEX.ios.test(user_agent)
+	const is_android = DEVICE_REGEX.android.test(user_agent)
 	const is_tablet =
-		DEVICE_REGEX.TABLET.test(user_agent) ||
-		((viewport_width >= VIEWPORT.TABLET_MIN_WIDTH ||
-			viewport_height >= VIEWPORT.TABLET_MIN_WIDTH) &&
-			(viewport_width >= VIEWPORT.TABLET_MIN_HEIGHT ||
-				viewport_height >= VIEWPORT.TABLET_MIN_HEIGHT))
+		DEVICE_REGEX.tablet.test(user_agent) ||
+		((viewport_width >= VIEWPORT.tablet_min_width ||
+			viewport_height >= VIEWPORT.tablet_min_width) &&
+			(viewport_width >= VIEWPORT.tablet_min_height ||
+				viewport_height >= VIEWPORT.tablet_min_height))
 
 	if ((is_ios || is_android) && !is_tablet) {
 		return 1
 	}
 
-	const scale_x = viewport_width / VIEWPORT.BASE_WIDTH
-	const scale_y = viewport_height / VIEWPORT.BASE_HEIGHT
+	const scale_x = viewport_width / VIEWPORT.base_width
+	const scale_y = viewport_height / VIEWPORT.base_height
 
-	return Math.max(SCALE_LIMITS.MIN, Math.min(scale_x, scale_y, SCALE_LIMITS.MAX))
+	return Math.max(SCALE_LIMITS.min, Math.min(scale_x, scale_y, SCALE_LIMITS.max))
 }
 
 export function create_debounced_resize_handler(
