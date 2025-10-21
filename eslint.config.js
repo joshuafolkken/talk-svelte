@@ -297,7 +297,7 @@ export default defineConfig(
 			// Svelte ファイルでは Svelte 固有のルールを適用
 
 			// Svelte の $state などのリアクティブ変数は再代入されるため、prefer-const を緩和
-			'prefer-const': 'off',
+			'prefer-const': 'warn',
 
 			// Svelte コンポーネントファイルは PascalCase を許可
 			'unicorn/filename-case': [

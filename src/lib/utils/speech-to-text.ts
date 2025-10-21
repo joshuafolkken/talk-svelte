@@ -22,6 +22,18 @@ export class SpeechToText {
 		this.#recognition = this.#initialize_recognition()
 	}
 
+	#add_event_listener(recognition: SpeechRecognition): void {
+		recognition.addEventListener('error', this.#handle_error.bind(this))
+
+		if (is_android()) {
+			recognition.addEventListener('result', this.#handle_result_android.bind(this))
+			recognition.addEventListener('end', this.#handle_end_android.bind(this))
+		} else {
+			recognition.addEventListener('result', this.#handle_result.bind(this))
+			recognition.addEventListener('end', this.#handle_end.bind(this))
+		}
+	}
+
 	#initialize_recognition(): SpeechRecognition | undefined {
 		if (typeof globalThis === 'undefined') return undefined
 
@@ -36,20 +48,12 @@ export class SpeechToText {
 		const recognition = new speech_recognition()
 		recognition.continuous = true
 		recognition.interimResults = true
-		recognition.addEventListener('error', this.#handle_error.bind(this))
-
-		if (is_android()) {
-			recognition.addEventListener('result', this.#handle_result_android.bind(this))
-			recognition.addEventListener('end', this.#handle_end_android.bind(this))
-		} else {
-			recognition.addEventListener('result', this.#handle_result.bind(this))
-			recognition.addEventListener('end', this.#handle_end.bind(this))
-		}
+		this.#add_event_listener(recognition)
 
 		return recognition
 	}
 
-	#add_transcript(transcript: string): void {
+	#add_final_transcript(transcript: string): void {
 		this.#final_transcript = this.#get_full_transcript(transcript)
 	}
 
@@ -61,21 +65,36 @@ export class SpeechToText {
 		return `${this.#final_transcript} ${interim_transcript}`
 	}
 
+	#should_add_to_interim(is_android: boolean, is_final: boolean): boolean {
+		return is_android || !is_final
+	}
+
+	#get_transcript_from_result(result: SpeechRecognitionResult | undefined): string | undefined {
+		if (result === undefined) return undefined
+		return result[0]?.transcript
+	}
+
+	#process_recognition_result(
+		result: SpeechRecognitionResult | undefined,
+		is_android: boolean,
+	): string {
+		if (result === undefined) return ''
+
+		const transcript = this.#get_transcript_from_result(result)
+		if (transcript === undefined) return ''
+
+		if (this.#should_add_to_interim(is_android, result.isFinal)) {
+			return transcript
+		}
+
+		this.#add_final_transcript(transcript)
+		return ''
+	}
 	#handle_result_common(event: SpeechRecognitionEvent, is_android: boolean): void {
 		let interim_transcript = ''
 
 		for (let index = event.resultIndex; index < event.results.length; index++) {
-			const result = event.results[index]
-			if (result === undefined) continue
-
-			const transcript = result[0]?.transcript
-			if (transcript === undefined) continue
-
-			if (is_android || !result.isFinal) {
-				interim_transcript += transcript
-			} else {
-				this.#add_transcript(transcript)
-			}
+			interim_transcript += this.#process_recognition_result(event.results[index], is_android)
 		}
 
 		if (is_android) {
@@ -122,7 +141,7 @@ export class SpeechToText {
 	#handle_end_android(): void {
 		if (!this.#should_restart()) return
 
-		this.#add_transcript(this.#interim_transcript)
+		this.#add_final_transcript(this.#interim_transcript)
 		this.#interim_transcript = ''
 		this.#restart_recognition()
 	}
@@ -130,6 +149,19 @@ export class SpeechToText {
 	#reset_transcripts(): void {
 		this.#final_transcript = ''
 		this.#interim_transcript = ''
+	}
+
+	#start_recognition(lang: string): void {
+		if (this.#recognition === undefined) return
+
+		try {
+			this.#is_active = true
+			this.#recognition.lang = lang
+			this.#recognition.start()
+		} catch (error: unknown) {
+			this.#on_error(`Failed to start recognition: ${String(error)}`)
+			this.#is_active = false
+		}
 	}
 
 	start(lang: string = DEFAULT_LANGUAGE): void {
@@ -140,16 +172,8 @@ export class SpeechToText {
 
 		if (this.#is_active) return
 
-		this.#recognition.lang = lang
 		this.#reset_transcripts()
-
-		try {
-			this.#is_active = true
-			this.#recognition.start()
-		} catch (error: unknown) {
-			this.#on_error(`Failed to start recognition: ${String(error)}`)
-			this.#is_active = false
-		}
+		this.#start_recognition(lang)
 	}
 
 	stop(): void {

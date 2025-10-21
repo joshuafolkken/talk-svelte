@@ -41,23 +41,19 @@
 	// let t = $derived(page.url.searchParams.get('t') || undefined)
 
 	let lang = $state(DEFAULT_LANGUAGE)
-	let video_id = $state<string | undefined>()
-	let time = $state<string | undefined>()
+	let video_id = $state<string>()
+	let time = $state<string>()
 
-	function get_parameter(name: string): string | undefined {
-		return page.url.searchParams.get(name) ?? undefined
+	function get_parameter(name: string, default_value? = ''): string {
+		return page.url.searchParams.get(name) ?? default_value
 	}
 
 	$effect(() => {
 		if (!browser) return
 
-		lang = get_parameter('lang') ?? DEFAULT_LANGUAGE
+		lang = get_parameter('lang', DEFAULT_LANGUAGE)
 		video_id = get_parameter('v')
 		time = get_parameter('t')
-
-		console.log('lang:', lang)
-		console.log('video_id:', video_id)
-		console.log('time:', time)
 	})
 
 	$effect(() => {
