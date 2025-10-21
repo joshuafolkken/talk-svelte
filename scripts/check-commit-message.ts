@@ -20,7 +20,7 @@ function get_commit_message(): string {
 function extract_issue_number(branch_name: string): string | undefined {
 	const branch_pattern = /^(\d+)-[\da-z-]+$/u
 	const match = branch_pattern.exec(branch_name)
-	return match?.[1] ?? undefined
+	return match?.[1]
 }
 
 function create_error_message(issue_number: string, branch: string, message: string): string {

@@ -272,6 +272,66 @@ export default defineConfig(
 			'@typescript-eslint/no-unnecessary-type-parameters': 'error',
 			// Promise返す関数には非同期処理を必須に
 			'@typescript-eslint/promise-function-async': 'error',
+			// 混乱を招くvoid式を禁止
+			'@typescript-eslint/no-confusing-void-expression': 'error',
+			// 動的なdelete演算子を禁止
+			'@typescript-eslint/no-dynamic-delete': 'error',
+			// 無効なvoid型を禁止
+			'@typescript-eslint/no-invalid-void-type': 'error',
+			// 非nullアサーションの後の代替を禁止
+			'@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
+			// requireを禁止（ES6 importを使用）
+			'@typescript-eslint/no-require-imports': 'error',
+			// 型アサーションを制限
+			'@typescript-eslint/consistent-type-assertions': [
+				'error',
+				{
+					assertionStyle: 'as',
+					objectLiteralTypeAssertions: 'never',
+				},
+			],
+			// デフォルトエクスポートを禁止（既存のimport/no-default-exportと併用）
+			'@typescript-eslint/no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['../*'],
+							message: 'Relative imports from parent directories can make refactoring difficult.',
+						},
+					],
+				},
+			],
+			// 型のみのインポートを分離
+			'@typescript-eslint/no-import-type-side-effects': 'error',
+			// inferを適切に使用
+			'@typescript-eslint/no-unnecessary-qualifier': 'error',
+			// 不要なtemplate expressionを禁止
+			'@typescript-eslint/no-base-to-string': 'error',
+			// 配列のソートにcompare関数を必須化
+			'@typescript-eslint/require-array-sort-compare': ['error', { ignoreStringArrays: false }],
+			// +演算子での文字列連結を制限
+			'@typescript-eslint/restrict-plus-operands': [
+				'error',
+				{
+					allowAny: false,
+					allowBoolean: false,
+					allowNullish: false,
+					allowNumberAndString: false,
+					allowRegExp: false,
+				},
+			],
+			// テンプレート内の型を制限
+			'@typescript-eslint/restrict-template-expressions': [
+				'error',
+				{
+					allowAny: false,
+					allowBoolean: false,
+					allowNullish: false,
+					allowNumber: false,
+					allowRegExp: false,
+				},
+			],
 
 			// ===== 一般的なコード品質 =====
 			// console の使用を警告（開発時は許可、本番ではエラーにするべき）
@@ -361,7 +421,7 @@ export default defineConfig(
 			// 不要なエスケープを禁止
 			'no-useless-escape': 'error',
 			// void演算子を禁止
-			'no-void': 'error',
+			'no-void': ['error', { allowAsStatement: true }],
 			// ラベル付き文を禁止
 			'no-labels': 'error',
 			// 単独のifをelse内に置くことを禁止
@@ -407,8 +467,130 @@ export default defineConfig(
 			'symbol-description': 'error',
 			// Yodaスタイルを禁止
 			yoda: 'error',
+			// パラメータの再代入を禁止
+			'no-param-reassign': 'error',
+			// 暗黙的な型変換を禁止
+			'no-implicit-coercion': 'error',
+			// カンマ演算子を禁止
+			'no-sequences': 'error',
+			// ビット演算子を禁止
+			'no-bitwise': 'error',
+			// continue文を禁止
+			'no-continue': 'error',
+			// インクリメント・デクリメント演算子を禁止
+			'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+			// arguments.caller/calleeを禁止
+			'no-caller': 'error',
+			// evalを禁止
+			'no-eval': 'error',
+			// 暗黙的なevalを禁止
+			'no-implied-eval': 'error',
+			// with文を禁止
+			'no-with': 'error',
+			// __iterator__を禁止
+			'no-iterator': 'error',
+			// __proto__を禁止
+			'no-proto': 'error',
+			// スクリプトURLを禁止
+			'no-script-url': 'error',
+			// カンマ演算子を禁止（ループを除く）
+			'no-restricted-syntax': [
+				'error',
+				{
+					selector: 'ForInStatement',
+					message:
+						'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array.',
+				},
+				{
+					selector: 'LabeledStatement',
+					message:
+						'Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.',
+				},
+				{
+					selector: 'WithStatement',
+					message:
+						'`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
+				},
+			],
+			// delete演算子を変数に使用することを禁止
+			'no-delete-var': 'error',
+			// undefinedへの代入を禁止
+			// 'no-undefined': 'error',
+			// 初期化されていない変数を禁止
+			'init-declarations': ['error', 'always'],
+			// シャドーイングを禁止
+			'no-shadow': 'off', // TypeScript版を使用
+			'@typescript-eslint/no-shadow': 'error',
+			// グローバル変数のシャドーイングを禁止
+			'no-shadow-restricted-names': 'error',
+			// alert/confirm/promptを禁止
+			'no-alert': 'error',
+			// 拡張されたネイティブオブジェクトを禁止
+			'no-extend-native': 'error',
+			// 不要なbind()を禁止
+			'no-extra-bind': 'error',
+			// 不要なラベルを禁止
+			'no-extra-label': 'error',
+			// caseのフォールスルーを禁止
+			'no-fallthrough': 'error',
+			// 浮動小数点の省略を禁止
+			'no-floating-decimal': 'error',
+			// グローバル変数への代入を禁止
+			'no-global-assign': 'error',
+			// 型変換の短縮形を禁止
+			'no-implicit-globals': 'error',
+			// ループ内で変更されない条件を禁止
+			'no-unmodified-loop-condition': 'error',
+			// 不要な.call()/.apply()を禁止
+			'no-useless-call': 'error',
+			// 一貫性のあるreturnを要求
+			'consistent-return': 'error',
+			// カーリーブレースを必須化
+			curly: ['error', 'multi-line'],
+			// default caseを要求
+			'default-case': 'error',
+			// default caseを最後に配置
+			'default-case-last': 'error',
+			// ドット記法を優先
+			'dot-notation': 'error',
+			// 分割代入のデフォルト値を要求
+			'default-param-last': 'error',
+			// グループ化された変数宣言を要求
+			'one-var': ['error', 'never'],
+			// 変数を使用する前に宣言を要求
+			'no-use-before-define': 'off', // TypeScript版を使用
+			'@typescript-eslint/no-use-before-define': 'error',
+			// throw文でErrorオブジェクトを要求
+			'no-throw-literal': 'off', // TypeScript版を使用
+			'@typescript-eslint/only-throw-error': 'error',
+			// 文字列リテラルでのオクタル・エスケープシーケンスを禁止
+			'no-octal-escape': 'error',
+			// 8進数リテラルを禁止
+			'no-octal': 'error',
+			// 関数のパラメータ名の重複を禁止
+			'no-dupe-args': 'error',
+			// オブジェクトのキーの重複を禁止
+			'no-dupe-keys': 'error',
+			// case句の重複を禁止
+			'no-duplicate-case': 'error',
+			// 空のブロック文を禁止
+			'no-empty': 'error',
+			// 正規表現での空の文字クラスを禁止
+			'no-empty-character-class': 'error',
+			// 条件式での代入を禁止
+			'no-cond-assign': 'error',
+			// 定数条件を禁止
+			'no-constant-condition': 'error',
+			// 制御文字を禁止
+			'no-control-regex': 'error',
+			// 未定義変数の使用を禁止（TypeScriptで管理）
+			// 'no-undef': 'error', // 既にoffに設定済み
+			// 正規表現での複数のスペースを禁止
+			'no-regex-spaces': 'error',
+			// スパースアレイを禁止
+			'no-sparse-arrays': 'error',
 
-			// TODO コメントを禁止（issueに登録すべき）
+			// アノテーションコメントを禁止（issueに登録すべき）
 			'no-warning-comments': [
 				'error',
 				{
@@ -451,6 +633,47 @@ export default defineConfig(
 			'import/no-cycle': 'error',
 			// 未使用のインポートを禁止
 			'import/no-unused-modules': 'error',
+			// CommonJSを禁止
+			'import/no-commonjs': 'error',
+			// AMD形式を禁止
+			'import/no-amd': 'error',
+			// Node.jsビルトインモジュールを禁止（必要に応じて調整）
+			// 'import/no-nodejs-modules': 'error',
+			// 可変エクスポートを禁止
+			'import/no-mutable-exports': 'error',
+			// 絶対パスのインポートを禁止
+			'import/no-absolute-path': 'error',
+			// webpack固有のローダー構文を禁止
+			'import/no-webpack-loader-syntax': 'error',
+			// 自己インポートを禁止
+			'import/no-self-import': 'error',
+			// 同じファイルへの複数のインポートを禁止
+			'import/no-duplicates': 'error',
+			// 名前空間インポートを禁止
+			'import/no-namespace': 'error',
+			// 名前付きデフォルトエクスポートを禁止
+			'import/no-named-default': 'error',
+			// 匿名デフォルトエクスポートを禁止
+			'import/no-anonymous-default-export': 'error',
+			// インポートの際に拡張子を必須化/禁止
+			'import/extensions': [
+				'error',
+				{
+					js: 'always',
+					ts: 'always',
+					svelte: 'always',
+					// SvelteKitの仮想モジュールを無視
+					ignorePackages: true,
+				},
+			],
+			// 最初のインポートを強制
+			'import/first': 'error',
+			// エクスポートの後のインポートを禁止
+			'import/exports-last': 'error',
+			// インポートとそれ以外の間に改行を強制
+			'import/newline-after-import': 'error',
+			// グループ化されていないインポートを禁止
+			'import/no-unassigned-import': ['error', { allow: ['**/*.css', '**/*.scss'] }],
 
 			// null よりも undefined を優先
 			'unicorn/no-null': 'error',
@@ -494,6 +717,88 @@ export default defineConfig(
 			'unicorn/catch-error-name': ['error', { name: 'error' }],
 			// switchケースでのブレークを強制
 			'unicorn/prefer-switch': ['error', { minimumCases: 2 }],
+			// Array.isArray()を優先
+			'unicorn/no-instanceof-array': 'error',
+			// 単独のifを禁止（else内）
+			'unicorn/no-lonely-if': 'error',
+			// 否定条件を避ける
+			'unicorn/no-negated-condition': 'error',
+			// new Array()を禁止
+			'unicorn/no-new-array': 'error',
+			// Buffer()コンストラクタを禁止
+			'unicorn/no-new-buffer': 'error',
+			// オブジェクトをデフォルトパラメータにしない
+			'unicorn/no-object-as-default-parameter': 'error',
+			// 読みにくい配列分割代入を禁止
+			'unicorn/no-unreadable-array-destructuring': 'error',
+			// 不要なundefinedを禁止
+			'unicorn/no-useless-undefined': 'error',
+			// 数値セパレータのスタイルを統一
+			'unicorn/numeric-separators-style': 'error',
+			// flatMapを優先
+			'unicorn/prefer-array-flat-map': 'error',
+			// Date.now()を優先
+			'unicorn/prefer-date-now': 'error',
+			// デフォルトパラメータを優先
+			'unicorn/prefer-default-parameters': 'error',
+			// Math.trunc()を優先
+			'unicorn/prefer-math-trunc': 'error',
+			// モダンなDOM APIを優先
+			'unicorn/prefer-modern-dom-apis': 'error',
+			// 負のインデックスを優先
+			'unicorn/prefer-negative-index': 'error',
+			// Number.*プロパティを優先
+			'unicorn/prefer-number-properties': 'error',
+			// Object.fromEntries()を優先
+			'unicorn/prefer-object-from-entries': 'error',
+			// プロトタイプメソッドを優先
+			'unicorn/prefer-prototype-methods': 'error',
+			// querySelector*を優先
+			'unicorn/prefer-query-selector': 'error',
+			// Reflect.apply()を優先
+			'unicorn/prefer-reflect-apply': 'error',
+			// Set#has()を優先
+			'unicorn/prefer-set-has': 'error',
+			// String#slice()を優先
+			'unicorn/prefer-string-slice': 'error',
+			// trimStart/trimEndを優先
+			'unicorn/prefer-string-trim-start-end': 'error',
+			// トップレベルawaitを優先
+			'unicorn/prefer-top-level-await': 'error',
+			// TypeErrorを優先
+			'unicorn/prefer-type-error': 'error',
+			// Array#joinにセパレータを必須化
+			'unicorn/require-array-join-separator': 'error',
+			// toFixed()に引数を必須化
+			'unicorn/require-number-to-fixed-digits-argument': 'error',
+			// 配列メソッドにコールバックのreturnを必須化
+			'unicorn/require-array-join-separator': 'error',
+			// 一貫性のないArray#lengthへの代入を禁止
+			'unicorn/no-unreadable-iife': 'error',
+			// process.exit()よりthrowを優先
+			'unicorn/no-process-exit': 'error',
+			// textContentを優先
+			'unicorn/prefer-dom-node-text-content': 'error',
+			// KeyboardEvent#keyを優先
+			'unicorn/prefer-keyboard-event-key': 'error',
+			// 配列のインデックスメソッドを優先
+			'unicorn/prefer-array-index-of': 'error',
+			// EventTarget#addEventListenerを優先
+			'unicorn/prefer-add-event-listener': 'error',
+			// Blob#arrayBuffer/text()を優先
+			'unicorn/prefer-blob-reading-methods': 'error',
+			// String#codePointAtを優先
+			'unicorn/prefer-code-point': 'error',
+			// Element#append/prependを優先
+			'unicorn/prefer-dom-node-append': 'error',
+			// Element#removeを優先
+			'unicorn/prefer-dom-node-remove': 'error',
+			// includes()を優先（文字列）
+			'unicorn/prefer-includes': 'error',
+			// .at()を優先
+			'unicorn/prefer-at': 'error',
+			// String#replaceAll()を優先
+			'unicorn/prefer-string-replace-all': 'error',
 
 			// 認知的複雑度の制限（より厳しい複雑度の指標）
 			'sonarjs/cognitive-complexity': ['error', 4],
@@ -513,6 +818,26 @@ export default defineConfig(
 			'sonarjs/no-same-line-conditional': 'error',
 			// 使われない関数パラメータを禁止
 			'sonarjs/no-unused-collection': 'error',
+			// すべてが同じ値を返すswitch文を禁止
+			'sonarjs/no-all-duplicated-branches': 'error',
+			// 無駄な条件を禁止
+			'sonarjs/no-redundant-boolean': 'error',
+			// Promiseコールバック内でのreturnを必須化
+			'promise/always-return': 'error',
+			// catch()ハンドラを必須化
+			'promise/catch-or-return': 'error',
+			// Promiseのexecutor関数内でのreturnを禁止
+			'promise/no-return-in-finally': 'error',
+			// Promise.all()の引数が配列でない場合を禁止
+			'promise/valid-params': 'error',
+			// Promiseチェーン内での一貫性を強制
+			'promise/prefer-await-to-then': 'error',
+			// Promiseチェーン内での一貫性を強制
+			'promise/prefer-await-to-callbacks': 'error',
+			// ブール値を返すだけの無駄な条件を禁止
+			'sonarjs/prefer-immediate-return': 'error',
+			// 無駄なジャンプ文を禁止
+			'sonarjs/prefer-single-boolean-return': 'error',
 
 			// async 関数は必ず await を含む
 			'require-await': 'error',

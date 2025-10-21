@@ -1,4 +1,4 @@
-import { DEBOUNCE_TIME, DEVICE_REGEX, SCALE_LIMITS, VIEWPORT } from '../constants'
+import { DEBOUNCE_TIME, DEVICE_REGEX, SCALE_LIMITS, VIEWPORT } from '$lib/constants'
 
 function has_tablet_dimensions(viewport_width: number, viewport_height: number): boolean {
 	const min_dimension = Math.min(viewport_width, viewport_height)
@@ -46,7 +46,7 @@ export function create_debounced_resize_handler(
 	callback: () => void,
 	delay: number = DEBOUNCE_TIME,
 ): () => void {
-	let timeout_id: ReturnType<typeof setTimeout> | undefined
+	let timeout_id: ReturnType<typeof setTimeout> | undefined = undefined
 
 	return () => {
 		clearTimeout(timeout_id)

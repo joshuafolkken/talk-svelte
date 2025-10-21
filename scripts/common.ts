@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process'
-import * as os from 'node:os'
+import { platform } from 'node:os'
 
-export interface CheckResult {
+interface CheckResult {
 	success: boolean
 	message: string
 }
 
 function get_git_command(): string {
-	if (os.platform() === 'win32') {
+	if (platform() === 'win32') {
 		return String.raw`"C:\Program Files\Git\bin\git.exe"`
 	}
 	return '/usr/bin/git'
 }
 
-export function get_current_branch(): string {
+function get_current_branch(): string {
 	try {
 		const git_command = get_git_command()
 		// eslint-disable-next-line sonarjs/os-command
@@ -24,7 +24,7 @@ export function get_current_branch(): string {
 	}
 }
 
-export function execute_check(check_function: () => CheckResult): void {
+function execute_check(check_function: () => CheckResult): void {
 	const result = check_function()
 	console.log(result.message) // eslint-disable-line no-console
 
@@ -32,3 +32,6 @@ export function execute_check(check_function: () => CheckResult): void {
 		process.exit(1)
 	}
 }
+
+export type { CheckResult }
+export { get_current_branch, execute_check }

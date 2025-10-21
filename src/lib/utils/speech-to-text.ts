@@ -1,11 +1,11 @@
-import { DEFAULT_LANGUAGE } from '../constants'
+import { DEFAULT_LANGUAGE } from '$lib/constants'
 import type {
 	ErrorCallback,
 	SpeechRecognition,
 	SpeechRecognitionErrorEvent,
 	SpeechRecognitionEvent,
 	TranscriptCallback,
-} from '../types/speech-recognition.types'
+} from '$lib/types/speech-recognition.types'
 import { is_android } from './device'
 
 export class SpeechToText {
@@ -71,8 +71,8 @@ export class SpeechToText {
 		return `${this.#final_transcript} ${interim_transcript}`
 	}
 
-	#should_add_to_interim(is_android: boolean, is_final: boolean): boolean {
-		return is_android || !is_final
+	#should_add_to_interim(is_android_device: boolean, is_final: boolean): boolean {
+		return is_android_device || !is_final
 	}
 
 	#get_transcript_from_result(result: SpeechRecognitionResult | undefined): string | undefined {
@@ -82,28 +82,31 @@ export class SpeechToText {
 
 	#process_recognition_result(
 		result: SpeechRecognitionResult | undefined,
-		is_android: boolean,
+		is_android_device: boolean,
 	): string {
 		if (result === undefined) return ''
 
 		const transcript = this.#get_transcript_from_result(result)
 		if (transcript === undefined) return ''
 
-		if (this.#should_add_to_interim(is_android, result.isFinal)) {
+		if (this.#should_add_to_interim(is_android_device, result.isFinal)) {
 			return transcript
 		}
 
 		this.#add_final_transcript(transcript)
 		return ''
 	}
-	#handle_result_common(event: SpeechRecognitionEvent, is_android: boolean): void {
+	#handle_result_common(event: SpeechRecognitionEvent, is_android_device: boolean): void {
 		let interim_transcript = ''
 
 		for (let index = event.resultIndex; index < event.results.length; index++) {
-			interim_transcript += this.#process_recognition_result(event.results[index], is_android)
+			interim_transcript += this.#process_recognition_result(
+				event.results[index],
+				is_android_device,
+			)
 		}
 
-		if (is_android) {
+		if (is_android_device) {
 			this.#interim_transcript = interim_transcript
 		}
 

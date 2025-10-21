@@ -17,11 +17,11 @@
 	const total_questions = $derived(questions.length)
 	const current_question_number = $derived(current_index + 1)
 	const question = $derived.by(() => {
-		const question = questions[current_index]
-		if (question === undefined) {
+		const current_question = questions[current_index]
+		if (current_question === undefined) {
 			throw new Error(`Question at index ${String(current_index)} not found`)
 		}
-		return question
+		return current_question
 	})
 
 	let is_playing = $state(false)
@@ -34,7 +34,8 @@
 	let is_completed = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
-	let speech_to_text: SpeechToText | undefined
+	// eslint-disable-next-line unicorn/no-useless-undefined
+	let speech_to_text: SpeechToText | undefined = undefined
 
 	// let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
 	// let v = $derived(page.url.searchParams.get('v') || undefined)
@@ -72,15 +73,6 @@
 		}
 	})
 
-	$effect(() => {
-		if (is_recording) {
-			reset_transcript()
-			speech_to_text?.start(lang)
-		} else {
-			speech_to_text?.stop()
-		}
-	})
-
 	let scale_factor = $state(1)
 
 	function update_scale(): void {
@@ -88,10 +80,11 @@
 	}
 
 	$effect(() => {
-		if (!browser)
+		if (!browser) {
 			return (): void => {
 				// operation
 			}
+		}
 
 		const debounced_update_scale = create_debounced_resize_handler(update_scale)
 
@@ -103,11 +96,22 @@
 		}
 	})
 
-	$effect(() => {
-		if (is_transcript_correct(question.transcript, user_transcript)) {
-			handle_correct_transcript()
+	async function play_audio_safely(): Promise<void> {
+		if (audio_element === undefined) return
+
+		try {
+			await play_audio(audio_element)
+			is_playing = true
+		} catch {
+			is_playing = false
 		}
-	})
+	}
+
+	function stop_audio(): void {
+		if (audio_element === undefined) return
+		pause_audio(audio_element)
+		is_playing = false
+	}
 
 	function handle_play_audio(): void {
 		if (audio_element === undefined) return
@@ -117,12 +121,9 @@
 		}
 
 		if (is_playing) {
-			pause_audio(audio_element)
-			is_playing = false
+			stop_audio()
 		} else {
-			play_audio(audio_element)
-				.then(() => (is_playing = true))
-				.catch(() => (is_playing = false))
+			void play_audio_safely()
 		}
 	}
 
@@ -161,14 +162,14 @@
 
 	function handle_next(): void {
 		if (current_index < total_questions - 1) {
-			current_index++
+			current_index += 1
 			reset_state()
 		}
 	}
 
 	function handle_preview(): void {
 		if (current_index > 0) {
-			current_index--
+			current_index -= 1
 			reset_state()
 		}
 	}
@@ -200,6 +201,21 @@
 		is_completed = true
 		is_recording = false
 	}
+
+	$effect(() => {
+		if (is_recording) {
+			reset_transcript()
+			speech_to_text?.start(lang)
+		} else {
+			speech_to_text?.stop()
+		}
+	})
+
+	$effect(() => {
+		if (is_transcript_correct(question.transcript, user_transcript)) {
+			handle_correct_transcript()
+		}
+	})
 </script>
 
 <div class="relative min-h-screen overflow-hidden">

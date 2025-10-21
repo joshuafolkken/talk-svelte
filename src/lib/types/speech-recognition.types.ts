@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export type TranscriptCallback = (transcript: string) => void
-export type ErrorCallback = (error: string) => void
+type TranscriptCallback = (transcript: string) => void
+type ErrorCallback = (error: string) => void
 
-export interface SpeechRecognition extends EventTarget {
+interface SpeechRecognition extends EventTarget {
 	lang: string
 	continuous: boolean
 	interimResults: boolean
@@ -23,12 +23,12 @@ export interface SpeechRecognition extends EventTarget {
 		((type: string, listener: EventListenerOrEventListenerObject) => void)
 }
 
-export interface SpeechRecognitionEvent extends Event {
+interface SpeechRecognitionEvent extends Event {
 	resultIndex: number
 	results: SpeechRecognitionResultList
 }
 
-export interface SpeechRecognitionErrorEvent extends Event {
+interface SpeechRecognitionErrorEvent extends Event {
 	error: string
 	message: string
 }
@@ -38,4 +38,12 @@ declare global {
 		SpeechRecognition?: new () => SpeechRecognition
 		webkitSpeechRecognition?: new () => SpeechRecognition
 	}
+}
+
+export type {
+	TranscriptCallback,
+	ErrorCallback,
+	SpeechRecognition,
+	SpeechRecognitionEvent,
+	SpeechRecognitionErrorEvent,
 }
