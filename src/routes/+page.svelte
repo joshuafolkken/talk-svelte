@@ -44,12 +44,20 @@
 	let video_id = $state<string | undefined>()
 	let time = $state<string | undefined>()
 
+	function get_parameter(name: string): string | undefined {
+		return page.url.searchParams.get(name) ?? undefined
+	}
+
 	$effect(() => {
 		if (!browser) return
 
-		lang = page.url.searchParams.get('lang') ?? DEFAULT_LANGUAGE
-		video_id = page.url.searchParams.get('v') ?? undefined
-		time = page.url.searchParams.get('t') ?? undefined
+		lang = get_parameter('lang') ?? DEFAULT_LANGUAGE
+		video_id = get_parameter('v')
+		time = get_parameter('t')
+
+		console.log('lang:', lang)
+		console.log('video_id:', video_id)
+		console.log('time:', time)
 	})
 
 	$effect(() => {

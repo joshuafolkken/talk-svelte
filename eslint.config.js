@@ -263,7 +263,7 @@ export default defineConfig(
 			// 不要な catch を禁止
 			'no-useless-catch': 'error',
 			// 複雑度の制限
-			complexity: ['warn', 10],
+			complexity: ['error', 4],
 			// 最大ネストレベル
 			'max-depth': ['warn', 4],
 			// 関数の最大行数
@@ -297,7 +297,7 @@ export default defineConfig(
 			// Svelte ファイルでは Svelte 固有のルールを適用
 
 			// Svelte の $state などのリアクティブ変数は再代入されるため、prefer-const を緩和
-			// 'prefer-const': 'warn',
+			'prefer-const': 'off',
 
 			// Svelte コンポーネントファイルは PascalCase を許可
 			'unicorn/filename-case': [

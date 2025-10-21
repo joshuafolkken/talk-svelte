@@ -4,10 +4,14 @@
 		time?: string | undefined
 	}
 
-	const { video_id = 'dQw4w9WgXcQ', time = '0' }: Props = $props()
-	const time_in_seconds = time.endsWith('s') ? time.slice(0, -1) : time
+	let { video_id = 'dQw4w9WgXcQ', time = '0' }: Props = $props()
+	let time_in_seconds = time.endsWith('s') ? time.slice(0, -1) : time
 
-	const youtube_parameters = [
+	console.log('video_id:', video_id)
+	console.log('time:', time)
+	console.log('time_in_seconds:', time_in_seconds)
+
+	let youtube_parameters = [
 		'autoplay=1',
 		'mute=1',
 		'loop=1',
@@ -20,7 +24,7 @@
 		`start=${time_in_seconds}`,
 	].join('&')
 
-	const youtube_url = `https://www.youtube.com/embed/${video_id}?${youtube_parameters}`
+	let youtube_url = `https://www.youtube.com/embed/${video_id}?${youtube_parameters}`
 </script>
 
 <div class="fixed inset-0 -z-10 overflow-hidden">
