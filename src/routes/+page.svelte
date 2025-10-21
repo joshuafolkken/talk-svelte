@@ -9,7 +9,7 @@
 	import { APP_TITLE, DEFAULT_LANGUAGE } from '$lib/constants'
 	import { questions } from '$lib/data/questions'
 	import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
-	import { calculate_scale_factor, create_debounced_resize_handler } from '$lib/utils/responsive'
+	import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
@@ -86,7 +86,7 @@
 			}
 		}
 
-		const debounced_update_scale = create_debounced_resize_handler(update_scale)
+		const debounced_update_scale = debounce(update_scale)
 
 		update_scale()
 		window.addEventListener('resize', debounced_update_scale)

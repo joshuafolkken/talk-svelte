@@ -390,7 +390,7 @@ export default defineConfig(
 				'error',
 				{
 					min: 2,
-					max: 40,
+					max: 25,
 					exceptions: ['_', 'i', 'j', 'k', 'x', 'y', 'z'],
 					properties: 'never',
 				},
