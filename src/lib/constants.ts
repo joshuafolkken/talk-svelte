@@ -1,7 +1,7 @@
 export const APP_TITLE = 'Talk'
 
 export const DEFAULT_LANGUAGE = 'en-US'
-export const AUDIO_PATH = '/audio'
+export const AUDIO_PATH = 'audio'
 
 export const SCALE_LIMITS = {
 	min: 0.1,
