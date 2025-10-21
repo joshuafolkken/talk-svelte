@@ -44,7 +44,7 @@
 	let video_id = $state<string>()
 	let time = $state<string>()
 
-	function get_parameter(name: string, default_value? = ''): string {
+	function get_parameter(name: string, default_value = ''): string {
 		return page.url.searchParams.get(name) ?? default_value
 	}
 
