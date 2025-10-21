@@ -7,15 +7,18 @@ export interface CheckResult {
 	message: string
 }
 
+function get_git_command(): string {
+	if (os.platform() === 'win32') {
+		return String.raw`"C:\Program Files\Git\bin\git.exe"`
+	}
+	return '/usr/bin/git'
+}
+
 export function get_current_branch(): string {
 	try {
-		if (os.platform() === 'win32') {
-			// eslint-disable-next-line sonarjs/os-command
-			return execSync(String.raw`"C:\Program Files\Git\bin\git.exe" rev-parse --abbrev-ref HEAD`, {
-				encoding: 'utf8',
-			}).trim()
-		}
-		return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
+		const git_command = get_git_command()
+		// eslint-disable-next-line sonarjs/os-command
+		return execSync(`${git_command} rev-parse --abbrev-ref HEAD`, { encoding: 'utf8' }).trim()
 	} catch (error) {
 		throw new Error('Failed to get current branch', { cause: error })
 	}
