@@ -6,7 +6,7 @@
 		children: Snippet
 	}
 
-	let { heading, children }: Props = $props()
+	const { heading, children }: Props = $props()
 </script>
 
 <div class="border-b border-white/25 p-6">

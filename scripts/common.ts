@@ -1,32 +1,37 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process'
-import * as os from 'node:os'
+import { platform } from 'node:os'
 
-export interface CheckResult {
+interface CheckResult {
 	success: boolean
 	message: string
 }
 
-export function getCurrentBranch(): string {
+function get_git_command(): string {
+	if (platform() === 'win32') {
+		return String.raw`"C:\Program Files\Git\bin\git.exe"`
+	}
+	return '/usr/bin/git'
+}
+
+function get_current_branch(): string {
 	try {
-		if (os.platform() === 'win32') {
-			return execSync(String.raw`"C:\Program Files\Git\bin\git.exe" rev-parse --abbrev-ref HEAD`, {
-				encoding: 'utf8',
-			}).trim()
-		} else {
-			return execSync('/usr/bin/git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim()
-		}
+		const git_command = get_git_command()
+		// eslint-disable-next-line sonarjs/os-command
+		return execSync(`${git_command} rev-parse --abbrev-ref HEAD`, { encoding: 'utf8' }).trim()
 	} catch (error) {
-		console.error('Failed to get current branch:', error)
-		process.exit(1)
+		throw new Error('Failed to get current branch', { cause: error })
 	}
 }
 
-export function executeCheck(checkFunction: () => CheckResult): void {
-	const result = checkFunction()
-	console.log(result.message)
+function execute_check(check_function: () => CheckResult): void {
+	const result = check_function()
+	console.log(result.message) // eslint-disable-line no-console
 
 	if (!result.success) {
 		process.exit(1)
 	}
 }
+
+export type { CheckResult }
+export { get_current_branch, execute_check }

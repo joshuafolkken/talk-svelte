@@ -1,21 +1,21 @@
-export function reset_audio(audioElement?: HTMLAudioElement): void {
-	if (!audioElement) return
+export function reset_audio(audio_element?: HTMLAudioElement): void {
+	if (audio_element === undefined) return
 
-	audioElement.pause()
-	audioElement.currentTime = 0
+	audio_element.pause()
+	audio_element.currentTime = 0
 }
 
-export async function play_audio(audioElement?: HTMLAudioElement): Promise<void> {
-	if (!audioElement) return
+export async function play_audio(audio_element?: HTMLAudioElement): Promise<void> {
+	if (audio_element === undefined) return
 
-	return audioElement.play().catch((error) => {
+	await audio_element.play().catch((error: unknown) => {
 		console.error('Failed to play audio:', error)
 		throw error
 	})
 }
 
-export function pause_audio(audioElement?: HTMLAudioElement): void {
-	if (!audioElement) return
+export function pause_audio(audio_element?: HTMLAudioElement): void {
+	if (audio_element === undefined) return
 
-	audioElement.pause()
+	audio_element.pause()
 }

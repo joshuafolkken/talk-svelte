@@ -11,8 +11,8 @@
 	interface Props {
 		question: Question
 		is_playing: boolean
-		show_transcript: boolean
-		show_translation: boolean
+		is_transcript_visible: boolean
+		is_translation_visible: boolean
 		on_play_audio: VoidCallback
 		on_can_play_through: VoidCallback
 		on_toggle_transcript: VoidCallback
@@ -22,19 +22,19 @@
 	}
 
 	let {
-		question,
-		is_playing,
-		show_transcript,
-		show_translation,
-		on_play_audio,
-		on_can_play_through,
-		on_toggle_transcript,
-		on_toggle_translation,
-		on_audio_ended,
+		question, // eslint-disable-line prefer-const
+		is_playing, // eslint-disable-line prefer-const
+		is_transcript_visible, // eslint-disable-line prefer-const
+		is_translation_visible, // eslint-disable-line prefer-const
+		on_play_audio, // eslint-disable-line prefer-const
+		on_can_play_through, // eslint-disable-line prefer-const
+		on_toggle_transcript, // eslint-disable-line prefer-const
+		on_toggle_translation, // eslint-disable-line prefer-const
+		on_audio_ended, // eslint-disable-line prefer-const
 		audio_element = $bindable(),
 	}: Props = $props()
 
-	let audio_path = $derived(asset(`${AUDIO_PATH}/${question.audio_uri}`))
+	const audio_path = $derived(asset(`${AUDIO_PATH}/${question.audio_uri}`))
 </script>
 
 <Section heading="Listen">
@@ -46,7 +46,7 @@
 		aria-label="Question Audio"
 	></audio>
 
-	<IconButton size={BUTTON_SIZES.LG} onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
+	<IconButton size={BUTTON_SIZES.lg} onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
 		{#if is_playing}
 			<PauseIcon />
 		{:else}
@@ -56,14 +56,14 @@
 
 	<div class="flex w-full flex-col items-center gap-4">
 		<ToggleRevealButton
-			revealed={show_transcript}
+			is_revealed={is_transcript_visible}
 			label="Script"
 			content={question.transcript}
 			on_toggle={on_toggle_transcript}
 		/>
 
 		<ToggleRevealButton
-			revealed={show_translation}
+			is_revealed={is_translation_visible}
 			label="Meaning"
 			content={question.translation}
 			on_toggle={on_toggle_translation}

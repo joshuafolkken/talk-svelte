@@ -14,13 +14,19 @@
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
 	let current_index = $state(0)
-	let total_questions = $derived(questions.length)
-	let current_question_number = $derived(current_index + 1)
-	let question = $derived(questions[current_index]!)
+	const total_questions = $derived(questions.length)
+	const current_question_number = $derived(current_index + 1)
+	const question = $derived.by(() => {
+		const current_question = questions[current_index]
+		if (current_question === undefined) {
+			throw new Error(`Question at index ${String(current_index)} not found`)
+		}
+		return current_question
+	})
 
 	let is_playing = $state(false)
-	let show_transcript = $state(false)
-	let show_translation = $state(false)
+	let is_transcript_visible = $state(false)
+	let is_translation_visible = $state(false)
 	let is_recording = $state(false)
 	let user_transcript = $state('')
 	let is_correct = $state(false)
@@ -28,24 +34,27 @@
 	let is_completed = $state(false)
 
 	let audio_element = $state<HTMLAudioElement>()
-	let speech_to_text: SpeechToText | null = null
+	// eslint-disable-next-line unicorn/no-useless-undefined
+	let speech_to_text: SpeechToText | undefined = undefined
 
 	// let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
 	// let v = $derived(page.url.searchParams.get('v') || undefined)
 	// let t = $derived(page.url.searchParams.get('t') || undefined)
 
 	let lang = $state(DEFAULT_LANGUAGE)
-	let v = $state<string | undefined>()
-	let t = $state<string | undefined>()
+	let video_id = $state<string>()
+	let time = $state<string>()
 
-	let scale_factor = $state(1)
+	function get_parameter(name: string, default_value = ''): string {
+		return page.url.searchParams.get(name) ?? default_value
+	}
 
 	$effect(() => {
 		if (!browser) return
 
-		lang = page.url.searchParams.get('lang') || DEFAULT_LANGUAGE
-		v = page.url.searchParams.get('v') || undefined
-		t = page.url.searchParams.get('t') || undefined
+		lang = get_parameter('lang', DEFAULT_LANGUAGE)
+		video_id = get_parameter('v')
+		time = get_parameter('t')
 	})
 
 	$effect(() => {
@@ -59,25 +68,22 @@
 			},
 		)
 
-		return () => {
+		return (): void => {
 			speech_to_text?.destroy()
 		}
 	})
 
-	$effect(() => {
-		if (is_recording) {
-			reset_transcript()
-			speech_to_text?.start(lang)
-		} else {
-			speech_to_text?.stop()
-		}
-	})
+	let scale_factor = $state(1)
+
+	function update_scale(): void {
+		scale_factor = calculate_scale_factor()
+	}
 
 	$effect(() => {
-		if (!browser) return
-
-		const update_scale = () => {
-			scale_factor = calculate_scale_factor()
+		if (!browser) {
+			return (): void => {
+				// operation
+			}
 		}
 
 		const debounced_update_scale = create_debounced_resize_handler(update_scale)
@@ -85,31 +91,39 @@
 		update_scale()
 		window.addEventListener('resize', debounced_update_scale)
 
-		return () => {
+		return (): void => {
 			window.removeEventListener('resize', debounced_update_scale)
 		}
 	})
 
-	$effect(() => {
-		if (is_transcript_correct(question.transcript, user_transcript)) {
-			handle_correct_transcript()
+	async function play_audio_safely(): Promise<void> {
+		if (audio_element === undefined) return
+
+		try {
+			await play_audio(audio_element)
+			is_playing = true
+		} catch {
+			is_playing = false
 		}
-	})
+	}
+
+	function stop_audio(): void {
+		if (audio_element === undefined) return
+		pause_audio(audio_element)
+		is_playing = false
+	}
 
 	function handle_play_audio(): void {
-		if (!audio_element) return
+		if (audio_element === undefined) return
 
 		if (is_recording) {
 			is_recording = false
 		}
 
 		if (is_playing) {
-			pause_audio(audio_element)
-			is_playing = false
+			stop_audio()
 		} else {
-			play_audio(audio_element)
-				.then(() => (is_playing = true))
-				.catch(() => (is_playing = false))
+			void play_audio_safely()
 		}
 	}
 
@@ -129,8 +143,8 @@
 	}
 
 	function reset_user_state(): void {
-		show_transcript = false
-		show_translation = false
+		is_transcript_visible = false
+		is_translation_visible = false
 		is_liked = false
 		is_completed = false
 	}
@@ -148,14 +162,14 @@
 
 	function handle_next(): void {
 		if (current_index < total_questions - 1) {
-			current_index++
+			current_index += 1
 			reset_state()
 		}
 	}
 
 	function handle_preview(): void {
 		if (current_index > 0) {
-			current_index--
+			current_index -= 1
 			reset_state()
 		}
 	}
@@ -163,7 +177,7 @@
 	function handle_clear_transcript(): void {
 		reset_transcript()
 
-		if (is_recording && speech_to_text) {
+		if (is_recording && speech_to_text !== undefined) {
 			speech_to_text.restart()
 		}
 	}
@@ -187,10 +201,25 @@
 		is_completed = true
 		is_recording = false
 	}
+
+	$effect(() => {
+		if (is_recording) {
+			reset_transcript()
+			speech_to_text?.start(lang)
+		} else {
+			speech_to_text?.stop()
+		}
+	})
+
+	$effect(() => {
+		if (is_transcript_correct(question.transcript, user_transcript)) {
+			handle_correct_transcript()
+		}
+	})
 </script>
 
 <div class="relative min-h-screen overflow-hidden">
-	<YoutubeBackground {v} {t} />
+	<YoutubeBackground {video_id} {time} />
 
 	<div
 		class="m-4 mx-auto max-w-sm transition-transform"
@@ -202,13 +231,19 @@
 			<AudioSection
 				{question}
 				{is_playing}
-				{show_transcript}
-				{show_translation}
+				{is_transcript_visible}
+				{is_translation_visible}
 				on_play_audio={handle_play_audio}
 				on_can_play_through={handle_can_play_through}
-				on_toggle_transcript={() => (show_transcript = !show_transcript)}
-				on_toggle_translation={() => (show_translation = !show_translation)}
-				on_audio_ended={() => (is_playing = false)}
+				on_toggle_transcript={(): void => {
+					is_transcript_visible = !is_transcript_visible
+				}}
+				on_toggle_translation={(): void => {
+					is_translation_visible = !is_translation_visible
+				}}
+				on_audio_ended={(): void => {
+					is_playing = false
+				}}
 				bind:audio_element
 			/>
 
@@ -222,15 +257,17 @@
 		</div>
 
 		<ActionButtons
-			liked={is_liked}
-			completed={is_completed}
+			{is_liked}
+			{is_completed}
 			on_retry={handle_retry}
 			on_next={handle_next}
 			on_preview={handle_preview}
-			on_toggle_completed={() => {
+			on_toggle_completed={(): void => {
 				is_completed = !is_completed
 			}}
-			on_toggle_like={() => (is_liked = !is_liked)}
+			on_toggle_like={(): void => {
+				is_liked = !is_liked
+			}}
 		/>
 	</div>
 </div>
