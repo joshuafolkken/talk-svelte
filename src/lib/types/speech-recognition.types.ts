@@ -1,28 +1,30 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export type TranscriptCallback = (transcript: string) => void
 export type ErrorCallback = (error: string) => void
 
 export interface SpeechRecognition extends EventTarget {
 	lang: string
 	continuous: boolean
-	interimResults: boolean // eslint-disable-line @typescript-eslint/naming-convention
-	start(): void
-	stop(): void
+	interimResults: boolean
+	start: () => void
+	stop: () => void
 	onresult: ((this: SpeechRecognition, event: SpeechRecognitionEvent) => void) | null
 	onerror: ((this: SpeechRecognition, event: SpeechRecognitionErrorEvent) => void) | null
 	onend: ((this: SpeechRecognition, event: Event) => void) | null
-	addEventListener(
+	addEventListener: ((
 		type: 'error',
 		listener: (this: SpeechRecognition, event: SpeechRecognitionErrorEvent) => void,
-	): void
-	addEventListener(
-		type: 'result',
-		listener: (this: SpeechRecognition, event: SpeechRecognitionEvent) => void,
-	): void
-	addEventListener(type: string, listener: EventListenerOrEventListenerObject): void
+	) => void) &
+		((
+			type: 'result',
+			listener: (this: SpeechRecognition, event: SpeechRecognitionEvent) => void,
+		) => void) &
+		((type: string, listener: EventListenerOrEventListenerObject) => void)
 }
 
 export interface SpeechRecognitionEvent extends Event {
-	resultIndex: number // eslint-disable-line @typescript-eslint/naming-convention
+	resultIndex: number
 	results: SpeechRecognitionResultList
 }
 
@@ -33,7 +35,7 @@ export interface SpeechRecognitionErrorEvent extends Event {
 
 declare global {
 	interface Window {
-		SpeechRecognition?: new () => SpeechRecognition // eslint-disable-line @typescript-eslint/naming-convention
-		webkitSpeechRecognition?: new () => SpeechRecognition // eslint-disable-line @typescript-eslint/naming-convention
+		SpeechRecognition?: new () => SpeechRecognition
+		webkitSpeechRecognition?: new () => SpeechRecognition
 	}
 }

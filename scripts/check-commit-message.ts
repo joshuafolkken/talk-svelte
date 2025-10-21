@@ -4,7 +4,8 @@ import { execute_check, get_current_branch, type CheckResult } from './common.js
 
 function get_commit_message(): string {
 	// 引数からコミットメッセージファイルのパスを取得
-	const commit_message_file = process.argv[2]
+	const FILE_INDEX = 2
+	const commit_message_file = process.argv.at(FILE_INDEX)
 
 	// 引数がない場合は、デフォルトのパスを試す
 	const default_path = commit_message_file ?? '.git/COMMIT_EDITMSG'
@@ -17,7 +18,7 @@ function get_commit_message(): string {
 }
 
 function extract_issue_number(branch_name: string): string | undefined {
-	const branch_pattern = /^(\d+)-[a-z0-9-]+$/
+	const branch_pattern = /^(\d+)-[\da-z-]+$/u
 	const match = branch_pattern.exec(branch_name)
 	return match?.[1] ?? undefined
 }

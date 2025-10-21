@@ -11,9 +11,9 @@ export const SCALE_LIMITS = {
 export const DEBOUNCE_TIME = 200
 
 export const DEVICE_REGEX = {
-	ios: /iphone|ipad/,
-	android: /android/,
-	tablet: /ipad/,
+	ios: /iphone|ipad/u,
+	android: /android/u,
+	tablet: /ipad/u,
 }
 
 export const VIEWPORT = {

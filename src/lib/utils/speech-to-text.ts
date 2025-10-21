@@ -34,7 +34,7 @@ export class SpeechToText {
 		}
 	}
 
-	#initialize_recognition(): SpeechRecognition | undefined {
+	#get_speech_recognition(): (new () => SpeechRecognition) | undefined {
 		if (typeof globalThis === 'undefined') return undefined
 
 		const window = globalThis as unknown as Window
@@ -42,8 +42,14 @@ export class SpeechToText {
 
 		if (speech_recognition === undefined) {
 			this.#on_error('Speech Recognition API is not supported in this browser')
-			return undefined
 		}
+
+		return speech_recognition
+	}
+
+	#initialize_recognition(): SpeechRecognition | undefined {
+		const speech_recognition = this.#get_speech_recognition()
+		if (speech_recognition === undefined) return undefined
 
 		const recognition = new speech_recognition()
 		recognition.continuous = true

@@ -17,11 +17,11 @@
 	const total_questions = $derived(questions.length)
 	const current_question_number = $derived(current_index + 1)
 	const question = $derived.by(() => {
-		const q = questions[current_index]
-		if (q === undefined) {
+		const question = questions[current_index]
+		if (question === undefined) {
 			throw new Error(`Question at index ${String(current_index)} not found`)
 		}
-		return q
+		return question
 	})
 
 	let is_playing = $state(false)
