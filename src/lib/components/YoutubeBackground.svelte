@@ -5,22 +5,29 @@
 	}
 
 	const { video_id = 'dQw4w9WgXcQ', time = '0' }: Props = $props()
-	const time_in_seconds = time.endsWith('s') ? time.slice(0, -1) : time
+	const time_in_seconds = $state(time.endsWith('s') ? time.slice(0, -1) : time)
+	let youtube_parameters = $state('')
 
-	const youtube_parameters = [
-		'autoplay=1',
-		'mute=1',
-		'loop=1',
-		`playlist=${video_id}`,
-		'controls=0',
-		'rel=0',
-		'modestbranding=1',
-		'playsinline=1',
-		'enablejsapi=1',
-		`start=${time_in_seconds}`,
-	].join('&')
+	function update_youtube_parameters(): void {
+		youtube_parameters = [
+			'autoplay=1',
+			'mute=1',
+			'loop=1',
+			`playlist=${video_id}`,
+			'controls=0',
+			'rel=0',
+			'modestbranding=1',
+			'playsinline=1',
+			'enablejsapi=1',
+			`start=${time_in_seconds}`,
+		].join('&')
+	}
 
-	const youtube_url = `https://www.youtube.com/embed/${video_id}?${youtube_parameters}`
+	$effect(() => {
+		update_youtube_parameters()
+	})
+
+	const youtube_url = $derived(`https://www.youtube.com/embed/${video_id}?${youtube_parameters}`)
 </script>
 
 <div class="fixed inset-0 -z-10 overflow-hidden">
