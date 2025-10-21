@@ -75,18 +75,15 @@ export class SpeechToText {
 		return is_android_device || !is_final
 	}
 
-	#get_transcript_from_result(result: SpeechRecognitionResult | undefined): string | undefined {
+	#get_transcript(result: SpeechRecognitionResult | undefined): string | undefined {
 		if (result === undefined) return undefined
 		return result[0]?.transcript
 	}
 
-	#process_recognition_result(
-		result: SpeechRecognitionResult | undefined,
-		is_android_device: boolean,
-	): string {
+	#process_result(result: SpeechRecognitionResult | undefined, is_android_device: boolean): string {
 		if (result === undefined) return ''
 
-		const transcript = this.#get_transcript_from_result(result)
+		const transcript = this.#get_transcript(result)
 		if (transcript === undefined) return ''
 
 		if (this.#should_add_to_interim(is_android_device, result.isFinal)) {
@@ -100,10 +97,7 @@ export class SpeechToText {
 		let interim_transcript = ''
 
 		for (let index = event.resultIndex; index < event.results.length; index++) {
-			interim_transcript += this.#process_recognition_result(
-				event.results[index],
-				is_android_device,
-			)
+			interim_transcript += this.#process_result(event.results[index], is_android_device)
 		}
 
 		if (is_android_device) {

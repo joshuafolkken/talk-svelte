@@ -42,10 +42,7 @@ export function calculate_scale_factor(): number {
 	return Math.max(SCALE_LIMITS.min, Math.min(scale_x, scale_y, SCALE_LIMITS.max))
 }
 
-export function create_debounced_resize_handler(
-	callback: () => void,
-	delay: number = DEBOUNCE_TIME,
-): () => void {
+export function debounce(callback: () => void, delay: number = DEBOUNCE_TIME): () => void {
 	let timeout_id: ReturnType<typeof setTimeout> | undefined = undefined
 
 	return () => {
