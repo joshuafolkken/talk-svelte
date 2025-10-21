@@ -245,7 +245,8 @@ export default defineConfig(
 
 			// ===== 一般的なコード品質 =====
 			// console の使用を警告（開発時は許可、本番ではエラーにするべき）
-			'no-console': ['warn', { allow: ['warn', 'error'] }],
+			'no-console': ['error', { allow: ['warn', 'error'] }],
+			// 'no-console': 'error',
 			// デバッガーの使用を禁止
 			'no-debugger': 'error',
 			// var の使用を禁止
@@ -267,11 +268,11 @@ export default defineConfig(
 			// 最大ネストレベル
 			'max-depth': ['error', 1],
 			// 関数の最大行数
-			'max-lines-per-function': ['warn', { max: 100, skipBlankLines: true, skipComments: true }],
+			'max-lines-per-function': ['error', { max: 25, skipBlankLines: true, skipComments: true }],
 			// ファイルの最大行数
-			'max-lines': ['warn', { max: 500, skipBlankLines: true, skipComments: true }],
+			'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
 			// パラメータの最大数
-			'max-params': ['warn', 4],
+			'max-params': ['error', 3],
 			// 一貫した return
 			'consistent-return': 'error',
 			// 不要な else を禁止

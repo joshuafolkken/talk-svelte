@@ -16,32 +16,38 @@ function get_commit_message(): string {
 	}
 }
 
+function extract_issue_number(branch_name: string): string | undefined {
+	const branch_pattern = /^(\d+)-[a-z0-9-]+$/
+	const match = branch_pattern.exec(branch_name)
+	return match?.[1] ?? undefined
+}
+
+function create_error_message(issue_number: string, branch: string, message: string): string {
+	return (
+		`🚫 Error: Commit message must include #${issue_number}\n` +
+		`   Current branch: ${branch}\n` +
+		`   Commit message: ${message}\n` +
+		`   Please include #${issue_number} in your commit message\n`
+	)
+}
+
 function check_commit_message(): CheckResult {
 	const current_branch = get_current_branch()
+	const issue_number = extract_issue_number(current_branch)
 
-	// ブランチ名が数字-xxxx-yyyの形式かチェック
-	const branch_pattern = /^(\d+)-[a-z0-9-]+$/
-	const match = branch_pattern.exec(current_branch)
-
-	if (match === null) {
+	if (issue_number === undefined) {
 		return {
 			success: true,
 			message: `✅ Branch format check passed: '${current_branch}' (no issue number required)`,
 		}
 	}
 
-	const issue_number = match[1] ?? '999999'
 	const commit_message = get_commit_message()
 
-	// コミットメッセージに#数字が含まれているかチェック
 	if (!commit_message.includes(`#${issue_number}`)) {
 		return {
 			success: false,
-			message:
-				`🚫 Error: Commit message must include #${issue_number}\n` +
-				`   Current branch: ${current_branch}\n` +
-				`   Commit message: ${commit_message}\n` +
-				`   Please include #${issue_number} in your commit message\n`,
+			message: create_error_message(issue_number, current_branch, commit_message),
 		}
 	}
 
