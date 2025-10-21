@@ -280,9 +280,6 @@ export default defineConfig(
 			// 重複したインポートを禁止
 			'no-duplicate-imports': 'error',
 
-			// TypeScriptコンパイラが既にチェックするため無効化
-			'import/no-unresolved': 'off',
-
 			// TODO コメントを禁止（issueに登録すべき）
 			'no-warning-comments': [
 				'error',
@@ -303,6 +300,62 @@ export default defineConfig(
 					ignore: [0, 1, -1],
 				},
 			],
+
+			// TypeScriptコンパイラが既にチェックするため無効化
+			'import/no-unresolved': 'off',
+			// Prettier: "@ianvs/prettier-plugin-sort-imports" と競合する
+			// インポートの順序を強制
+			// 'import/order': [
+			// 	'error',
+			// 	{
+			// 		groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+			// 		'newlines-between': 'always',
+			// 		alphabetize: { order: 'asc', caseInsensitive: true },
+			// 	},
+			// ],
+			// 名前付きエクスポートを優先
+			'import/prefer-default-export': 'off',
+			'import/no-default-export': 'error',
+			// 循環依存を禁止
+			'import/no-cycle': 'error',
+			// 未使用のインポートを禁止
+			'import/no-unused-modules': 'error',
+
+			// null よりも undefined を優先
+			'unicorn/no-null': 'error',
+			// reduce の過度な使用を禁止
+			'unicorn/no-array-reduce': 'warn',
+			// abbreviation を禁止（明確な命名を強制）
+			'unicorn/prevent-abbreviations': 'error',
+			// より良いエラーメッセージ
+			'unicorn/error-message': 'error',
+			// ファイル名のケース統一
+			'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+
+			// 認知的複雑度の制限（より厳しい複雑度の指標）
+			'sonarjs/cognitive-complexity': ['error', 4],
+			// 同一の条件分岐を禁止
+			'sonarjs/no-identical-conditions': 'error',
+			// 同一の関数を禁止
+			'sonarjs/no-identical-functions': 'error',
+			// 重複した文字列リテラルを禁止
+			'sonarjs/no-duplicate-string': ['error', { threshold: 2 }],
+
+			// async 関数は必ず await を含む
+			'require-await': 'error',
+			'@typescript-eslint/require-await': 'error',
+
+			// Promise コンストラクタの適切な使用
+			'promise/no-new-statics': 'error',
+			'promise/no-return-wrap': 'error',
+			'promise/param-names': 'error',
+			'promise/no-nesting': 'error',
+
+			// a11y（アクセシビリティ）ルールを厳格に
+			'svelte/valid-compile': 'error',
+			'svelte/no-at-html-tags': 'error',
+			'svelte/no-dom-manipulating': 'error',
+			'svelte/require-optimized-style-attribute': 'error',
 		},
 	},
 	{
