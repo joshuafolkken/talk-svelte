@@ -33,6 +33,7 @@
 <div class="fixed inset-0 -z-10 overflow-hidden">
 	<div class="absolute inset-0">
 		<iframe
+			data-testid="youtube-background"
 			class="absolute top-1/2 left-1/2 h-[56.25vw] min-h-screen w-[177.77vh] min-w-screen -translate-x-1/2 -translate-y-1/2"
 			src={youtube_url}
 			title="Background video"
