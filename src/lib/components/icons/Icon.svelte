@@ -8,6 +8,7 @@
 		children: Snippet
 	}
 
+	const STROKE_WIDTH = 2
 	const { size = ICON_SIZES.sm, is_filled = false, children }: Props = $props()
 
 	const size_classes = $derived.by(() => {
@@ -26,7 +27,7 @@
 
 	const fill = $derived(is_filled ? 'currentColor' : 'none')
 	const stroke = $derived(is_filled ? undefined : 'currentColor')
-	const stroke_width = $derived(is_filled ? undefined : 2)
+	const stroke_width = $derived(is_filled ? undefined : STROKE_WIDTH)
 </script>
 
 <svg class={size_classes} {fill} {stroke} stroke-width={stroke_width} viewBox="0 0 24 24">

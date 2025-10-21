@@ -282,6 +282,27 @@ export default defineConfig(
 
 			// TypeScriptコンパイラが既にチェックするため無効化
 			'import/no-unresolved': 'off',
+
+			// TODO コメントを禁止（issueに登録すべき）
+			'no-warning-comments': [
+				'error',
+				{
+					terms: ['todo', 'fixme', 'hack'],
+					location: 'anywhere',
+				},
+			],
+
+			// マジックナンバーを禁止
+			'@typescript-eslint/no-magic-numbers': [
+				'error',
+				{
+					ignoreArrayIndexes: true,
+					ignoreDefaultValues: true,
+					enforceConst: true,
+					detectObjects: false,
+					ignore: [0, 1, -1],
+				},
+			],
 		},
 	},
 	{
