@@ -305,10 +305,10 @@ export default defineConfig(
 				{
 					case: 'pascalCase',
 					ignore: [
-						'\\+page\\.svelte$',
-						'\\+layout\\.svelte$',
-						'\\+error\\.svelte$',
-						'\\+server\\.ts$',
+						String.raw`\+page\.svelte$`,
+						String.raw`\+layout\.svelte$`,
+						String.raw`\+error\.svelte$`,
+						String.raw`\+server\.ts$`,
 					],
 				},
 			],
