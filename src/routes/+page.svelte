@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
+	import { asset } from '$app/paths'
 	import { page } from '$app/state'
 	import ActionButtons from '$lib/components/ActionButtons.svelte'
 	import AudioSection from '$lib/components/AudioSection.svelte'
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
-	import { APP_TITLE, DEFAULT_LANGUAGE } from '$lib/constants'
+	import { APP_TITLE, AUDIO_PATH, DEFAULT_LANGUAGE } from '$lib/constants'
+	import { get_praise_audio_file, praise_audio_files } from '$lib/data/praise-audio'
 	import { questions } from '$lib/data/questions'
 	import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
 	import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
@@ -32,6 +34,8 @@
 	let is_correct = $state(false)
 	let is_liked = $state(false)
 	let is_completed = $state(false)
+
+	const praise_audio_map = $state<Map<string, HTMLAudioElement>>(new Map())
 
 	let audio_element = $state<HTMLAudioElement>()
 	// eslint-disable-next-line unicorn/no-useless-undefined
@@ -62,6 +66,7 @@
 	$effect(() => {
 		speech_to_text = new SpeechToText(
 			(transcript) => {
+				if (is_correct) return
 				user_transcript = transcript
 			},
 			(error) => {
@@ -198,11 +203,32 @@
 	}
 
 	function handle_correct_transcript(): void {
-		user_transcript = question.transcript
 		is_correct = true
 		is_completed = true
 		is_recording = false
+
+		user_transcript = question.transcript
 	}
+
+	function play_praise_audio(): void {
+		const praise_audio_file = get_praise_audio_file()
+		if (praise_audio_file.length === 0) return
+
+		const praise_audio = praise_audio_map.get(praise_audio_file)
+		if (praise_audio === undefined) return
+		praise_audio.currentTime = 0
+		void praise_audio.play()
+	}
+
+	$effect(() => {
+		if (!browser) return
+
+		for (const filename of praise_audio_files) {
+			const audio = new Audio(asset(`/${AUDIO_PATH}/praise/${filename}.mp3`))
+			audio.preload = 'auto'
+			praise_audio_map.set(filename, audio)
+		}
+	})
 
 	$effect(() => {
 		if (is_recording) {
@@ -214,8 +240,10 @@
 	})
 
 	$effect(() => {
+		if (is_correct) return
 		if (is_transcript_correct(question.transcript, user_transcript)) {
 			handle_correct_transcript()
+			play_praise_audio()
 		}
 	})
 </script>

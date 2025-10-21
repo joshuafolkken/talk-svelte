@@ -34,7 +34,7 @@
 		audio_element = $bindable(),
 	}: Props = $props()
 
-	const audio_path = $derived(asset(`${AUDIO_PATH}/${question.audio_uri}`))
+	const audio_path = $derived(asset(`/${AUDIO_PATH}/${question.audio_uri}.mp3`))
 </script>
 
 <Section heading="Listen">
