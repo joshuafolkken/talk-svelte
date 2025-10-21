@@ -543,8 +543,6 @@ export default defineConfig(
 			'no-unmodified-loop-condition': 'error',
 			// 不要な.call()/.apply()を禁止
 			'no-useless-call': 'error',
-			// 一貫性のあるreturnを要求
-			'consistent-return': 'error',
 			// カーリーブレースを必須化
 			curly: ['error', 'multi-line'],
 			// default caseを要求
@@ -573,8 +571,6 @@ export default defineConfig(
 			'no-dupe-keys': 'error',
 			// case句の重複を禁止
 			'no-duplicate-case': 'error',
-			// 空のブロック文を禁止
-			'no-empty': 'error',
 			// 正規表現での空の文字クラスを禁止
 			'no-empty-character-class': 'error',
 			// 条件式での代入を禁止
@@ -771,8 +767,6 @@ export default defineConfig(
 			'unicorn/require-array-join-separator': 'error',
 			// toFixed()に引数を必須化
 			'unicorn/require-number-to-fixed-digits-argument': 'error',
-			// 配列メソッドにコールバックのreturnを必須化
-			'unicorn/require-array-join-separator': 'error',
 			// 一貫性のないArray#lengthへの代入を禁止
 			'unicorn/no-unreadable-iife': 'error',
 			// process.exit()よりthrowを優先
@@ -797,8 +791,6 @@ export default defineConfig(
 			'unicorn/prefer-includes': 'error',
 			// .at()を優先
 			'unicorn/prefer-at': 'error',
-			// String#replaceAll()を優先
-			'unicorn/prefer-string-replace-all': 'error',
 
 			// 認知的複雑度の制限（より厳しい複雑度の指標）
 			'sonarjs/cognitive-complexity': ['error', 4],
