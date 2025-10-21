@@ -45,14 +45,16 @@
 	let video_id = $state<string>()
 	let time = $state<string>()
 
-	function get_parameter(name: string, default_value = ''): string {
-		return page.url.searchParams.get(name) ?? default_value
+	function get_parameter(name: string): string | undefined {
+		const value = page.url.searchParams.get(name)
+		if (value === null) return undefined
+		return value
 	}
 
 	$effect(() => {
 		if (!browser) return
 
-		lang = get_parameter('lang', DEFAULT_LANGUAGE)
+		lang = get_parameter('lang') ?? DEFAULT_LANGUAGE
 		video_id = get_parameter('v')
 		time = get_parameter('t')
 	})
