@@ -10,6 +10,7 @@ export interface CheckResult {
 export function get_current_branch(): string {
 	try {
 		if (os.platform() === 'win32') {
+			// eslint-disable-next-line sonarjs/os-command
 			return execSync(String.raw`"C:\Program Files\Git\bin\git.exe" rev-parse --abbrev-ref HEAD`, {
 				encoding: 'utf8',
 			}).trim()

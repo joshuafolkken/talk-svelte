@@ -7,9 +7,18 @@ export interface SpeechRecognition extends EventTarget {
 	interimResults: boolean // eslint-disable-line @typescript-eslint/naming-convention
 	start(): void
 	stop(): void
-	onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => void) | null
-	onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => void) | null
-	onend: ((this: SpeechRecognition, ev: Event) => void) | null
+	onresult: ((this: SpeechRecognition, event: SpeechRecognitionEvent) => void) | null
+	onerror: ((this: SpeechRecognition, event: SpeechRecognitionErrorEvent) => void) | null
+	onend: ((this: SpeechRecognition, event: Event) => void) | null
+	addEventListener(
+		type: 'error',
+		listener: (this: SpeechRecognition, event: SpeechRecognitionErrorEvent) => void,
+	): void
+	addEventListener(
+		type: 'result',
+		listener: (this: SpeechRecognition, event: SpeechRecognitionEvent) => void,
+	): void
+	addEventListener(type: string, listener: EventListenerOrEventListenerObject): void
 }
 
 export interface SpeechRecognitionEvent extends Event {

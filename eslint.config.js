@@ -5,7 +5,11 @@ import { fileURLToPath } from 'node:url'
 import { includeIgnoreFile } from '@eslint/compat'
 import js from '@eslint/js'
 import prettier from 'eslint-config-prettier'
+import importPlugin from 'eslint-plugin-import'
+import promise from 'eslint-plugin-promise'
+import sonarjs from 'eslint-plugin-sonarjs'
 import svelte from 'eslint-plugin-svelte'
+import unicorn from 'eslint-plugin-unicorn'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 import ts from 'typescript-eslint'
@@ -54,6 +58,29 @@ export default defineConfig(
 	...svelte.configs.recommended,
 	prettier,
 	...svelte.configs.prettier,
+	unicorn.configs.recommended,
+	sonarjs.configs.recommended,
+	// promise.configs.recommended,
+	{
+		plugins: {
+			promise,
+		},
+		rules: {
+			...promise.configs.recommended.rules,
+		},
+	},
+	importPlugin.flatConfigs.recommended,
+	{
+		settings: {
+			'import/resolver': {
+				typescript: {
+					alwaysTryTypes: true,
+					project: './tsconfig.json',
+				},
+				node: true,
+			},
+		},
+	},
 	{
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node },
@@ -251,6 +278,9 @@ export default defineConfig(
 			'no-else-return': 'error',
 			// 重複したインポートを禁止
 			'no-duplicate-imports': 'error',
+
+			// TypeScriptコンパイラが既にチェックするため無効化
+			'import/no-unresolved': 'off',
 		},
 	},
 	{
@@ -265,8 +295,33 @@ export default defineConfig(
 		},
 		rules: {
 			// Svelte ファイルでは Svelte 固有のルールを適用
+
 			// Svelte の $state などのリアクティブ変数は再代入されるため、prefer-const を緩和
 			// 'prefer-const': 'warn',
+
+			// Svelte コンポーネントファイルは PascalCase を許可
+			'unicorn/filename-case': [
+				'error',
+				{
+					case: 'pascalCase',
+					ignore: [
+						'\\+page\\.svelte$',
+						'\\+layout\\.svelte$',
+						'\\+error\\.svelte$',
+						'\\+server\\.ts$',
+					],
+				},
+			],
+
+			// Svelte の Props インターフェース名を許可
+			'unicorn/prevent-abbreviations': [
+				'error',
+				{
+					allowList: {
+						Props: true,
+					},
+				},
+			],
 		},
 	},
 	// {

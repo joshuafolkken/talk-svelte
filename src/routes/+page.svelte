@@ -44,8 +44,6 @@
 	let video_id = $state<string | undefined>()
 	let time = $state<string | undefined>()
 
-	let scale_factor = $state(1)
-
 	$effect(() => {
 		if (!browser) return
 
@@ -79,12 +77,17 @@
 		}
 	})
 
-	$effect(() => {
-		if (!browser) return undefined
+	let scale_factor = $state(1)
 
-		const update_scale = (): void => {
-			scale_factor = calculate_scale_factor()
-		}
+	function update_scale(): void {
+		scale_factor = calculate_scale_factor()
+	}
+
+	$effect(() => {
+		if (!browser)
+			return (): void => {
+				// operation
+			}
 
 		const debounced_update_scale = create_debounced_resize_handler(update_scale)
 

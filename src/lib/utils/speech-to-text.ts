@@ -36,14 +36,14 @@ export class SpeechToText {
 		const recognition = new speech_recognition()
 		recognition.continuous = true
 		recognition.interimResults = true
-		recognition.onerror = this.#handle_error.bind(this)
+		recognition.addEventListener('error', this.#handle_error.bind(this))
 
 		if (is_android()) {
-			recognition.onresult = this.#handle_result_android.bind(this)
-			recognition.onend = this.#handle_end_android.bind(this)
+			recognition.addEventListener('result', this.#handle_result_android.bind(this))
+			recognition.addEventListener('end', this.#handle_end_android.bind(this))
 		} else {
-			recognition.onresult = this.#handle_result.bind(this)
-			recognition.onend = this.#handle_end.bind(this)
+			recognition.addEventListener('result', this.#handle_result.bind(this))
+			recognition.addEventListener('end', this.#handle_end.bind(this))
 		}
 
 		return recognition
@@ -64,8 +64,8 @@ export class SpeechToText {
 	#handle_result_common(event: SpeechRecognitionEvent, is_android: boolean): void {
 		let interim_transcript = ''
 
-		for (let i = event.resultIndex; i < event.results.length; i++) {
-			const result = event.results[i]
+		for (let index = event.resultIndex; index < event.results.length; index++) {
+			const result = event.results[index]
 			if (result === undefined) continue
 
 			const transcript = result[0]?.transcript

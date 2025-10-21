@@ -4,10 +4,10 @@ import { execute_check, get_current_branch, type CheckResult } from './common.js
 
 function get_commit_message(): string {
 	// 引数からコミットメッセージファイルのパスを取得
-	const commit_msg_file = process.argv[2]
+	const commit_message_file = process.argv[2]
 
 	// 引数がない場合は、デフォルトのパスを試す
-	const default_path = commit_msg_file ?? '.git/COMMIT_EDITMSG'
+	const default_path = commit_message_file ?? '.git/COMMIT_EDITMSG'
 
 	try {
 		return readFileSync(default_path, 'utf8').trim()

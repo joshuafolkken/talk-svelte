@@ -10,9 +10,20 @@
 
 	const { size = ICON_SIZES.sm, is_filled = false, children }: Props = $props()
 
-	const size_classes = $derived(
-		size === ICON_SIZES.lg ? 'h-8 w-8' : size === ICON_SIZES.md ? 'h-6 w-6' : 'h-4 w-4',
-	)
+	const size_classes = $derived.by(() => {
+		switch (size) {
+			case ICON_SIZES.lg: {
+				return 'h-8 w-8'
+			}
+			case ICON_SIZES.md: {
+				return 'h-6 w-6'
+			}
+			default: {
+				return 'h-4 w-4'
+			}
+		}
+	})
+
 	const fill = $derived(is_filled ? 'currentColor' : 'none')
 	const stroke = $derived(is_filled ? undefined : 'currentColor')
 	const stroke_width = $derived(is_filled ? undefined : 2)
