@@ -1,10 +1,12 @@
 import { expect, test } from '@playwright/test'
 
-for (const { goto_path, expected } of [
+const data = [
 	{ goto_path: '', expected: 'dQw4w9WgXcQ' },
 	{ goto_path: '?v=Z4J2ecm8m5k', expected: 'Z4J2ecm8m5k' },
-]) {
-	test(`youtube: goto: ${goto_path}`, async ({ page }) => {
+] satisfies Array<{ goto_path: string; expected: string }>
+
+for (const { goto_path, expected } of data) {
+	test(`youtube: ${goto_path}`, async ({ page }) => {
 		await page.goto(goto_path)
 
 		const youtube_background = page.getByTestId('youtube-background')
