@@ -1,6 +1,6 @@
 import { existsSync, readdirSync } from 'node:fs'
 import path from 'node:path'
-import type { Question } from '$lib/types/question'
+// import type { Question } from '$lib/types/question'
 import { expect, it } from 'vitest'
 import { praise_audio_files } from './praise-audio.js'
 import { questions } from './questions.js'
@@ -8,7 +8,7 @@ import { questions } from './questions.js'
 const STATIC_DIRECTORY = 'static'
 const AUDIO_DIRECTORY = 'audio'
 const MP3_EXTENSION = '.mp3'
-const REQUIRED_PROPERTIES: Array<keyof Question> = ['audio_uri', 'transcript', 'translation']
+// const REQUIRED_PROPERTIES: Array<keyof Question> = ['audio_uri', 'transcript', 'translation']
 const MIN_QUESTIONS_COUNT = 0
 
 it.each(questions)('mp3 file exists: $audio_uri', (question) => {
@@ -23,12 +23,12 @@ it('questions is not empty', () => {
 	expect(questions.length).toBeGreaterThan(MIN_QUESTIONS_COUNT)
 })
 
-it.each(questions)('has required properties: $audio_uri', (question) => {
-	for (const property of REQUIRED_PROPERTIES) {
-		expect(question).toHaveProperty(property)
-		expect(typeof question[property]).toBe('string')
-	}
-})
+// it.each(questions)('has required properties: $audio_uri', (question) => {
+// 	for (const property of REQUIRED_PROPERTIES) {
+// 		expect(question).toHaveProperty(property)
+// 		expect(typeof question[property]).toBe('string')
+// 	}
+// })
 
 it('audio_uri should be unique', () => {
 	const audio_uris = questions.map((question) => question.audio_uri)

@@ -1,7 +1,10 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import fetch from 'node-fetch'
-import { text_to_slug } from './text-to-slug.js'
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
+import { questions } from '../src/lib/data/questions.js'
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
+import { text_to_slug } from '../src/lib/utils/text-to-slug.js'
 
 const ARGV_SLICE_START = 2
 
@@ -15,7 +18,7 @@ const API_KEY =
 	})()
 // ElevenLabs voice ID (replace this with your actual voice ID)
 const VOICE_ID = 'Xb7hH8MSUJpSbSDYk0k2' // Alice
-const OUTPUT_DIRECTORY = './output'
+const OUTPUT_DIRECTORY = './static/audio'
 
 const command_line_arguments = new Set(process.argv.slice(ARGV_SLICE_START))
 const should_force_overwrite =
@@ -36,13 +39,7 @@ Options:
 	process.exit(0)
 }
 
-const text = `
-Hello there!
-How are you doing today?
-That's great!
-Let's get started!
-This is fine
-`
+const text = questions.map((question) => question.transcript).join('\n')
 
 const MILLISECONDS_PER_SECOND = 1000
 const DECIMAL_PLACES = 2

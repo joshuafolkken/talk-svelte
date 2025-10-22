@@ -30,7 +30,8 @@
 		"lefthook:push": "lefthook run pre-push",
 		"sonar": "source .env && sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dsonar.branch.name=$(git branch --show-current)",
 		"check-commit-message": "tsx scripts/check-commit-message.ts",
-		"prevent-main-commit": "tsx scripts/prevent-main-commit.ts"
+		"prevent-main-commit": "tsx scripts/prevent-main-commit.ts",
+		"generate-voices": "npx dotenv-cli -e .env tsx scripts/generate-voices.ts"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.1",
