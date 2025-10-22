@@ -39,6 +39,7 @@ Options:
 const text = `
 Hello there!
 How are you doing today?
+That's great!
 Let's get started!
 This is fine
 `
