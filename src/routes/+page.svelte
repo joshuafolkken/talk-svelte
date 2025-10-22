@@ -9,12 +9,13 @@
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { APP_TITLE, AUDIO_PATH, DEFAULT_LANGUAGE } from '$lib/constants'
 	import { get_praise_audio_file, praise_audio_files } from '$lib/data/praise-audio'
-	import { questions } from '$lib/data/questions'
+	import { get_shuffled_questions } from '$lib/data/questions'
 	import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
 	import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
+	const questions = get_shuffled_questions()
 	let current_index = $state(0)
 	const total_questions = $derived(questions.length)
 	const current_question_number = $derived(current_index + 1)
