@@ -160,7 +160,7 @@ export default defineConfig(
 					filter: {
 						// 一般的な HTTP ヘッダー名のパターンのみ許可
 						regex:
-							'^(Content-Type|Accept|Accept-Language|Authorization|Cache-Control|Connection|Cookie|Host|Origin|Referer|User-Agent|X-[A-Za-z-]+|x[a-z]-[a-z-]+)$',
+							'^(Content-Type|Accept|Accept-Language|Authorization|Cache-Control|Connection|Cookie|Host|Origin|Referer|User-Agent|X-[A-Za-z-]+|x[a-z]-[a-z-]+|[a-z-/]+)$',
 						match: false,
 					},
 				},

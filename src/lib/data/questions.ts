@@ -43,7 +43,7 @@ const questions_map = {
 	'i-m-so-tired': ["I'm so tired.", 'めっちゃ疲れた。'],
 	'you-made-my-day': ['You made my day!', 'おかげで最高の一日になったよ。'],
 	'i-m-not-sure-about-that': ["I'm not sure about that.", 'それはちょっとどうかな。'],
-	'its-up-to-you': ["It's up to you.", '君次第だよ。'],
+	'it-s-up-to-you': ["It's up to you.", '君次第だよ。'],
 	'that-s-the-point': ["That's the point.", 'そこがポイントだよ。'],
 	'i-knew-it': ['I knew it.', 'やっぱりね！'],
 	'i-m-looking-forward-to-it': ["I'm looking forward to it.", '楽しみにしてるよ。'],
