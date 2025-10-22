@@ -1,7 +1,8 @@
-import { existsSync } from 'node:fs'
+import { existsSync, readdirSync } from 'node:fs'
 import path from 'node:path'
 import type { Question } from '$lib/types/question'
 import { expect, it } from 'vitest'
+import { praise_audio_files } from './praise-audio.js'
 import { questions } from './questions.js'
 
 const STATIC_DIRECTORY = 'static'
@@ -29,7 +30,7 @@ it.each(questions)('has required properties: $audio_uri', (question) => {
 	}
 })
 
-it('audio_uri should be unique (no duplicates)', () => {
+it('audio_uri should be unique', () => {
 	const audio_uris = questions.map((question) => question.audio_uri)
 	const unique_audio_uris = [...new Set(audio_uris)]
 
@@ -41,4 +42,16 @@ it('audio_uri should be unique (no duplicates)', () => {
 		const unique_duplicates = [...new Set(duplicates)]
 		throw new Error(`Duplicate audio_uri found: ${unique_duplicates.join(', ')}`)
 	}
+})
+
+const audio_directory_path = path.join(process.cwd(), STATIC_DIRECTORY, AUDIO_DIRECTORY)
+const mp3_files = readdirSync(audio_directory_path)
+	.filter((file) => file.endsWith(MP3_EXTENSION))
+	.map((file) => file.replace(MP3_EXTENSION, ''))
+
+it.each(mp3_files)('mp3 file is defined: %s', (mp3_file) => {
+	const question_audio_uris = questions.map((question) => question.audio_uri)
+	const all_defined_audio_uris = new Set([...question_audio_uris, ...praise_audio_files])
+
+	expect(all_defined_audio_uris.has(mp3_file)).toBe(true)
 })
