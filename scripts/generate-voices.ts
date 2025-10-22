@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import fetch from 'node-fetch'
+import { text_to_slug } from './text-to-slug.js'
 
 const ARGV_SLICE_START = 2
 
@@ -103,44 +104,6 @@ function print_credit_info(info: SubscriptionInfo, label: string): void {
 	console.info()
 }
 
-/**
- * Convert text to safe slug format for filename
- * - Non-alphanumeric characters become hyphens
- * - Ends with ? gets -q suffix
- * - Ends with ! gets -x suffix
- */
-function remove_leading_hyphens(input: string): string {
-	return input.replaceAll(/^-+/gu, '')
-}
-
-function remove_trailing_hyphens(input: string): string {
-	// Remove trailing hyphens (iterative process)
-	let result = input
-	while (result.endsWith('-')) {
-		result = result.slice(0, -1)
-	}
-	return result
-}
-
-function to_slug(filename: string): string {
-	const trimmed = filename.trim()
-	// Convert to lowercase and replace non-alphanumeric characters with hyphens
-	let slug = trimmed.toLowerCase().replaceAll(/[^\da-z]+/gu, '-')
-
-	// Remove leading and trailing hyphens
-	slug = remove_leading_hyphens(slug)
-	slug = remove_trailing_hyphens(slug)
-
-	// Add appropriate suffix if original text ends with punctuation
-	if (trimmed.endsWith('?')) {
-		return `${slug}-q`
-	}
-	if (trimmed.endsWith('!')) {
-		return `${slug}-x`
-	}
-	return slug
-}
-
 async function text_to_speech(line: string, filename: string): Promise<void> {
 	const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`
 
@@ -229,7 +192,7 @@ async function process_line(
 	index: number,
 	total: number,
 ): Promise<'generated' | 'skipped' | 'failed'> {
-	const safe_name = to_slug(line)
+	const safe_name = text_to_slug(line)
 	const output_path = path.join(OUTPUT_DIRECTORY, `${safe_name}.mp3`)
 
 	console.info(`[${String(index + 1)}/${String(total)}] ${line}`)
