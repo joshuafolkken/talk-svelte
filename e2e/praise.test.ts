@@ -5,7 +5,7 @@ const STATUS_CODE_OK = 200
 
 for (const audio_file of praise_audio_files) {
 	test(`praise audio file: ${audio_file}`, async ({ page }) => {
-		const response = await page.request.get(`audio/praise/${audio_file}.mp3`)
+		const response = await page.request.get(`audio/${audio_file}.mp3`)
 		expect(response.status(), `${audio_file}.mp3 should return 200`).toBe(STATUS_CODE_OK)
 
 		const content_type = response.headers()['content-type']
