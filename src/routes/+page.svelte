@@ -224,7 +224,7 @@
 		if (!browser) return
 
 		for (const filename of praise_audio_files) {
-			const audio = new Audio(asset(`/${AUDIO_PATH}/praise/${filename}.mp3`))
+			const audio = new Audio(asset(`/${AUDIO_PATH}/${filename}.mp3`))
 			audio.preload = 'auto'
 			praise_audio_map.set(filename, audio)
 		}
