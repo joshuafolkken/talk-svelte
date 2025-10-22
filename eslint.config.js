@@ -156,8 +156,15 @@ export default defineConfig(
 				{
 					selector: 'objectLiteralProperty',
 					format: ['snake_case'],
+					// format: ['snake_case', 'kebab-case'],
 					// format: ['snake_case', 'camelCase', 'PascalCase'],
+					// format: ['snake_case', 'camelCase', 'PascalCase', 'kebab-case'],
 					leadingUnderscore: 'allow',
+					filter: {
+						// kebab-case のプロパティを許可
+						regex: '^[a-z]+([/-][a-z]+)*$',
+						match: false,
+					},
 				},
 				// 型プロパティは snake_case
 				{
