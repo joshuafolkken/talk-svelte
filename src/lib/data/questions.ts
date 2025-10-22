@@ -1,4 +1,5 @@
 import type { Question } from '$lib/types/question'
+import { shuffle_array } from '$lib/utils/arrays'
 import { text_to_slug } from '$lib/utils/text-to-slug'
 
 // audio_uri を自動生成するヘルパー関数
@@ -76,4 +77,8 @@ const questions: Array<Question> = [
 	q("That's it.", '以上だよ / それだけ。'),
 ]
 
-export { questions }
+function get_shuffled_questions(): Array<Question> {
+	return shuffle_array(questions)
+}
+
+export { get_shuffled_questions, questions }
