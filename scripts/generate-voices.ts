@@ -12,8 +12,8 @@ const API_KEY =
 			'ELEVENLABS_API_KEY is required. Please set it in your .env file or environment variables.',
 		)
 	})()
-// ElevenLabs voice ID (この値は実際のvoice IDに置き換える必要があります)
-const VOICE_ID = 'Alice'
+// ElevenLabs voice ID (replace this with your actual voice ID)
+const VOICE_ID = 'Xb7hH8MSUJpSbSDYk0k2' // Alice
 const OUTPUT_DIRECTORY = './output'
 
 const command_line_arguments = new Set(process.argv.slice(ARGV_SLICE_START))
@@ -45,18 +45,76 @@ This is fine
 const MILLISECONDS_PER_SECOND = 1000
 const DECIMAL_PLACES = 2
 const SEPARATOR_LENGTH = 50
+const PERCENTAGE_MULTIPLIER = 100
+const PADDING_WIDTH = 10
+
+interface SubscriptionInfo {
+	character_count: number
+	character_limit: number
+	can_extend_character_limit: boolean
+	allowed_to_extend_character_limit: boolean
+	next_character_count_reset_unix: number
+	voice_limit: number
+	professional_voice_limit: number
+	can_extend_voice_limit: boolean
+	can_use_instant_voice_cloning: boolean
+	available_models: Array<{
+		model_id: string
+		display_name: string
+	}>
+	can_use_delayed_payment_methods: boolean
+}
 
 /**
- * テキストを安全なスラッグ形式のファイル名に変換する
- * - 非英数字はハイフンに
- * - 末尾が記号の場合はハイフンで終わるように
+ * Get ElevenLabs subscription information
+ */
+async function get_subscription_info(): Promise<SubscriptionInfo> {
+	const url = 'https://api.elevenlabs.io/v1/user/subscription'
+
+	const response = await fetch(url, {
+		method: 'GET',
+		headers: {
+			'xi-api-key': API_KEY,
+		},
+	})
+
+	if (!response.ok) {
+		const error_text = await response.text()
+		throw new Error(`API Error: ${String(response.status)} ${response.statusText}\n${error_text}`)
+	}
+
+	return (await response.json()) as SubscriptionInfo
+}
+
+/**
+ * Print credit information
+ */
+function print_credit_info(info: SubscriptionInfo, label: string): void {
+	const used = info.character_count
+	const limit = info.character_limit
+	const remaining = limit - used
+	const percentage = ((used / limit) * PERCENTAGE_MULTIPLIER).toFixed(1)
+
+	console.info(`💳 ${label}:`)
+	console.info(
+		`  Used:      ${String(used).padStart(PADDING_WIDTH)} / ${String(limit)} chars (${percentage}%)`,
+	)
+	console.info(`  Remaining: ${String(remaining).padStart(PADDING_WIDTH)} chars`)
+	console.info()
+}
+
+/**
+ * Convert text to safe slug format for filename
+ * - Non-alphanumeric characters become hyphens
+ * - Ends with ? gets -q suffix
+ * - Ends with ! gets -x suffix
  */
 function remove_leading_hyphens(input: string): string {
 	return input.replaceAll(/^-+/gu, '')
 }
 
 function remove_trailing_hyphens(input: string): string {
-	// 末尾のハイフンを削除（繰り返し処理）
+	// Remove trailing hyphens (iterative process)
 	let result = input
 	while (result.endsWith('-')) {
 		result = result.slice(0, -1)
@@ -66,16 +124,21 @@ function remove_trailing_hyphens(input: string): string {
 
 function to_slug(filename: string): string {
 	const trimmed = filename.trim()
-	// 小文字にして非英数字をハイフンに置換
+	// Convert to lowercase and replace non-alphanumeric characters with hyphens
 	let slug = trimmed.toLowerCase().replaceAll(/[^\da-z]+/gu, '-')
 
-	// 先頭と末尾のハイフンを削除
+	// Remove leading and trailing hyphens
 	slug = remove_leading_hyphens(slug)
 	slug = remove_trailing_hyphens(slug)
 
-	// 元のテキストが記号（!?など）で終わっていたら、末尾にハイフンを追加
-	const has_ending_punctuation = /[!?]$/u.test(trimmed)
-	return has_ending_punctuation ? `${slug}-` : slug
+	// Add appropriate suffix if original text ends with punctuation
+	if (trimmed.endsWith('?')) {
+		return `${slug}-q`
+	}
+	if (trimmed.endsWith('!')) {
+		return `${slug}-x`
+	}
+	return slug
 }
 
 async function text_to_speech(line: string, filename: string): Promise<void> {
@@ -119,12 +182,17 @@ function parse_lines(input_text: string): Array<string> {
 		.filter(Boolean)
 }
 
-function print_header(lines: Array<string>): void {
+function count_total_chars(lines: Array<string>): number {
+	return lines.reduce((total, line) => total + line.length, 0)
+}
+
+function print_header(lines: Array<string>, total_chars: number): void {
 	console.info(`📁 Output directory: ${OUTPUT_DIRECTORY}`)
 	console.info(
 		`🔧 Mode: ${should_force_overwrite ? '🔄 Force overwrite' : '⏭️  Skip existing files'}`,
 	)
 	console.info(`📝 Total lines: ${String(lines.length)}`)
+	console.info(`📊 Required characters: ${String(total_chars)} chars`)
 	console.info()
 }
 
@@ -195,7 +263,7 @@ function increment_stat(stats: ProcessingStats, result: 'generated' | 'skipped' 
 			break
 		}
 		default: {
-			// このケースは型システムにより到達不可能だが、default caseが必要
+			// This case is unreachable due to type system, but default case is required
 			throw new Error('Unknown result type')
 		}
 	}
@@ -217,19 +285,44 @@ async function process_all_lines(lines: Array<string>): Promise<ProcessingStats>
 	return stats
 }
 
-async function main(): Promise<void> {
-	const start_time = Date.now()
+async function print_initial_credit(): Promise<SubscriptionInfo> {
+	console.info('🔍 Fetching credit information...\n')
+	const initial_credit = await get_subscription_info()
+	print_credit_info(initial_credit, 'Initial credit')
+	return initial_credit
+}
 
+async function print_final_credit(initial_credit: SubscriptionInfo): Promise<void> {
+	console.info()
+	const final_credit = await get_subscription_info()
+	print_credit_info(final_credit, 'Final credit')
+
+	const consumed = final_credit.character_count - initial_credit.character_count
+	if (consumed > 0) {
+		console.info(`📉 Consumed characters: ${String(consumed)} chars`)
+		console.info()
+	}
+}
+
+async function run_generation(): Promise<ProcessingStats> {
 	ensure_output_directory()
 
 	const lines = parse_lines(text)
-	print_header(lines)
+	const total_chars = count_total_chars(lines)
+	print_header(lines, total_chars)
 
-	const stats = await process_all_lines(lines)
+	return await process_all_lines(lines)
+}
 
+async function main(): Promise<void> {
+	const start_time = Date.now()
+
+	const initial_credit = await print_initial_credit()
+	const stats = await run_generation()
 	const elapsed_time = ((Date.now() - start_time) / MILLISECONDS_PER_SECOND).toFixed(DECIMAL_PLACES)
 
-	print_summary(stats, lines, elapsed_time)
+	print_summary(stats, parse_lines(text), elapsed_time)
+	await print_final_credit(initial_credit)
 
 	if (stats.failed > 0) {
 		throw new Error('Some files failed to generate')
