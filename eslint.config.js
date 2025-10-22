@@ -558,7 +558,7 @@ export default defineConfig(
 			'dot-notation': [
 				'error',
 				{
-					allowPattern: '^process\\.env\\.',
+					allowPattern: String.raw`^process\.env\.`,
 				},
 			],
 			// 分割代入のデフォルト値を要求
