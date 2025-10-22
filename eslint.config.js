@@ -156,13 +156,11 @@ export default defineConfig(
 				{
 					selector: 'objectLiteralProperty',
 					format: ['snake_case'],
-					// format: ['snake_case', 'kebab-case'],
-					// format: ['snake_case', 'camelCase', 'PascalCase'],
-					// format: ['snake_case', 'camelCase', 'PascalCase', 'kebab-case'],
 					leadingUnderscore: 'allow',
 					filter: {
-						// kebab-case のプロパティを許可
-						regex: '^[a-z]+([/-][a-z]+)*$',
+						// 一般的な HTTP ヘッダー名のパターンのみ許可
+						regex:
+							'^(Content-Type|Accept|Accept-Language|Authorization|Cache-Control|Connection|Cookie|Host|Origin|Referer|User-Agent|X-[A-Za-z-]+|x[a-z]-[a-z-]+)$',
 						match: false,
 					},
 				},
@@ -342,7 +340,7 @@ export default defineConfig(
 
 			// ===== 一般的なコード品質 =====
 			// console の使用を警告（開発時は許可、本番ではエラーにするべき）
-			'no-console': ['error', { allow: ['warn', 'error'] }],
+			'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
 			// 'no-console': 'error',
 			// デバッガーの使用を禁止
 			'no-debugger': 'error',
@@ -557,7 +555,12 @@ export default defineConfig(
 			// default caseを最後に配置
 			'default-case-last': 'error',
 			// ドット記法を優先
-			'dot-notation': 'error',
+			'dot-notation': [
+				'error',
+				{
+					allowPattern: '^process\\.env\\.',
+				},
+			],
 			// 分割代入のデフォルト値を要求
 			'default-param-last': 'error',
 			// グループ化された変数宣言を要求
@@ -894,6 +897,13 @@ export default defineConfig(
 					},
 				},
 			],
+		},
+	},
+	{
+		// CLI スクリプトでは process.exit() を許可
+		files: ['scripts/**/*.ts', 'scripts/**/*.js'],
+		rules: {
+			'unicorn/no-process-exit': 'off',
 		},
 	},
 	// {
