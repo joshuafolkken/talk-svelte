@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test'
 
-const data = [
+const cases = [
 	{ goto_path: '', expected: 'dQw4w9WgXcQ' },
 	{ goto_path: '?v=Z4J2ecm8m5k', expected: 'Z4J2ecm8m5k' },
 ] satisfies Array<{ goto_path: string; expected: string }>
 
-for (const { goto_path, expected } of data) {
+for (const { goto_path, expected } of cases) {
 	test(`youtube: ${goto_path}`, async ({ page }) => {
 		await page.goto(goto_path)
 
