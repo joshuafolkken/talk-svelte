@@ -497,7 +497,7 @@ PR作成時に `enhancement` ラベルを付与する：
 ### 7.5 PR作成コマンド例
 
 ```bash
-gh pr create --title "Add dark mode toggle #123" --body "closes #123" --label enhanced --base main
+gh pr create --title "Add dark mode toggle #123" --body "closes #123" --label enhancement --base main
 ```
 
 ### 7.6 gh コマンドが使用できない場合
@@ -820,7 +820,7 @@ Automatic merge failed; fix conflicts and then commit the result.
      $ git push -u origin 123-add-dark-mode-toggle
      ✅ プッシュ成功
 [AI] PR を作成します...
-     $ gh pr create --title "Add dark mode toggle #123" --body "closes #123" --label enhanced --base main
+     $ gh pr create --title "Add dark mode toggle #123" --body "closes #123" --label enhancement --base main
      ✅ PR作成成功: https://github.com/owner/repo/pull/124
 [AI] ステータスチェックを待機しています...
      $ gh pr checks --watch
@@ -1039,7 +1039,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 10. **PR情報の形式を厳守**
     - PRタイトル: `<issue-title> #<issue-number>`
     - PR本文: `closes #<issue-number>`
-    - ラベル: `enhanced`
+    - ラベル: `enhancement`
 
 ---
 
