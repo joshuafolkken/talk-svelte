@@ -163,7 +163,7 @@ test('audio src matches displayed question', async ({ page }) => {
 
 ### Constants
 
-- マジックナンバー/文字列は禁止
+- **マジックナンバー/文字列は厳禁**（0, 1, -1 以外はすべて定数化）
 - `UPPER_SNAKE_CASE` で命名
 - ファイル上部、インポートの後に配置
 - 例:
@@ -171,6 +171,8 @@ test('audio src matches displayed question', async ({ page }) => {
   const STATUS_CODE_OK = 200
   const MIN_COUNT = 0
   const MP3_EXTENSION = '.mp3'
+  const TEST_ITERATION_COUNT = 5
+  const FIRST_INDEX = 0
   ```
 
 ### Error Messages
@@ -178,10 +180,13 @@ test('audio src matches displayed question', async ({ page }) => {
 - 詳細かつ具体的に記述
 - 何が期待され、何が得られたかを明示
 - テンプレートリテラルを使用
+- **template literal 内で `number` 型を使用する場合は `String()` で変換**
+- **template literal 内で不要な `?? ''` を使用しない**（既に string 型の場合）
 - 例:
   ```typescript
   throw new Error(`Matching question not found for: ${displayed_transcript ?? ''}`)
   const error_message = `mp3 file does not exist: ${file_name}`
+  const error_message = `Expected file at index ${String(index)} to be "${expected_file}"`
   ```
 
 ### Comments
@@ -218,6 +223,20 @@ test('audio src matches displayed question', async ({ page }) => {
 - 型アノテーションを適切に使用
 - `any` の使用は禁止
 - undefined チェックを適切に行う
+- **ループ変数は必ず使用する**（未使用変数エラーを避けるため）
+
+  ```typescript
+  // NG: 未使用変数
+  for (const _ of array) {
+  	do_something()
+  }
+
+  // OK: ループ変数を使用
+  for (const [index, item] of array.entries()) {
+  	do_something()
+  	expect(index).toBeGreaterThanOrEqual(0)
+  }
+  ```
 
 ---
 
@@ -225,14 +244,19 @@ test('audio src matches displayed question', async ({ page }) => {
 
 生成前に以下を確認してください：
 
-- [ ] すべてのマジックナンバー/文字列を定数化した
+- [ ] すべてのマジックナンバー/文字列を定数化した（0, 1, -1 以外）
 - [ ] インポート文に `.js` 拡張子を付与した（TypeScript でも）
 - [ ] 必要に応じて `test.each` または `for` でパラメータ化した
 - [ ] エラーメッセージを詳細に記述した（何が期待され、何が得られたか）
+- [ ] template literal 内の number 型を String() で変換した
+- [ ] template literal 内の不要な `?? ''` を削除した
 - [ ] `data-testid` を使用してエレメントを取得した（Playwright の場合）
 - [ ] `async`/`await` を適切に使用した
 - [ ] 型の安全性を確保した（`undefined` チェック等）
+- [ ] ループ変数を必ず使用した（未使用変数エラーを避ける）
+- [ ] **テスト生成後、必ず `read_lints` ツールでリントエラーを確認した**
 - [ ] eslint ルールに準拠している（命名規則、関数の複雑度等）
+- [ ] テスト関数の最大ステートメント数（10）を超えていない
 - [ ] 不要なコメントを削除した
 - [ ] `describe` が本当に必要か確認した（不要なら削除）
 
@@ -242,13 +266,94 @@ test('audio src matches displayed question', async ({ page }) => {
 
 参考にするテストコード：
 
+**E2E Tests (Playwright):**
+
 - `e2e/page.test.ts` - E2E テストの基本構造
 - `e2e/praise.test.ts` - パラメータ化テスト（Playwright）
-- `src/lib/data/questions.spec.ts` - パラメータ化テスト（Vitest）
+
+**Unit/Integration Tests (Vitest):**
+
+- `src/lib/data/questions.spec.ts` - パラメータ化テスト、データ検証（Vitest）
+- `src/lib/data/praise-audio.spec.ts` - ステートフルな関数のテスト（Vitest）
 
 ESLint 設定：
 
 - `eslint.config.js` - コーディング規約の詳細
+
+---
+
+## 10.1. Unit Test Examples
+
+### ステートフルな関数のテスト例
+
+状態を持つ関数（内部変数を変更する関数）をテストする場合の注意点：
+
+#### 基本パターン
+
+```typescript
+import { expect, test } from 'vitest'
+import { get_praise_audio_file, reset_praise_audio_index } from './praise-audio.js'
+
+test('function returns expected values in sequence', () => {
+	reset_praise_audio_index() // 状態をリセット
+
+	// 期待される動作を検証
+	const first_result = get_praise_audio_file()
+	expect(first_result).toBe('expected-value-1')
+
+	const second_result = get_praise_audio_file()
+	expect(second_result).toBe('expected-value-2')
+})
+```
+
+#### テスト間の独立性を保つ
+
+```typescript
+test('test A', () => {
+	reset_praise_audio_index() // 各テストの開始時に状態をリセット
+	// テストロジック
+})
+
+test('test B', () => {
+	reset_praise_audio_index() // 前のテストの影響を受けないように
+	// テストロジック
+})
+```
+
+#### 循環動作のテスト
+
+```typescript
+test('function cycles back to start', () => {
+	reset_praise_audio_index()
+
+	// 全要素を消費
+	for (let i = 0; i < array_length; i++) {
+		get_next_item()
+	}
+
+	// 最初に戻ることを確認
+	const cycled_item = get_next_item()
+	expect(cycled_item).toBe(first_item)
+})
+```
+
+#### リセット関数のテスト
+
+```typescript
+test('reset function restores initial state', () => {
+	// 状態を変更
+	for (let i = 0; i < 5; i++) {
+		modify_state()
+	}
+
+	// リセット
+	reset_state()
+
+	// 初期状態に戻ったことを確認
+	const result = get_state()
+	expect(result).toBe(initial_value)
+})
+```
 
 ---
 
@@ -268,8 +373,37 @@ ESLint 設定：
 ## 12. Additional Notes
 
 - **Lint エラー**: 必ず解決すること（一部エラーになっても構わないが、lint エラーは許容しない）
+  - **重要**: テスト生成後、必ず `read_lints` ツールで対象ファイルを指定してリントエラーを確認すること
+  - エラーが見つかった場合は、すべて修正してから完了とすること
 - **Test 実行**: 生成後、テストが実際に動作することを確認することが望ましい
 - **除外ファイル**: `demo`、`sample`、`page.svelte.spec.ts` は対象外
+
+### よくあるリントエラーと対処法
+
+1. **template literal 内の number 型エラー**
+   - エラー: `Invalid type "number" of template literal expression`
+   - 対処: `${index}` → `${String(index)}`
+
+2. **不要な `??` オペレーター**
+   - エラー: `Unnecessary conditional, expected left-hand side of ?? operator to be possibly null or undefined`
+   - 対処: 既に string 型の変数には `?? ''` は不要
+
+3. **for ループを for-of に変更**
+   - エラー: `Expected a for-of loop instead of a for loop with this simple iteration`
+   - 対処: `for (let i = 0; i < array.length; i++)` → `for (const item of array)`
+   - 注意: ループ変数は必ず使用すること
+
+4. **マジックナンバー**
+   - エラー: `No magic number: 5`
+   - 対処: すべての数値（0, 1, -1 以外）を定数化
+
+5. **未使用変数**
+   - エラー: `Remove the declaration of the unused '_' variable`
+   - 対処: ループ変数は必ず使用する（例: `expect(index).toBeGreaterThanOrEqual(0)`）
+
+6. **テスト関数の最大ステートメント数超過**
+   - エラー: `Arrow function has too many statements (11). Maximum allowed is 10`
+   - 対処: テストをシンプルにするか、複数のテストに分割する
 
 ---
 
