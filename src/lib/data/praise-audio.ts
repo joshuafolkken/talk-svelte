@@ -1,5 +1,6 @@
 const praise_audio_files = [
 	// Basic praise (low)
+	'good-x',
 	'nice-x',
 	'nice-work-x',
 	'well-done-x',
