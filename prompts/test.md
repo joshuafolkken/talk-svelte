@@ -1,20 +1,18 @@
 # AI test
 
-テストコードを書く。
+E2E テストを書く。
 
-- 対象ファイル：src/lib/utils/transcript.ts
-- 対象メソッド：is_transcript_correct()
+- 対象ファイル：src/routes/+page.svelte
+- 検証内容：ページに表示されている問題（シャッフルされた questions[0]）の audio_uri が 対象の音声エレメントの src にセットされているか
+- テスト方法：ページに表示されているトランスクリプトテキストを取得し、それに対応する audio_uri を $lib/data/questions から検索して、audio 要素の src と比較する
 
-## data
+## cases
 
-Love it!, love it
-I'm counting on you. i'm counting on you
-How's it going?, how's it going
-I mean…, i mean
+ページに表示されている現在の question（src/routes/+page.svelte 内の const questions = get_shuffled_questions() の questions[0]）
 
 ## ignore
 
-- 無視：transcript\_.spec.ts
+- 無視：なし
 
 ## Test Guidelines
 
@@ -26,6 +24,7 @@ I mean…, i mean
 - テスト結果：一部エラーになることがあるがそれでもよい。
 - リンター：lint エラーは解決する。
 - コメント：コメントはなるべく書かない。書く場合は英語。
+- Playwrightの場合： テスト対象のエレメントは、label 等で比較するのではなく、data-testid を適切に付与する。
 
 ## run guidelines
 
