@@ -371,10 +371,10 @@ closes #123
 
 ### 7.4 PRラベル
 
-PR作成時に `enhanced` ラベルを付与する：
+PR作成時に `enhancement` ラベルを付与する：
 
 ```bash
---label enhanced
+--label enhancement
 ```
 
 ### 7.5 PR作成コマンド例
