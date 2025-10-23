@@ -20,11 +20,14 @@
 	type="button"
 	onclick={on_toggle}
 	class={button_classes}
+	data-testid="toggle-{label.toLowerCase()}"
 	aria-label="Toggle {label}"
 	aria-expanded={is_revealed}
 >
 	{#if is_revealed}
-		<span class="text-content-bold whitespace-pre-line">{content}</span>
+		<span class="text-content-bold whitespace-pre-line" data-testid="{label.toLowerCase()}-content"
+			>{content}</span
+		>
 	{:else}
 		<div class="flex-center">
 			<span class="text-content-semibold">{label}</span>

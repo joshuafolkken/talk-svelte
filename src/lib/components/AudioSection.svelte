@@ -40,6 +40,7 @@
 <Section heading="Listen">
 	<audio
 		bind:this={audio_element}
+		data-testid="question-audio"
 		src={audio_path}
 		onended={on_audio_ended}
 		oncanplaythrough={on_can_play_through}

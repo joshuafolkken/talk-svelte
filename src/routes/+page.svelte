@@ -15,7 +15,14 @@
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
-	const questions = get_shuffled_questions()
+	let questions = $state(get_shuffled_questions())
+
+	$effect(() => {
+		if (!browser) return
+
+		questions = get_shuffled_questions()
+	})
+
 	let current_index = $state(0)
 	const total_questions = $derived(questions.length)
 	const current_question_number = $derived(current_index + 1)
