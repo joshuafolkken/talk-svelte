@@ -9,13 +9,15 @@
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { APP_TITLE, AUDIO_PATH, DEFAULT_LANGUAGE } from '$lib/constants'
 	import { get_praise_audio_file, praise_audio_files } from '$lib/data/praise-audio'
-	import { get_shuffled_questions } from '$lib/data/questions'
+	import { questions as original_questions } from '$lib/data/questions'
+	import { shuffle_array } from '$lib/utils/arrays'
 	import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
 	import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
-	const questions = get_shuffled_questions()
+	// サーバー側では元の順序、クライアント側でシャッフル
+	let questions = $state(original_questions)
 	let current_index = $state(0)
 	const total_questions = $derived(questions.length)
 	const current_question_number = $derived(current_index + 1)
@@ -56,12 +58,21 @@
 		return value
 	}
 
+	let is_shuffled = $state(false)
+
 	$effect(() => {
 		if (!browser) return
 
 		lang = get_parameter('lang') ?? DEFAULT_LANGUAGE
 		video_id = get_parameter('v')
 		time = get_parameter('t')
+	})
+
+	$effect(() => {
+		if (!browser || is_shuffled) return
+
+		questions = shuffle_array(original_questions)
+		is_shuffled = true
 	})
 
 	$effect(() => {
