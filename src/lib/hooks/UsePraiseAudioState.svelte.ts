@@ -7,7 +7,7 @@ import { SvelteMap } from 'svelte/reactivity'
 
 export function use_praise_audio_state(): {
 	initialize: () => void
-	play: () => void
+	play: () => Promise<void>
 } {
 	const praise_audio_map = new SvelteMap<string, HTMLAudioElement>()
 
@@ -21,14 +21,14 @@ export function use_praise_audio_state(): {
 		}
 	}
 
-	function play(): void {
+	async function play(): Promise<void> {
 		const praise_audio_file = get_praise_audio_file()
 		if (praise_audio_file.length === 0) return
 
 		const praise_audio = praise_audio_map.get(praise_audio_file)
 		if (praise_audio === undefined) return
 		praise_audio.currentTime = AUDIO_RESET_TIME
-		void praise_audio.play()
+		await praise_audio.play()
 	}
 
 	// Initialize audio files

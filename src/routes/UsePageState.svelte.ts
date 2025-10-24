@@ -31,17 +31,17 @@ export function use_page_state(): {
 		ui.reset()
 	}
 
-	function handle_correct_transcript(): void {
+	async function handle_correct_transcript(): Promise<void> {
 		recording.mark_correct(question.current.transcript)
 		ui.toggle_completed()
-		praise_audio.play()
+		await praise_audio.play()
 	}
 
 	// Handle transcript correctness
 	$effect(() => {
 		if (recording.is_correct) return
 		if (is_transcript_correct(question.current.transcript, recording.user_transcript)) {
-			handle_correct_transcript()
+			void handle_correct_transcript()
 		}
 	})
 
