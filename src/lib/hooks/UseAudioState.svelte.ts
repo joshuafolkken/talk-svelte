@@ -3,6 +3,7 @@ import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
 export function use_audio_state(): {
 	is_playing: boolean
 	audio_element: HTMLAudioElement | undefined
+	play: () => Promise<void>
 	pause: () => void
 	reset: () => void
 	toggle: () => void
@@ -11,7 +12,7 @@ export function use_audio_state(): {
 	let is_playing = $state(false)
 	let audio_element = $state<HTMLAudioElement | undefined>()
 
-	async function play_safely(): Promise<void> {
+	async function play(): Promise<void> {
 		try {
 			await play_audio(audio_element)
 			is_playing = true
@@ -34,13 +35,13 @@ export function use_audio_state(): {
 		if (is_playing) {
 			pause()
 		} else {
-			void play_safely()
+			void play()
 		}
 	}
 
 	function can_play_through(is_recording: boolean): void {
 		if (is_playing || is_recording) return
-		void play_safely()
+		void play()
 	}
 
 	// prettier-ignore
@@ -50,6 +51,7 @@ export function use_audio_state(): {
     get audio_element() { return audio_element },
     set audio_element(value) { audio_element = value },
 		// Actions
+		play,
 		pause,
 		reset,
 		toggle,

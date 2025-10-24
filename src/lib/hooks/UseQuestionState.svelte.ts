@@ -3,9 +3,9 @@ import { get_shuffled_questions } from '$lib/data/questions'
 import type { Question } from '$lib/types/question'
 
 export function use_question_state(): {
-	total_questions: number
-	current_question_number: number
-	question: Question
+	total: number
+	current_number: number
+	current: Question
 	next: () => void
 	previous: () => void
 } {
@@ -20,17 +20,17 @@ export function use_question_state(): {
 		questions = get_shuffled_questions()
 	})
 
-	const total_questions = $derived(questions.length)
-	const current_question_number = $derived(current_index + 1)
-	const question = $derived.by(() => {
-		const current_question = questions[current_index]
-		if (current_question === undefined) {
+	const total = $derived(questions.length)
+	const current_number = $derived(current_index + 1)
+	const current = $derived.by(() => {
+		const question = questions[current_index]
+		if (question === undefined) {
 			throw new Error(`Question at index ${String(current_index)} not found`)
 		}
-		return current_question
+		return question
 	})
 
-	const can_go_next = $derived(current_index < total_questions - 1)
+	const can_go_next = $derived(current_index < total - 1)
 	const can_go_previous = $derived(current_index > 0)
 
 	function next(): void {
@@ -48,9 +48,9 @@ export function use_question_state(): {
 	// prettier-ignore
 	return {
 		// States
-		get total_questions() { return total_questions },
-		get current_question_number() { return current_question_number },
-		get question() { return question },
+		get total() { return total },
+		get current_number() { return current_number },
+		get current() { return current },
 		// Actions
 		next,
 		previous,

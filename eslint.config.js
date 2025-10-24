@@ -907,7 +907,7 @@ export default defineConfig(
 		},
 	},
 	{
-		files: ['**/hooks/**/*.svelte.ts'],
+		files: ['**/hooks/**/*.svelte.ts', '**/*State.svelte.ts'],
 		languageOptions: {
 			parserOptions: {
 				projectService: true,

@@ -9,7 +9,7 @@ export function use_recording_state(): {
 	start: (lang: string) => void
 	stop: () => void
 	reset: () => void
-	toggle: (lang: string) => void
+	toggle: (lang: string) => boolean
 	clear_transcript: () => void
 	mark_correct: (transcript: string) => void
 } {
@@ -39,12 +39,13 @@ export function use_recording_state(): {
 		is_recording = true
 	}
 
-	function toggle(lang: string): void {
+	function toggle(lang: string): boolean {
 		if (is_recording) {
 			stop()
 		} else {
 			start(lang)
 		}
+		return is_recording
 	}
 
 	function clear_transcript(): void {
