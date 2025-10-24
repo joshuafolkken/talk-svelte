@@ -75,6 +75,66 @@ const questions: Array<Question> = [
 	q("I'll think about it.", '考えておくよ。'),
 	q('I have no idea.', '全くわからない。'),
 	q("That's it.", '以上だよ / それだけ。'),
+
+	q('Nice work!', 'いい仕事したね！'),
+	q('You rock!', '君は最高だよ！'),
+	q("I'm impressed.", '感心したよ。'),
+	q('Well done!', 'よくやった！'),
+	q('You nailed it!', '完璧にやったね！'),
+
+	q('That sounds fun!', '楽しそうだね！'),
+	q('Count me in!', '私も参加するよ！'),
+	q("I'm excited!", 'ワクワクする！'),
+	q('This is amazing!', 'これはすごい！'),
+	q('I love this!', 'これ大好き！'),
+
+	q('What a surprise!', 'なんて驚き！'),
+	q('I had no idea!', '知らなかった！'),
+	q('That explains it!', 'それで納得！'),
+	q('Makes perfect sense!', '完璧に理解できる！'),
+	q('I totally agree!', '完全に同感！'),
+
+	q('You got this!', '君ならできる！'),
+	q("Don't give up!", '諦めないで！'),
+	q('Keep it up!', 'その調子で！'),
+	q('You can do it!', 'できるよ！'),
+	q('I believe in you!', '君を信じてる！'),
+
+	q("That's incredible!", '信じられないほどすごい！'),
+	q("I'm speechless!", '言葉が出ない！'),
+	q('This is unreal!', '現実じゃないみたい！'),
+	q('Mind blown!', '頭が吹き飛んだ！'),
+	q('Absolutely amazing!', '本当にすごい！'),
+
+	q("I'm so happy!", 'めっちゃ嬉しい！'),
+	q('This is perfect!', '完璧だね！'),
+	q("Couldn't be better!", 'これ以上ない！'),
+	q("I'm thrilled!", '興奮してる！'),
+	q('This made my day!', 'おかげで最高の一日！'),
+
+	q('What a day!', 'なんて一日！'),
+	q("I'm exhausted!", '疲れ果てた！'),
+	q('What a mess!', 'なんて混乱！'),
+	q('This is crazy!', 'これはクレイジー！'),
+	q("I can't handle this!", 'これには対処できない！'),
+
+	q('Give me a break!', '勘弁してよ！'),
+	q('This is too much!', 'これは多すぎる！'),
+	q('I need a vacation!', '休暇が必要！'),
+	q("I'm overwhelmed!", '圧倒されてる！'),
+	q('This is insane!', 'これは狂ってる！'),
+
+	q("I'm so sorry!", '本当にごめん！'),
+	q('My apologies!', '申し訳ありません！'),
+	q('I messed up!', '失敗しちゃった！'),
+	q("That's my fault!", 'それは私のせい！'),
+	q('I take full responsibility!', '全責任を負います！'),
+
+	q('No problem at all!', '全然大丈夫！'),
+	q("Don't worry about it!", '心配しないで！'),
+	q('It happens to everyone!', '誰にでもあること！'),
+	q('We all make mistakes!', 'みんな間違いはするよ！'),
+	q("That's totally fine!", '全然問題ないよ！'),
 ]
 
 function get_shuffled_questions(): Array<Question> {
