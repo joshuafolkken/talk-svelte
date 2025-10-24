@@ -176,7 +176,7 @@ export default defineConfig(
 			'@typescript-eslint/explicit-function-return-type': [
 				'error',
 				{
-					allowExpressions: false,
+					allowExpressions: true,
 					allowTypedFunctionExpressions: true,
 					allowHigherOrderFunctions: true,
 					allowDirectConstAssertionInArrowFunctions: true,
@@ -395,7 +395,7 @@ export default defineConfig(
 				'error',
 				{
 					min: 2,
-					max: 25,
+					max: 30,
 					exceptions: ['_', 'i', 'j', 'k', 'x', 'y', 'z'],
 					properties: 'never',
 				},
@@ -872,7 +872,7 @@ export default defineConfig(
 			// Svelte ファイルでは Svelte 固有のルールを適用
 
 			// Svelte の $state などのリアクティブ変数は再代入されるため、prefer-const を緩和
-			'prefer-const': 'warn',
+			// 'prefer-const': 'warn',
 
 			// Svelte コンポーネントファイルは PascalCase を許可
 			'unicorn/filename-case': [
@@ -904,6 +904,22 @@ export default defineConfig(
 		files: ['scripts/**/*.ts', 'scripts/**/*.js'],
 		rules: {
 			'unicorn/no-process-exit': 'off',
+		},
+	},
+	{
+		files: ['**/hooks/**/*.svelte.ts', '**/*State.svelte.ts'],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: ['.svelte'],
+				parser: ts.parser,
+				svelteConfig,
+			},
+		},
+		rules: {
+			'prefer-const': 'off',
+			'max-lines-per-function': ['error', 150],
+			'max-statements': ['error', 15],
 		},
 	},
 	// {
