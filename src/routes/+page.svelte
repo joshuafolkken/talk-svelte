@@ -10,7 +10,7 @@
 	import { APP_TITLE, AUDIO_PATH, DEFAULT_LANGUAGE } from '$lib/constants'
 	import { get_praise_audio_file, praise_audio_files } from '$lib/data/praise-audio'
 	import { get_shuffled_questions } from '$lib/data/questions'
-	import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
+	import { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
 	import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
@@ -38,7 +38,8 @@
 		return current_question
 	})
 
-	let is_playing = $state(false)
+	const audio_state = use_audio_state()
+
 	let is_transcript_visible = $state(false)
 	let is_translation_visible = $state(false)
 	let is_recording = $state(false)
@@ -49,7 +50,6 @@
 
 	const praise_audio_map = $state<Map<string, HTMLAudioElement>>(new Map())
 
-	let audio_element = $state<HTMLAudioElement>()
 	// eslint-disable-next-line unicorn/no-useless-undefined
 	let speech_to_text: SpeechToText | undefined = undefined
 
@@ -113,42 +113,6 @@
 		}
 	})
 
-	async function play_audio_safely(): Promise<void> {
-		if (audio_element === undefined) return
-
-		try {
-			await play_audio(audio_element)
-			is_playing = true
-		} catch {
-			is_playing = false
-		}
-	}
-
-	function stop_audio(): void {
-		if (audio_element === undefined) return
-		pause_audio(audio_element)
-		is_playing = false
-	}
-
-	function handle_play_audio(): void {
-		if (audio_element === undefined) return
-
-		if (is_recording) {
-			is_recording = false
-		}
-
-		if (is_playing) {
-			stop_audio()
-		} else {
-			void play_audio_safely()
-		}
-	}
-
-	function reset_audio_state(): void {
-		reset_audio(audio_element)
-		is_playing = false
-	}
-
 	function reset_transcript(): void {
 		user_transcript = ''
 		is_correct = false
@@ -167,14 +131,18 @@
 	}
 
 	function reset_state(): void {
-		reset_audio_state()
+		audio_state.reset()
 		reset_recording()
 		reset_user_state()
 	}
 
+	function set_recording(value: boolean): void {
+		is_recording = value
+	}
+
 	function handle_retry(): void {
 		reset_state()
-		handle_play_audio()
+		audio_state.play(is_recording, set_recording)
 	}
 
 	function handle_next(): void {
@@ -200,16 +168,11 @@
 	}
 
 	function handle_record(): void {
-		if (is_playing) {
-			reset_audio_state()
+		if (audio_state.is_playing) {
+			audio_state.reset()
 		}
 
 		is_recording = !is_recording
-	}
-
-	function handle_can_play_through(): void {
-		if (is_playing || is_recording) return
-		handle_play_audio()
 	}
 
 	function handle_correct_transcript(): void {
@@ -256,6 +219,14 @@
 			play_praise_audio()
 		}
 	})
+
+	function handle_play_audio_state(): void {
+		audio_state.play(is_recording, set_recording)
+	}
+
+	function handle_can_play_through_state(): void {
+		audio_state.can_play_through(is_recording)
+	}
 </script>
 
 <div class="relative min-h-screen overflow-hidden">
@@ -270,21 +241,19 @@
 		<div class="card-glass">
 			<AudioSection
 				{question}
-				{is_playing}
+				is_playing={audio_state.is_playing}
 				{is_transcript_visible}
 				{is_translation_visible}
-				on_play_audio={handle_play_audio}
-				on_can_play_through={handle_can_play_through}
+				on_play_audio={handle_play_audio_state}
+				on_can_play_through={handle_can_play_through_state}
 				on_toggle_transcript={(): void => {
 					is_transcript_visible = !is_transcript_visible
 				}}
 				on_toggle_translation={(): void => {
 					is_translation_visible = !is_translation_visible
 				}}
-				on_audio_ended={(): void => {
-					is_playing = false
-				}}
-				bind:audio_element
+				on_audio_ended={audio_state.stop}
+				bind:audio_element={audio_state.audio_element}
 			/>
 
 			<RecordingSection
