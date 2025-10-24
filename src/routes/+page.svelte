@@ -15,6 +15,10 @@
 	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
+	const INITIAL_QUESTION_INDEX = 0
+	const AUDIO_PRELOAD_STRATEGY = 'auto'
+	const AUDIO_RESET_TIME = 0
+
 	let questions = $state(get_shuffled_questions())
 
 	$effect(() => {
@@ -23,7 +27,7 @@
 		questions = get_shuffled_questions()
 	})
 
-	let current_index = $state(0)
+	let current_index = $state(INITIAL_QUESTION_INDEX)
 	const total_questions = $derived(questions.length)
 	const current_question_number = $derived(current_index + 1)
 	const question = $derived.by(() => {
@@ -57,18 +61,16 @@
 	let video_id = $state<string>()
 	let time = $state<string>()
 
-	function get_parameter(name: string): string | undefined {
-		const value = page.url.searchParams.get(name)
-		if (value === null) return undefined
-		return value
+	function get_url_parameter(name: string): string | undefined {
+		return page.url.searchParams.get(name) ?? undefined
 	}
 
 	$effect(() => {
 		if (!browser) return
 
-		lang = get_parameter('lang') ?? DEFAULT_LANGUAGE
-		video_id = get_parameter('v')
-		time = get_parameter('t')
+		lang = get_url_parameter('lang') ?? DEFAULT_LANGUAGE
+		video_id = get_url_parameter('v')
+		time = get_url_parameter('t')
 	})
 
 	$effect(() => {
@@ -224,7 +226,7 @@
 
 		const praise_audio = praise_audio_map.get(praise_audio_file)
 		if (praise_audio === undefined) return
-		praise_audio.currentTime = 0
+		praise_audio.currentTime = AUDIO_RESET_TIME
 		void praise_audio.play()
 	}
 
@@ -233,7 +235,7 @@
 
 		for (const filename of praise_audio_files) {
 			const audio = new Audio(asset(`/${AUDIO_PATH}/${filename}.mp3`))
-			audio.preload = 'auto'
+			audio.preload = AUDIO_PRELOAD_STRATEGY
 			praise_audio_map.set(filename, audio)
 		}
 	})
