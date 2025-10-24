@@ -907,9 +907,19 @@ export default defineConfig(
 		},
 	},
 	{
-		files: ['src/lib/hooks/use-*.ts'],
+		files: ['**/hooks/**/*.svelte.ts'],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: ['.svelte'],
+				parser: ts.parser,
+				svelteConfig,
+			},
+		},
 		rules: {
 			'prefer-const': 'off',
+			'max-lines-per-function': ['error', 150],
+			'max-statements': ['error', 15],
 		},
 	},
 	// {

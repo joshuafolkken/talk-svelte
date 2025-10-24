@@ -1,12 +1,11 @@
 import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
 
-// eslint-disable-next-line max-lines-per-function
 export function use_audio_state(): {
 	is_playing: boolean
 	audio_element: HTMLAudioElement | undefined
-	stop: () => void
+	pause: () => void
 	reset: () => void
-	play: (is_recording: boolean, set_recording: (value: boolean) => void) => void
+	toggle: () => void
 	can_play_through: (is_recording: boolean) => void
 } {
 	let is_playing = $state(false)
@@ -21,7 +20,7 @@ export function use_audio_state(): {
 		}
 	}
 
-	function stop(): void {
+	function pause(): void {
 		pause_audio(audio_element)
 		is_playing = false
 	}
@@ -31,13 +30,9 @@ export function use_audio_state(): {
 		is_playing = false
 	}
 
-	function play(is_recording: boolean, set_recording: (value: boolean) => void): void {
-		if (is_recording) {
-			set_recording(false)
-		}
-
+	function toggle(): void {
 		if (is_playing) {
-			stop()
+			pause()
 		} else {
 			void play_safely()
 		}
@@ -55,9 +50,9 @@ export function use_audio_state(): {
     get audio_element() { return audio_element },
     set audio_element(value) { audio_element = value },
 		// Actions
-		stop,
+		pause,
 		reset,
-		play,
+		toggle,
 		can_play_through,
 	}
 }

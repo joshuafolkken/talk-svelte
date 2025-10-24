@@ -11,8 +11,8 @@
 	import { get_praise_audio_file, praise_audio_files } from '$lib/data/praise-audio'
 	import { get_shuffled_questions } from '$lib/data/questions'
 	import { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
+	import { use_recording_state } from '$lib/hooks/UseRecordingState.svelte'
 	import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
-	import { SpeechToText } from '$lib/utils/speech-to-text'
 	import { is_transcript_correct } from '$lib/utils/transcript'
 
 	const INITIAL_QUESTION_INDEX = 0
@@ -39,19 +39,14 @@
 	})
 
 	const audio_state = use_audio_state()
+	const recording_state = use_recording_state()
 
 	let is_transcript_visible = $state(false)
 	let is_translation_visible = $state(false)
-	let is_recording = $state(false)
-	let user_transcript = $state('')
-	let is_correct = $state(false)
 	let is_liked = $state(false)
 	let is_completed = $state(false)
 
 	const praise_audio_map = $state<Map<string, HTMLAudioElement>>(new Map())
-
-	// eslint-disable-next-line unicorn/no-useless-undefined
-	let speech_to_text: SpeechToText | undefined = undefined
 
 	// let lang = $derived(page.url.searchParams.get('lang') || 'en-US')
 	// let v = $derived(page.url.searchParams.get('v') || undefined)
@@ -71,23 +66,6 @@
 		lang = get_url_parameter('lang') ?? DEFAULT_LANGUAGE
 		video_id = get_url_parameter('v')
 		time = get_url_parameter('t')
-	})
-
-	$effect(() => {
-		speech_to_text = new SpeechToText(
-			(transcript) => {
-				if (is_correct) return
-				user_transcript = transcript
-			},
-			(error) => {
-				console.error('Speech recognition error:', error)
-				is_recording = false
-			},
-		)
-
-		return (): void => {
-			speech_to_text?.destroy()
-		}
 	})
 
 	let scale_factor = $state(1)
@@ -113,16 +91,6 @@
 		}
 	})
 
-	function reset_transcript(): void {
-		user_transcript = ''
-		is_correct = false
-	}
-
-	function reset_recording(): void {
-		is_recording = false
-		reset_transcript()
-	}
-
 	function reset_user_state(): void {
 		is_transcript_visible = false
 		is_translation_visible = false
@@ -132,17 +100,14 @@
 
 	function reset_state(): void {
 		audio_state.reset()
-		reset_recording()
+		recording_state.reset()
 		reset_user_state()
-	}
-
-	function set_recording(value: boolean): void {
-		is_recording = value
 	}
 
 	function handle_retry(): void {
 		reset_state()
-		audio_state.play(is_recording, set_recording)
+		recording_state.reset()
+		audio_state.toggle()
 	}
 
 	function handle_next(): void {
@@ -160,27 +125,17 @@
 	}
 
 	function handle_clear_transcript(): void {
-		reset_transcript()
-
-		if (is_recording && speech_to_text !== undefined) {
-			speech_to_text.restart()
-		}
+		recording_state.clear_transcript()
 	}
 
 	function handle_record(): void {
-		if (audio_state.is_playing) {
-			audio_state.reset()
-		}
-
-		is_recording = !is_recording
+		audio_state.reset()
+		recording_state.toggle(lang)
 	}
 
 	function handle_correct_transcript(): void {
-		is_correct = true
+		recording_state.mark_correct(question.transcript)
 		is_completed = true
-		is_recording = false
-
-		user_transcript = question.transcript
 	}
 
 	function play_praise_audio(): void {
@@ -204,28 +159,20 @@
 	})
 
 	$effect(() => {
-		if (is_recording) {
-			reset_transcript()
-			speech_to_text?.start(lang)
-		} else {
-			speech_to_text?.stop()
-		}
-	})
-
-	$effect(() => {
-		if (is_correct) return
-		if (is_transcript_correct(question.transcript, user_transcript)) {
+		if (recording_state.is_correct) return
+		if (is_transcript_correct(question.transcript, recording_state.user_transcript)) {
 			handle_correct_transcript()
 			play_praise_audio()
 		}
 	})
 
 	function handle_play_audio_state(): void {
-		audio_state.play(is_recording, set_recording)
+		recording_state.stop()
+		audio_state.toggle()
 	}
 
 	function handle_can_play_through_state(): void {
-		audio_state.can_play_through(is_recording)
+		audio_state.can_play_through(recording_state.is_recording)
 	}
 </script>
 
@@ -252,14 +199,14 @@
 				on_toggle_translation={(): void => {
 					is_translation_visible = !is_translation_visible
 				}}
-				on_audio_ended={audio_state.stop}
+				on_audio_ended={audio_state.pause}
 				bind:audio_element={audio_state.audio_element}
 			/>
 
 			<RecordingSection
-				{is_recording}
-				{user_transcript}
-				{is_correct}
+				is_recording={recording_state.is_recording}
+				user_transcript={recording_state.user_transcript}
+				is_correct={recording_state.is_correct}
 				on_record={handle_record}
 				on_clear_transcript={handle_clear_transcript}
 			/>
