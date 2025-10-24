@@ -25,13 +25,20 @@ test('audio_uri should be unique', () => {
 	const audio_uris = questions.map((question) => question.audio_uri)
 	const unique_audio_uris = [...new Set(audio_uris)]
 
-	expect(audio_uris.length).toBe(unique_audio_uris.length)
-
 	const duplicates = audio_uris.filter((uri, index) => audio_uris.indexOf(uri) !== index)
 	if (duplicates.length > 0) {
 		const unique_duplicates = [...new Set(duplicates)]
-		throw new Error(`Duplicate audio_uri found: ${unique_duplicates.join(', ')}`)
+
+		// 各重複値が何回出現するかをカウント
+		const duplicate_counts = unique_duplicates.map((uri) => {
+			const count = audio_uris.filter((uri_item) => uri_item === uri).length
+			return `${uri} (${String(count)} times)`
+		})
+
+		throw new Error(`Duplicate audio_uri found: ${duplicate_counts.join(', ')}`)
 	}
+
+	expect(audio_uris.length).toBe(unique_audio_uris.length)
 })
 
 const audio_directory_path = path.join(process.cwd(), STATIC_DIRECTORY, AUDIO_DIRECTORY)
