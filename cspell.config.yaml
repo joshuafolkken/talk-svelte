@@ -30,19 +30,25 @@ words:
   - darkmode
   - Dsonar
   - EDITMSG
-  - elif
   - ELEVENLABS
+  - elif
   - enablejsapi
+  - Groot
+  - Gump
   - Hotspots
   - ianvs
   - inlang
   - isready
   - joshuafolkken
   - LEFTHOOK
+  - Lorean
+  - Maguire
   - mdsvex
   - mischeck
   - modestbranding
   - mysecretpassword
+  - Nemo
+  - Notting
   - octocat
   - oslojs
   - paraglide
@@ -54,4 +60,5 @@ words:
   - sonarqube
   - Stylesheet
   - Vercel
+  - vibing
   - Vite
