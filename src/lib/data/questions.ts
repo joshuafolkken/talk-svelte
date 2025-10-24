@@ -99,7 +99,7 @@ const questions: Array<Question> = [
 
 	q("That's incredible!", '信じられないほどすごい！'),
 	q("I'm speechless!", '言葉が出ない！'),
-	q('This is unreal!', '現実じゃないみたい！'),
+	// q('This is unreal!', '現実じゃないみたい！'),
 	q('Mind blown!', '頭が吹き飛んだ！'),
 	q('Absolutely amazing!', '本当にすごい！'),
 	q("I'm so happy!", 'すごく嬉しい！'),
@@ -111,13 +111,13 @@ const questions: Array<Question> = [
 	q('What a day!', 'なんて一日！'),
 	q("I'm exhausted!", '疲れ果てた！'),
 	q('What a mess!', 'なんて混乱！'),
-	q('This is crazy!', 'これはクレイジー！'),
+	// q('This is crazy!', 'これはクレイジー！'),
 	q("I can't handle this!", 'これには対処できない！'),
 	q('Give me a break!', '勘弁してよ！'),
 	q('This is too much!', 'これは多すぎる！'),
 	q('I need a vacation!', '休暇が必要！'),
 	q("I'm overwhelmed!", '圧倒されてる！'),
-	q('This is insane!', 'これは狂ってる！'),
+	// q('This is insane!', 'これは狂ってる！'),
 
 	q("I'm so sorry!", '本当にごめん！'),
 	q('My apologies!', '申し訳ありません！'),
@@ -445,7 +445,6 @@ const questions: Array<Question> = [
 	q("It's sunny today.", '今日は晴れてる。'),
 	q('I feel great!', '気分最高！'),
 	q('I play video games.', 'ゲームしてる。'),
-	q('Not really.', '特にない。'),
 	q('I love sushi.', '寿司が大好き。'),
 
 	q("I've been here for 2 years.", '2年ここにいます。'),
