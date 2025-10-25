@@ -28,7 +28,6 @@ const questions: Array<Question> = [
 	q('That makes sense.', 'それは理にかなってるね。'),
 	q('Sounds good!', '良いね！'),
 	q('I got it.', '分かった。'),
-	q('No worries.', '気にしないで。'),
 	q('Take care.', '気をつけてね。'),
 
 	q("I'm on my way.", '今向かってる。'),
@@ -37,7 +36,6 @@ const questions: Array<Question> = [
 	q('You know what?', 'あのね / ねえ、聞いて。'),
 	q("That's awesome!", 'すごいね！'),
 	q('Good for you!', 'よかったね！'),
-	q("I can't believe it!", '信じられない！'),
 	q("I'm not sure.", 'よくわからないな。'),
 	q("That's too bad.", '残念だね。'),
 	q("I'm just kidding.", '冗談だよ。'),
@@ -50,7 +48,6 @@ const questions: Array<Question> = [
 	q("That's interesting.", 'おもしろいね。'),
 	q('What do you mean?', 'どういう意味？'),
 	q("You're right.", 'その通り。'),
-	q('Exactly!', 'まさにその通り！'),
 	q('I guess so.', 'そうかもね。'),
 
 	q("I'm starving!", 'お腹ペコペコ！'),
@@ -72,7 +69,6 @@ const questions: Array<Question> = [
 	q("I'm looking forward to it.", '楽しみにしてるよ。'),
 	q("What's going on?", 'どうしたの？ / 何が起きてるの？'),
 	q("I'll think about it.", '考えておくよ。'),
-	q('I have no idea.', '全くわからない。'),
 	q("That's it.", '以上だよ / それだけ。'),
 
 	q('Nice work!', 'いい仕事したね！'),
@@ -86,64 +82,113 @@ const questions: Array<Question> = [
 	q('This is amazing!', 'これはすごい！'),
 	q('I love this!', 'これ大好き！'),
 
+	q('You got this!', '君ならできる！'),
+	q('Keep it up!', 'その調子で！'),
+	q('I believe in you!', '君を信じてる！'),
+
+	// 友達との会話でよく使う台詞
+	q("What's good?", '元気？'),
+	q("You're kidding!", '冗談でしょ！'),
+	q("That's crazy!", 'それはすごい！'),
+	q('Are you serious?', 'マジで？'),
+	q("I can't believe it!", '信じられない！'),
+
+	q('Exactly!', 'その通り！'),
+	q('I totally agree.', '完全に同意'),
+	q("You're absolutely right", '君が正しい'),
+	q("That's what I'm saying!", 'それが言いたかった！'),
+	q('I feel you.', 'わかるよ'),
+
+	q("You've got this!", '君ならできる！'),
+	q("Don't give up!", '諦めないで！'),
+	q('I believe in you.', '君を信じてる'),
+	q('You can do it!', 'できるよ！'),
+	q('Hang in there!', '頑張って！'),
+
+	q('Thanks a million!', '本当にありがとう！'),
+	q('I owe you one.', '借りができた'),
+	q('My bad.', 'ごめん'),
+	q('Sorry about that.', 'すみません'),
+	q('No worries.', '心配しないで'),
+
+	q('Want to hang out?', '遊ばない？'),
+	q("Let's grab some food", '何か食べに行こう'),
+	q('How about we...', '〜はどう？'),
+	q("Why don't we...", '〜しない？'),
+	q("I'm down for that", 'それいいね！'),
+
+	q("You're such a nerd!", '君って本当にオタクだね！'),
+	q("That's so you", '君らしいね'),
+	q("You're impossible!", '君は手に負えない！'),
+	q('Stop it!', 'やめて！'),
+	q("You're killing me!", '笑わせないで！'),
+
+	q("I'm stuck.", '困ってる'),
+	q('Can you help me out?', '手伝ってくれる？'),
+	q('I have no idea.', '全然わからない'),
+	q('This is a mess.', 'めちゃくちゃだ'),
+	q("I'm lost.", 'わからない'),
+
+	q("I'm so excited!", 'すごくワクワクしてる！'),
+	q('This is awesome!', 'これは最高！'),
+	q("I'm hyped!", 'テンション上がってる！'),
+	q("Let's go!", '行こう！'),
+	q('This is going to be epic!', 'これはすごいことになりそう！'),
+
+	// 驚きの表現
 	q('What a surprise!', 'なんて驚き！'),
 	q('I had no idea!', '知らなかった！'),
 	q('That explains it!', 'それで納得！'),
 	q('Makes perfect sense!', '完璧に理解できる！'),
 	q('I totally agree!', '完全に同感！'),
-	q('You got this!', '君ならできる！'),
-	q("Don't give up!", '諦めないで！'),
-	q('Keep it up!', 'その調子で！'),
-	q('You can do it!', 'できるよ！'),
-	q('I believe in you!', '君を信じてる！'),
 
 	q("That's incredible!", '信じられないほどすごい！'),
 	q("I'm speechless!", '言葉が出ない！'),
-	// q('This is unreal!', '現実じゃないみたい！'),
 	q('Mind blown!', '頭が吹き飛んだ！'),
 	q('Absolutely amazing!', '本当にすごい！'),
 	q("I'm so happy!", 'すごく嬉しい！'),
+
 	q('This is perfect!', '完璧だね！'),
 	q("Couldn't be better!", 'これ以上ない！'),
 	q("I'm thrilled!", '興奮してる！'),
 	q('This made my day!', 'おかげで最高の一日！'),
-
 	q('What a day!', 'なんて一日！'),
+
 	q("I'm exhausted!", '疲れ果てた！'),
 	q('What a mess!', 'なんて混乱！'),
-	// q('This is crazy!', 'これはクレイジー！'),
 	q("I can't handle this!", 'これには対処できない！'),
 	q('Give me a break!', '勘弁してよ！'),
 	q('This is too much!', 'これは多すぎる！'),
+
 	q('I need a vacation!', '休暇が必要！'),
 	q("I'm overwhelmed!", '圧倒されてる！'),
-	// q('This is insane!', 'これは狂ってる！'),
-
 	q("I'm so sorry!", '本当にごめん！'),
 	q('My apologies!', '申し訳ありません！'),
 	q('I messed up!', '失敗しちゃった！'),
+
 	q("That's my fault!", 'それは私のせい！'),
 	q('No problem at all!', '全然大丈夫！'),
 	q("Don't worry about it!", '心配しないで！'),
 	q('It happens to everyone!', '誰にでもあること！'),
 	q('We all make mistakes!', 'みんな間違いはするよ！'),
-	q("That's totally fine!", '全然問題ないよ！'),
 
+	q("That's totally fine!", '全然問題ないよ！'),
 	q("I'm all set.", '準備完了だよ。'),
 	q("That's a good idea.", 'それはいいアイデアだね。'),
 	q("I'm not feeling well.", '調子が悪いんだ。'),
 	q("Let's get started.", '始めよう。'),
+
 	q("I'm running late.", '遅刻しそう。'),
 	q("That's not fair.", 'それは不公平だよ。'),
 	q("I'm really sorry.", '本当にごめん。'),
 	q('Let me help you.', '手伝わせて。'),
-	q("I'm so excited!", 'めっちゃワクワク！'),
-	q("That's too expensive.", 'それは高すぎる。'),
 
+	q("That's too expensive.", 'それは高すぎる。'),
 	q("I'm getting hungry.", 'お腹がすいてきた。'),
 	q("Let's take a break.", '休憩しよう。'),
 	q("I'm almost done.", 'もうすぐ終わる。'),
 	q("That's really cool!", 'それ本当にクール！'),
+
 	q("I'm not ready yet.", 'まだ準備できてない。'),
 	q("Let's try again.", 'もう一度やってみよう。'),
 	q("I'm really proud of you.", '君を本当に誇りに思う。'),
@@ -155,38 +200,78 @@ const questions: Array<Question> = [
 	q("I'm getting nervous.", '緊張してきた。'),
 	q("Let's make it happen.", '実現させよう。'),
 	q("I'm really impressed.", '本当に感心した。'),
+
 	q("I'm getting better.", 'だんだん良くなってる。'),
 	q("Let's work together.", '一緒に働こう。'),
 	q("I'm so proud of you.", '君をとても誇りに思う。'),
-
 	q("I'm getting tired.", '疲れてきた。'),
 	q("Let's do our best.", 'ベストを尽くそう。'),
+
 	q("I'm really happy for you.", '君のことを本当に嬉しく思う。'),
 	q("I'm getting excited.", 'ワクワクしてきた。'),
 	q("Let's celebrate together.", '一緒にお祝いしよう。'),
 	q("I'm so glad you're here.", '君がここにいてくれて嬉しい。'),
 	q("I'm feeling confident.", '自信を感じてる。'),
-	q("Let's make it special.", '特別にしよう。'),
 
+	q("Let's make it special.", '特別にしよう。'),
 	q("I'm really enjoying this.", 'これを本当に楽しんでる。'),
 	q("That's a fantastic result.", 'それは素晴らしい結果だ。'),
 	q("I'm starting to feel comfortable.", 'だんだん慣れてきた。'),
 	q("Let's create something amazing.", '何かすごいものを作ろう。'),
-	q("I'm so lucky to have you.", '君がいてくれて本当にラッキー。'),
 
+	q("I'm so lucky to have you.", '君がいてくれて本当にラッキー。'),
 	q("I'm feeling motivated.", 'やる気が出てきた。'),
 	q("I'm really looking forward to this.", 'これを本当に楽しみにしてる。'),
 	q("Let's have some fun.", '楽しもう。'),
 	q("I'm so thankful for you.", '君に本当に感謝してる。'),
-	q("Let's build something great.", '素晴らしいものを作ろう。'),
 
+	q("Let's build something great.", '素晴らしいものを作ろう。'),
 	q("I'm really excited about this.", 'これについて本当にワクワクしてる。'),
 	q('We can do this together.', '一緒にできるよ。'),
 	q("I'm really inspired by you.", '君に本当にインスパイアされてる。'),
 	q("I'm so happy we met.", '君と出会えて本当に嬉しい。'),
-	q("I'm so excited to see what's next.", '次に何が起こるか本当にワクワクしてる。'),
 
+	q("I'm so excited to see what's next.", '次に何が起こるか本当にワクワクしてる。'),
 	q("I'm really excited about the future.", '未来について本当にワクワクしてる。'),
+
+	// Division 2 ゲーム内チャット表現
+	q("Let's push forward!", '前進しよう！'),
+	q('Cover me!', '援護して！'),
+	q("I'm flanking!", '側面から攻撃する！'),
+	q('Watch your six!', '後ろに注意！'),
+	q("I'm down!", '倒れた！'),
+	q('Need backup!', '援護が必要！'),
+	q('Clear!', '安全！'),
+	q('Enemy spotted!', '敵発見！'),
+	q("Let's retreat!", '撤退しよう！'),
+
+	q('Need ammo!', '弾薬が必要！'),
+	q('Found some loot!', '戦利品発見！'),
+	q('This weapon is OP!', 'この武器強すぎ！'),
+	q('Need better gear!', 'もっといい装備が必要！'),
+	q('Check this out!', 'これ見て！'),
+
+	q('Good job!', 'よくやった！'),
+	q('Nice shot!', 'いい射撃！'),
+	q('Thanks for the save!', '助けてくれてありがとう！'),
+	q("Let's stick together!", '一緒に行動しよう！'),
+	q("I've got your back!", '俺が後ろを守る！'),
+
+	q("I'm low on health!", '体力が少ない！'),
+	q('Almost there!', 'もうすぐだ！'),
+	q('This is intense!', 'これは激しい！'),
+	q("We're getting overwhelmed!", '圧倒されてる！'),
+	q("Let's regroup!", '再編成しよう！'),
+
+	q('That was epic!', 'それはすごかった！'),
+	q('We did it!', 'やった！'),
+	q('Close call!', '危なかった！'),
+
+	q("Let's try a different approach!", '別のアプローチを試そう！'),
+	q("This isn't working!", 'これはうまくいかない！'),
+	q('Good strategy!', 'いい戦略だ！'),
+	q("Let's coordinate!", '連携しよう！'),
+	q('Time to adapt!', '適応する時だ！'),
 
 	// Back to the Future phrases
 	q('Great Scott!', 'グレート・スコット！ (Back to the Future)'),
