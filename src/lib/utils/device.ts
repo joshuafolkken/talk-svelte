@@ -10,3 +10,7 @@ export function get_device_type(): DeviceType {
 export function is_android(): boolean {
 	return navigator.userAgent.toLowerCase().includes('android')
 }
+
+export function is_iphone(): boolean {
+	return navigator.userAgent.toLowerCase().includes('iphone')
+}

@@ -5,6 +5,7 @@
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
 	import { APP_TITLE } from '$lib/constants'
+	import { is_iphone } from '$lib/utils/device'
 	import { use_page_state } from './UsePageState.svelte'
 
 	const {
@@ -36,13 +37,14 @@
 		recording.clear_transcript()
 	}
 
+	function autoplay(): void {
+		if (is_iphone()) return
+		void audio.play()
+	}
+
 	function handle_record(): void {
-		if (audio.is_playing) {
-			audio.reset()
-		}
-		if (!recording.toggle(url_parameters.lang)) {
-			void audio.play()
-		}
+		if (audio.is_playing) audio.reset()
+		if (!recording.toggle(url_parameters.lang)) autoplay()
 	}
 
 	function handle_play_audio(): void {
