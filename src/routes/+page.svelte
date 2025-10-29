@@ -64,47 +64,49 @@
 <div class="relative min-h-screen overflow-hidden">
 	<YoutubeBackground video_id={url_parameters.video_id} time={url_parameters.time} />
 
-	<div
-		class="m-4 mx-auto max-w-sm transition-transform"
-		style="transform: scale({responsive.scale_factor}); transform-origin: top center;"
-	>
-		{#if should_show_menu}
-			<MenuScreen />
-		{:else}
-			<ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />
+	{#if responsive.is_ready}
+		<div
+			class="m-4 mx-auto max-w-sm transition-transform"
+			style="transform: scale({responsive.scale_factor}); transform-origin: top center;"
+		>
+			{#if should_show_menu}
+				<MenuScreen />
+			{:else}
+				<ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />
 
-			<div class="card-glass">
-				<AudioSection
-					phrase={phrase.current}
-					is_playing={audio.is_playing}
-					is_transcript_visible={ui.is_transcript_visible}
-					is_translation_visible={ui.is_translation_visible}
-					on_play_audio={handle_play_audio}
-					on_can_play_through={handle_can_play_through}
-					on_toggle_transcript={ui.toggle_transcript}
-					on_toggle_translation={ui.toggle_translation}
-					on_audio_ended={audio.pause}
-					bind:audio_element={audio.audio_element}
+				<div class="card-glass">
+					<AudioSection
+						phrase={phrase.current}
+						is_playing={audio.is_playing}
+						is_transcript_visible={ui.is_transcript_visible}
+						is_translation_visible={ui.is_translation_visible}
+						on_play_audio={handle_play_audio}
+						on_can_play_through={handle_can_play_through}
+						on_toggle_transcript={ui.toggle_transcript}
+						on_toggle_translation={ui.toggle_translation}
+						on_audio_ended={audio.pause}
+						bind:audio_element={audio.audio_element}
+					/>
+
+					<RecordingSection
+						is_recording={recording.is_recording}
+						user_transcript={recording.user_transcript}
+						is_correct={recording.is_correct}
+						on_record={handle_record}
+						on_clear_transcript={handle_clear_transcript}
+					/>
+				</div>
+
+				<ActionButtons
+					is_liked={ui.is_liked}
+					is_completed={ui.is_completed}
+					on_retry={handle_retry}
+					on_next={handle_next}
+					on_preview={handle_preview}
+					on_toggle_completed={ui.toggle_completed}
+					on_toggle_like={ui.toggle_like}
 				/>
-
-				<RecordingSection
-					is_recording={recording.is_recording}
-					user_transcript={recording.user_transcript}
-					is_correct={recording.is_correct}
-					on_record={handle_record}
-					on_clear_transcript={handle_clear_transcript}
-				/>
-			</div>
-
-			<ActionButtons
-				is_liked={ui.is_liked}
-				is_completed={ui.is_completed}
-				on_retry={handle_retry}
-				on_next={handle_next}
-				on_preview={handle_preview}
-				on_toggle_completed={ui.toggle_completed}
-				on_toggle_like={ui.toggle_like}
-			/>
-		{/if}
-	</div>
+			{/if}
+		</div>
+	{/if}
 </div>
