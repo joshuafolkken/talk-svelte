@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { ChevronDownIcon } from '$lib/components/icons'
 	import type { VoidCallback } from '$lib/types'
-	import { ChevronDownIcon } from './icons'
 
 	interface Props {
 		is_revealed: boolean

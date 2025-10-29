@@ -1,9 +1,14 @@
 <script lang="ts">
+	import {
+		ArrowLeftIcon,
+		ArrowRightIcon,
+		HeartIcon,
+		RetryIcon,
+		TrophyIcon,
+	} from '$lib/components/icons'
+	import IconButton from '$lib/components/ui/IconButton.svelte'
 	import { BUTTON_STYLES } from '$lib/constants'
 	import type { VoidCallback } from '$lib/types'
-	import IconButton from './IconButton.svelte'
-	import { ArrowRightIcon, HeartIcon, RetryIcon, TrophyIcon } from './icons'
-	import ArrowLeftIcon from './icons/ArrowLeftIcon.svelte'
 
 	interface Props {
 		is_liked: boolean

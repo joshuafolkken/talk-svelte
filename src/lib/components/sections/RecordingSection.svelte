@@ -1,10 +1,10 @@
 <script lang="ts">
+	import UserTranscriptButton from '$lib/components/features/UserTranscriptButton.svelte'
+	import { MicrophoneIcon, StopIcon } from '$lib/components/icons'
+	import IconButton from '$lib/components/ui/IconButton.svelte'
+	import Section from '$lib/components/ui/Section.svelte'
 	import { BUTTON_SIZES, BUTTON_STYLES } from '$lib/constants'
 	import type { VoidCallback } from '$lib/types'
-	import IconButton from './IconButton.svelte'
-	import { MicrophoneIcon, StopIcon } from './icons'
-	import Section from './Section.svelte'
-	import UserTranscriptButton from './UserTranscriptButton.svelte'
 
 	interface Props {
 		is_recording: boolean
