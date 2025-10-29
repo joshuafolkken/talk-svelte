@@ -10,10 +10,12 @@ export function use_url_parameters(): {
 	lang: string
 	video_id: string | undefined
 	time: string | undefined
+	set: string | undefined
 } {
 	let lang = $state(DEFAULT_LANGUAGE)
 	let video_id = $state<string>()
 	let time = $state<string>()
+	let set = $state<string>()
 
 	$effect(() => {
 		if (!browser) return
@@ -21,6 +23,7 @@ export function use_url_parameters(): {
 		lang = get_url_parameter('lang') ?? DEFAULT_LANGUAGE
 		video_id = get_url_parameter('v')
 		time = get_url_parameter('t')
+		set = get_url_parameter('set')
 	})
 
 	// prettier-ignore
@@ -29,5 +32,6 @@ export function use_url_parameters(): {
 		get lang() { return lang },
 		get video_id() { return video_id },
 		get time() { return time },
+		get set() { return set },
 	}
 }

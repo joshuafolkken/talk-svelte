@@ -2,8 +2,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import fetch from 'node-fetch'
-import { get_bttf_phrases } from '../src/lib/data/phrases/back-to-the-future.js'
-import { get_praise_phrases } from '../src/lib/data/phrases/praise.js'
+import { get_all_bttf_phrases } from '../src/lib/data/phrases/back-to-the-future.js'
+import { get_all_praise_phrases } from '../src/lib/data/phrases/praise.js'
 import { text_to_slug } from '../src/lib/utils/text-to-slug.js'
 
 const ARGV_SLICE_START = 2
@@ -41,7 +41,7 @@ Options:
 	process.exit(0)
 }
 
-const text = [...get_praise_phrases(0), ...get_bttf_phrases(0)]
+const text = [...get_all_praise_phrases(), ...get_all_bttf_phrases()]
 	.map((phrase) => phrase.script)
 	.join('\n')
 

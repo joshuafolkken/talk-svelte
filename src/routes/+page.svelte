@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ActionButtons from '$lib/components/ActionButtons.svelte'
 	import AudioSection from '$lib/components/AudioSection.svelte'
+	import MenuScreen from '$lib/components/MenuScreen.svelte'
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import RecordingSection from '$lib/components/RecordingSection.svelte'
 	import YoutubeBackground from '$lib/components/YoutubeBackground.svelte'
@@ -17,6 +18,9 @@
 		responsive,
 		reset_all_states,
 	} = use_page_state()
+
+	// URLパラメータでメニュー表示を制御
+	const should_show_menu = $derived(url_parameters.set === undefined || url_parameters.set === '')
 
 	function handle_retry(): void {
 		reset_all_states()
@@ -64,39 +68,43 @@
 		class="m-4 mx-auto max-w-sm transition-transform"
 		style="transform: scale({responsive.scale_factor}); transform-origin: top center;"
 	>
-		<ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />
+		{#if should_show_menu}
+			<MenuScreen />
+		{:else}
+			<ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />
 
-		<div class="card-glass">
-			<AudioSection
-				phrase={phrase.current}
-				is_playing={audio.is_playing}
-				is_transcript_visible={ui.is_transcript_visible}
-				is_translation_visible={ui.is_translation_visible}
-				on_play_audio={handle_play_audio}
-				on_can_play_through={handle_can_play_through}
-				on_toggle_transcript={ui.toggle_transcript}
-				on_toggle_translation={ui.toggle_translation}
-				on_audio_ended={audio.pause}
-				bind:audio_element={audio.audio_element}
+			<div class="card-glass">
+				<AudioSection
+					phrase={phrase.current}
+					is_playing={audio.is_playing}
+					is_transcript_visible={ui.is_transcript_visible}
+					is_translation_visible={ui.is_translation_visible}
+					on_play_audio={handle_play_audio}
+					on_can_play_through={handle_can_play_through}
+					on_toggle_transcript={ui.toggle_transcript}
+					on_toggle_translation={ui.toggle_translation}
+					on_audio_ended={audio.pause}
+					bind:audio_element={audio.audio_element}
+				/>
+
+				<RecordingSection
+					is_recording={recording.is_recording}
+					user_transcript={recording.user_transcript}
+					is_correct={recording.is_correct}
+					on_record={handle_record}
+					on_clear_transcript={handle_clear_transcript}
+				/>
+			</div>
+
+			<ActionButtons
+				is_liked={ui.is_liked}
+				is_completed={ui.is_completed}
+				on_retry={handle_retry}
+				on_next={handle_next}
+				on_preview={handle_preview}
+				on_toggle_completed={ui.toggle_completed}
+				on_toggle_like={ui.toggle_like}
 			/>
-
-			<RecordingSection
-				is_recording={recording.is_recording}
-				user_transcript={recording.user_transcript}
-				is_correct={recording.is_correct}
-				on_record={handle_record}
-				on_clear_transcript={handle_clear_transcript}
-			/>
-		</div>
-
-		<ActionButtons
-			is_liked={ui.is_liked}
-			is_completed={ui.is_completed}
-			on_retry={handle_retry}
-			on_next={handle_next}
-			on_preview={handle_preview}
-			on_toggle_completed={ui.toggle_completed}
-			on_toggle_like={ui.toggle_like}
-		/>
+		{/if}
 	</div>
 </div>

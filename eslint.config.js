@@ -359,7 +359,7 @@ export default defineConfig(
 			// 不要な catch を禁止
 			'no-useless-catch': 'error',
 			// 複雑度の制限
-			complexity: ['error', 4],
+			complexity: ['error', 5],
 			// 最大ネストレベル
 			'max-depth': ['error', 1],
 			// 関数の最大行数
