@@ -1,33 +1,35 @@
 import { browser } from '$app/environment'
-import { get_shuffled_questions } from '$lib/data/questions'
-import type { Question } from '$lib/types/question'
+import { get_bttf_phrases } from '$lib/data/phrases/back-to-the-future'
+import type { Phrase } from '$lib/data/phrases/common'
+import { shuffle_array } from '$lib/utils/arrays'
 
-export function use_question_state(): {
+export function use_phrase_state(): {
 	total: number
 	current_number: number
-	current: Question
+	current: Phrase
 	next: () => void
 	previous: () => void
 } {
-	const INITIAL_QUESTION_INDEX = 0
+	const INITIAL_INDEX = 0
 
-	let current_index = $state(INITIAL_QUESTION_INDEX)
-	let questions = $state(get_shuffled_questions())
+	let current_index = $state(INITIAL_INDEX)
+	let phrases = $state(get_bttf_phrases(0))
+	let is_shuffled = $state(false)
 
 	$effect(() => {
-		if (!browser) return
-
-		questions = get_shuffled_questions()
+		if (!browser || is_shuffled) return
+		is_shuffled = true
+		phrases = shuffle_array(phrases)
 	})
 
-	const total = $derived(questions.length)
+	const total = $derived(phrases.length)
 	const current_number = $derived(current_index + 1)
 	const current = $derived.by(() => {
-		const question = questions[current_index]
-		if (question === undefined) {
-			throw new Error(`Question at index ${String(current_index)} not found`)
+		const phrase = phrases[current_index]
+		if (phrase === undefined) {
+			throw new Error(`Phrase at index ${String(current_index)} not found`)
 		}
-		return question
+		return phrase
 	})
 
 	const can_go_next = $derived(current_index < total - 1)

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-restricted-imports */
 import fs from 'node:fs'
 import path from 'node:path'
 import fetch from 'node-fetch'
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import { questions } from '../src/lib/data/questions.js'
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports
+import { get_bttf_phrases } from '../src/lib/data/phrases/back-to-the-future.js'
+import { get_praise_phrases } from '../src/lib/data/phrases/praise.js'
 import { text_to_slug } from '../src/lib/utils/text-to-slug.js'
 
 const ARGV_SLICE_START = 2
@@ -17,7 +17,9 @@ const API_KEY =
 		)
 	})()
 // ElevenLabs voice ID (replace this with your actual voice ID)
-const VOICE_ID = 'Xb7hH8MSUJpSbSDYk0k2' // Alice
+// const VOICE_ID = 'Xb7hH8MSUJpSbSDYk0k2' // Alice
+const VOICE_ID = 'NDTYOmYEjbDIVCKB35i3' // Paige – Engaging Narrator // cspell:disable-line
+
 const OUTPUT_DIRECTORY = './static/audio'
 
 const command_line_arguments = new Set(process.argv.slice(ARGV_SLICE_START))
@@ -39,7 +41,9 @@ Options:
 	process.exit(0)
 }
 
-const text = questions.map((question) => question.transcript).join('\n')
+const text = [...get_praise_phrases(0), ...get_bttf_phrases(0)]
+	.map((phrase) => phrase.script)
+	.join('\n')
 
 const MILLISECONDS_PER_SECOND = 1000
 const DECIMAL_PLACES = 2

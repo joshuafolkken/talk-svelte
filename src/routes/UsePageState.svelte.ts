@@ -1,6 +1,6 @@
 import { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
+import { use_phrase_state } from '$lib/hooks/UsePhraseState.svelte'
 import { use_praise_audio_state } from '$lib/hooks/UsePraiseAudioState.svelte'
-import { use_question_state } from '$lib/hooks/UseQuestionState.svelte'
 import { use_recording_state } from '$lib/hooks/UseRecordingState.svelte'
 import { use_responsive } from '$lib/hooks/UseResponsive.svelte'
 import { use_ui_state } from '$lib/hooks/UseUiState.svelte'
@@ -11,7 +11,7 @@ export function use_page_state(): {
 	audio: ReturnType<typeof use_audio_state>
 	recording: ReturnType<typeof use_recording_state>
 	ui: ReturnType<typeof use_ui_state>
-	question: ReturnType<typeof use_question_state>
+	phrase: ReturnType<typeof use_phrase_state>
 	url_parameters: ReturnType<typeof use_url_parameters>
 	responsive: ReturnType<typeof use_responsive>
 	praise_audio: ReturnType<typeof use_praise_audio_state>
@@ -20,7 +20,7 @@ export function use_page_state(): {
 	const audio = use_audio_state()
 	const recording = use_recording_state()
 	const ui = use_ui_state()
-	const question = use_question_state()
+	const phrase = use_phrase_state()
 	const url_parameters = use_url_parameters()
 	const responsive = use_responsive()
 	const praise_audio = use_praise_audio_state()
@@ -32,7 +32,7 @@ export function use_page_state(): {
 	}
 
 	async function handle_correct_transcript(): Promise<void> {
-		recording.mark_correct(question.current.transcript)
+		recording.mark_correct(phrase.current.script)
 		ui.toggle_completed()
 		await praise_audio.play()
 	}
@@ -40,7 +40,7 @@ export function use_page_state(): {
 	// Handle transcript correctness
 	$effect(() => {
 		if (recording.is_correct) return
-		if (is_transcript_included(question.current.transcript, recording.user_transcript)) {
+		if (is_transcript_included(phrase.current.script, recording.user_transcript)) {
 			void handle_correct_transcript()
 		}
 	})
@@ -49,7 +49,7 @@ export function use_page_state(): {
 		audio,
 		recording,
 		ui,
-		question,
+		phrase,
 		url_parameters,
 		responsive,
 		praise_audio,
