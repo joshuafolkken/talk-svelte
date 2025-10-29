@@ -8,6 +8,7 @@ export default defineConfig({
 		port: 4173,
 	},
 	testDir: 'e2e',
+	timeout: 5_000,
 	use: {
 		baseURL: `http://localhost:4173/talk-svelte/`,
 	},
