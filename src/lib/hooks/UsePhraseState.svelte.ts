@@ -1,7 +1,15 @@
 import { browser } from '$app/environment'
+import { page } from '$app/state'
 import { get_bttf_phrases } from '$lib/data/phrases/back-to-the-future'
 import type { Phrase } from '$lib/data/phrases/common'
 import { shuffle_array } from '$lib/utils/arrays'
+
+// eslint-disable-next-line complexity -- complexity is acceptable for this function
+function get_set_index(): number {
+	const value = page.url.searchParams.get('set') ?? undefined
+	const int_index = value === undefined || value === '' ? 0 : Number.parseInt(value, 10)
+	return int_index >= 0 && int_index < get_bttf_phrases(int_index).length ? int_index : 0
+}
 
 export function use_phrase_state(): {
 	total: number
@@ -18,8 +26,10 @@ export function use_phrase_state(): {
 
 	$effect(() => {
 		if (!browser || is_shuffled) return
+
 		is_shuffled = true
-		phrases = shuffle_array(phrases)
+		const set_index = get_set_index()
+		phrases = shuffle_array(get_bttf_phrases(set_index))
 	})
 
 	const total = $derived(phrases.length)

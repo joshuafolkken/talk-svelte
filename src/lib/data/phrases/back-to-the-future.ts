@@ -60,13 +60,13 @@ const en = new Map<string, string>([
 const phrase_key_groups = [
 	// ['mcfly-x', 'doc-x', 'great-scott-x', 'time-machine-x', 'the-future-x'],
 	['mcfly-x', 'great-scott-x', 'time-machine-x', 'the-future-x', 'holy-shit-x'],
-	// [
-	// 	'i-m-your-density',
-	// 	'you-re-my-son-x',
-	// 	'it-s-a-delorean-x',
-	// 	'this-is-heavy-x',
-	// 	'this-is-insane-x',
-	// ],
+	[
+		'i-m-your-density',
+		'you-re-my-son-x',
+		'it-s-a-delorean-x',
+		'this-is-heavy-x',
+		'this-is-insane-x',
+	],
 	// [
 	// 	'this-is-crazy-x',
 	// 	'1-21-gigawatts-x',
