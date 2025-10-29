@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { asset } from '$app/paths'
+	import ToggleRevealButton from '$lib/components/features/ToggleRevealButton.svelte'
+	import { PauseIcon, PlayIcon } from '$lib/components/icons'
+	import IconButton from '$lib/components/ui/IconButton.svelte'
+	import Section from '$lib/components/ui/Section.svelte'
 	import { AUDIO_PATH, BUTTON_SIZES } from '$lib/constants'
 	import type { Phrase } from '$lib/data/phrases/common'
 	import type { VoidCallback } from '$lib/types'
-	import IconButton from './IconButton.svelte'
-	import { PauseIcon, PlayIcon } from './icons'
-	import Section from './Section.svelte'
-	import ToggleRevealButton from './ToggleRevealButton.svelte'
 
 	interface Props {
 		phrase: Phrase
