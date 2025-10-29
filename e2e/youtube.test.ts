@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 const cases = [
-	{ goto_path: '', expected: 'fIwjfBzlpoI' }, // cspell:disable-line
+	{ goto_path: '', expected: 'FWG3Dfss3Jc' }, // cspell:disable-line
 	{ goto_path: '?v=Z4J2ecm8m5k', expected: 'Z4J2ecm8m5k' },
 ] satisfies Array<{ goto_path: string; expected: string }>
 
