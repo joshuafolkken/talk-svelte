@@ -26,8 +26,10 @@ ignorePaths:
   - .scannerwork/**/*
 words:
   - autodocs
+  - bttf
   - customise
   - darkmode
+  - delorean
   - Dsonar
   - EDITMSG
   - ELEVENLABS
@@ -43,6 +45,7 @@ words:
   - LEFTHOOK
   - Lorean
   - Maguire
+  - mcfly
   - mdsvex
   - mischeck
   - modestbranding

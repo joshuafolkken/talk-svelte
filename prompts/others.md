@@ -25,7 +25,7 @@ WIP
 フォーマルすぎる表現を避ける
 
 対象ファイル
-src/lib/data/questions.ts
+src/lib/data/phrases/\*
 
 コード生成
 クォートが含まれるテキストは、ダブルクォートで囲む。

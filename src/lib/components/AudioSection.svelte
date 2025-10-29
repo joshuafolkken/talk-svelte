@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { asset } from '$app/paths'
 	import { AUDIO_PATH, BUTTON_SIZES } from '$lib/constants'
+	import type { Phrase } from '$lib/data/phrases/common'
 	import type { VoidCallback } from '$lib/types'
-	import type { Question } from '$lib/types/question'
 	import IconButton from './IconButton.svelte'
 	import { PauseIcon, PlayIcon } from './icons'
 	import Section from './Section.svelte'
 	import ToggleRevealButton from './ToggleRevealButton.svelte'
 
 	interface Props {
-		question: Question
+		phrase: Phrase
 		is_playing: boolean
 		is_transcript_visible: boolean
 		is_translation_visible: boolean
@@ -22,7 +22,7 @@
 	}
 
 	let {
-		question, // eslint-disable-line prefer-const
+		phrase, // eslint-disable-line prefer-const
 		is_playing, // eslint-disable-line prefer-const
 		is_transcript_visible, // eslint-disable-line prefer-const
 		is_translation_visible, // eslint-disable-line prefer-const
@@ -34,13 +34,13 @@
 		audio_element = $bindable(),
 	}: Props = $props()
 
-	const audio_path = $derived(asset(`/${AUDIO_PATH}/${question.audio_uri}.mp3`))
+	const audio_path = $derived(asset(`/${AUDIO_PATH}/${phrase.key}.mp3`))
 </script>
 
 <Section heading="Listen">
 	<audio
 		bind:this={audio_element}
-		data-testid="question-audio"
+		data-testid="phrase-audio"
 		src={audio_path}
 		onended={on_audio_ended}
 		oncanplaythrough={on_can_play_through}
@@ -59,14 +59,14 @@
 		<ToggleRevealButton
 			is_revealed={is_transcript_visible}
 			label="Script"
-			content={question.transcript}
+			content={phrase.script}
 			on_toggle={on_toggle_transcript}
 		/>
 
 		<ToggleRevealButton
 			is_revealed={is_translation_visible}
 			label="Meaning"
-			content={question.translation}
+			content={phrase.translation}
 			on_toggle={on_toggle_translation}
 		/>
 	</div>

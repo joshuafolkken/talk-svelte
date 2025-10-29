@@ -404,7 +404,7 @@ test('test description', async ({ page }) => {
   const error_message = `Expected to cycle back to first file "${first_file}", but got "${cycled_file}"`
 
   // その他の例
-  throw new Error(`Matching question not found for: ${displayed_transcript ?? ''}`)
+  throw new Error(`Matching phrase not found for: ${displayed_transcript ?? ''}`)
   const error_message = `mp3 file does not exist: ${file_name}`
   const error_message = `Expected file at index ${String(index)} to be "${expected_file}"`
   ```
@@ -422,8 +422,8 @@ test('test description', async ({ page }) => {
 - 例:
   ```typescript
   import { expect, test } from '@playwright/test'
-  import { questions } from '$lib/data/questions.js'
-  import type { Question } from '$lib/types/question.js'
+  import { get_bttf_phrases } from '$lib/data/phrases/back-to-the-future'
+  import type { Phrase } from '$lib/data/phrases/common'
   ```
 
 ### Playwright Specific
@@ -507,7 +507,7 @@ test('test description', async ({ page }) => {
 
 **Unit/Integration Tests (Vitest):**
 
-- `src/lib/data/questions.spec.ts` - パラメータ化テスト、データ検証（Vitest）
+- `src/lib/data/phrases/phrases.spec.ts` - パラメータ化テスト、データ検証（Vitest）
 - `src/lib/data/praise-audio.spec.ts` - ステートフルな関数のテスト（Vitest）
 
 ESLint 設定：

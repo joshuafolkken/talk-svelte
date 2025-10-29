@@ -1,14 +1,17 @@
 import { expect, test } from '@playwright/test'
-import { praise_audio_files } from '$lib/data/praise-audio'
+import { get_praise_phrases } from '$lib/data/phrases/praise'
 
 const STATUS_CODE_OK = 200
 
-for (const audio_file of praise_audio_files) {
-	test(`praise audio file: ${audio_file}`, async ({ page }) => {
-		const response = await page.request.get(`audio/${audio_file}.mp3`)
-		expect(response.status(), `${audio_file}.mp3 should return 200`).toBe(STATUS_CODE_OK)
+const praise_phrases = get_praise_phrases(0)
+const keys = praise_phrases.map((phrase) => phrase.key)
+
+for (const key of keys) {
+	test(`praise audio file: ${key}`, async ({ page }) => {
+		const response = await page.request.get(`audio/${key}.mp3`)
+		expect(response.status(), `${key}.mp3 should return 200`).toBe(STATUS_CODE_OK)
 
 		const content_type = response.headers()['content-type']
-		expect(content_type, `${audio_file}.mp3 should be audio type`).toContain('audio')
+		expect(content_type, `${key}.mp3 should be audio type`).toContain('audio')
 	})
 }

@@ -12,7 +12,7 @@
 		audio,
 		recording,
 		ui: ui,
-		question: question,
+		phrase,
 		url_parameters,
 		responsive,
 		reset_all_states,
@@ -24,12 +24,12 @@
 	}
 
 	function handle_next(): void {
-		question.next()
+		phrase.next()
 		reset_all_states()
 	}
 
 	function handle_preview(): void {
-		question.previous()
+		phrase.previous()
 		reset_all_states()
 	}
 
@@ -64,11 +64,11 @@
 		class="m-4 mx-auto max-w-sm transition-transform"
 		style="transform: scale({responsive.scale_factor}); transform-origin: top center;"
 	>
-		<ProgressBar current={question.current_number} total={question.total} title={APP_TITLE} />
+		<ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />
 
 		<div class="card-glass">
 			<AudioSection
-				question={question.current}
+				phrase={phrase.current}
 				is_playing={audio.is_playing}
 				is_transcript_visible={ui.is_transcript_visible}
 				is_translation_visible={ui.is_translation_visible}
