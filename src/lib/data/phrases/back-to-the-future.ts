@@ -4,7 +4,7 @@ import { get_all_phrase_entries, get_phrase_entries, type Phrase } from './commo
 
 const en = new Map<string, string>([
 	['mcfly-x', 'McFly!'],
-	['doc-x', 'Doc!'],
+	// ['doc-x', 'Doc!'],
 	// ['marty-x', 'Marty!'],
 	// ['biff-x', 'Biff!'],
 	['great-scott-x', 'Great Scott!'],
@@ -67,13 +67,13 @@ const phrase_key_groups = [
 		'this-is-heavy-x',
 		'this-is-insane-x',
 	],
-	// [
-	// 	'this-is-crazy-x',
-	// 	'1-21-gigawatts-x',
-	// 	'88-miles-per-hour-x',
-	// 	'back-to-the-future-x',
-	// 	'i-m-from-the-future-x',
-	// ],
+	[
+		'this-is-crazy-x',
+		'1-21-gigawatts-x',
+		'88-miles-per-hour-x',
+		'back-to-the-future-x',
+		'i-m-from-the-future-x',
+	],
 	// [
 	// 	'the-flux-capacitor-x',
 	// 	'the-plutonium-chamber-x',
@@ -106,7 +106,7 @@ const phrase_key_groups = [
 
 const ja = new Map<string, string>([
 	['mcfly-x', 'マクフライ！'],
-	['doc-x', 'ドク！'],
+	// ['doc-x', 'ドク！'],
 	// ['marty-x', 'マーティ！'],
 	// ['biff-x', 'ビフ！'],
 	['great-scott-x', 'グレート・スコット！'],
