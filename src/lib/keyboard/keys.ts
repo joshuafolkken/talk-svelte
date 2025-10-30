@@ -1,0 +1,19 @@
+export const KEYS = {
+	a: 'a',
+	d: 'd',
+	space: ' ',
+	r: 'r',
+	f: 'f',
+	s: 's',
+	e: 'e',
+	v: 'v',
+	z: 'z',
+} as const
+
+export type KeyName = (typeof KEYS)[keyof typeof KEYS]
+
+export const KEYS_SET: ReadonlySet<string> = new Set<string>(Object.values(KEYS))
+
+export function is_supported_key(value: string): value is KeyName {
+	return KEYS_SET.has(value)
+}

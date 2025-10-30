@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ChevronDownIcon } from '$lib/components/icons'
+	import { ACTIONS } from '$lib/constants/actions'
 	import type { VoidCallback } from '$lib/types'
 
 	interface Props {
@@ -18,7 +19,13 @@
 	)
 </script>
 
-<button type="button" {onclick} class={button_classes} aria-label="Clear user transcript">
+<button
+	type="button"
+	{onclick}
+	class={button_classes}
+	aria-label="Clear user transcript"
+	data-action={ACTIONS.clear_transcript}
+>
 	{#if user_transcript}
 		<span class="text-content-bold">{user_transcript}</span>
 	{:else}

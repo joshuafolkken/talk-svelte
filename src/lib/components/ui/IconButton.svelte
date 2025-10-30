@@ -8,6 +8,7 @@
 		size?: ButtonSize
 		class?: string
 		label?: string
+		data_action?: string
 		children: Snippet
 	}
 
@@ -17,6 +18,7 @@
 		class: class_names = '',
 		label,
 		children,
+		data_action,
 	}: Props = $props()
 
 	const size_classes = $derived(size === BUTTON_SIZES.lg ? 'h-20 w-20' : 'h-12 w-12')
@@ -27,6 +29,7 @@
 	{onclick}
 	class="btn-icon-glass {size_classes} {class_names}"
 	aria-label={label}
+	data-action={data_action}
 >
 	{@render children()}
 </button>

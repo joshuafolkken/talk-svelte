@@ -5,6 +5,7 @@
 	import IconButton from '$lib/components/ui/IconButton.svelte'
 	import Section from '$lib/components/ui/Section.svelte'
 	import { AUDIO_PATH, BUTTON_SIZES } from '$lib/constants'
+	import { ACTIONS } from '$lib/constants/actions'
 	import type { Phrase } from '$lib/data/phrases/common'
 	import type { VoidCallback } from '$lib/types'
 
@@ -47,7 +48,12 @@
 		aria-label="Question Audio"
 	></audio>
 
-	<IconButton size={BUTTON_SIZES.lg} onclick={on_play_audio} label={is_playing ? 'Pause' : 'Play'}>
+	<IconButton
+		size={BUTTON_SIZES.lg}
+		onclick={on_play_audio}
+		label={is_playing ? 'Pause' : 'Play'}
+		data_action={ACTIONS.toggle_play}
+	>
 		{#if is_playing}
 			<PauseIcon />
 		{:else}
@@ -61,6 +67,7 @@
 			label="Script"
 			content={phrase.script}
 			on_toggle={on_toggle_transcript}
+			data_action={ACTIONS.toggle_transcript}
 		/>
 
 		<ToggleRevealButton
@@ -68,6 +75,7 @@
 			label="Meaning"
 			content={phrase.translation}
 			on_toggle={on_toggle_translation}
+			data_action={ACTIONS.toggle_translation}
 		/>
 	</div>
 </Section>

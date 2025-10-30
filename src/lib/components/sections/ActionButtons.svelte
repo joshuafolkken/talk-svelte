@@ -8,6 +8,7 @@
 	} from '$lib/components/icons'
 	import IconButton from '$lib/components/ui/IconButton.svelte'
 	import { BUTTON_STYLES } from '$lib/constants'
+	import { ACTIONS } from '$lib/constants/actions'
 	import type { VoidCallback } from '$lib/types'
 
 	interface Props {
@@ -39,15 +40,15 @@
 		<HeartIcon {is_liked} />
 	</IconButton>
 
-	<IconButton onclick={on_retry}>
+	<IconButton onclick={on_retry} data_action={ACTIONS.retry}>
 		<RetryIcon />
 	</IconButton>
 
-	<IconButton onclick={on_preview}>
+	<IconButton onclick={on_preview} data_action={ACTIONS.prev}>
 		<ArrowLeftIcon />
 	</IconButton>
 
-	<IconButton onclick={on_next}>
+	<IconButton onclick={on_next} data_action={ACTIONS.next}>
 		<ArrowRightIcon />
 	</IconButton>
 

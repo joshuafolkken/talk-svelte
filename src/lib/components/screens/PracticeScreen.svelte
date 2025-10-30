@@ -4,11 +4,14 @@
 	import RecordingSection from '$lib/components/sections/RecordingSection.svelte'
 	import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
 	import { APP_TITLE } from '$lib/constants'
+	import { ACTIONS, type ActionName } from '$lib/constants/actions'
 	import type { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
 	import type { use_phrase_state } from '$lib/hooks/UsePhraseState.svelte'
 	import type { use_recording_state } from '$lib/hooks/UseRecordingState.svelte'
 	import type { use_ui_state } from '$lib/hooks/UseUiState.svelte'
 	import type { use_url_parameters } from '$lib/hooks/UseUrlParameters.svelte'
+	import { create_on_keydown } from '$lib/keyboard/create-on-keydown'
+	import { KEYS, type KeyName } from '$lib/keyboard/keys'
 	import { is_iphone } from '$lib/utils/device'
 
 	interface Props {
@@ -59,6 +62,31 @@
 	function handle_can_play_through(): void {
 		audio.can_play_through(recording.is_recording)
 	}
+
+	const action_by_key = new Map<KeyName, ActionName>([
+		[KEYS.a, ACTIONS.prev],
+		[KEYS.d, ACTIONS.next],
+		[KEYS.r, ACTIONS.toggle_play],
+		[KEYS.f, ACTIONS.toggle_record],
+		[KEYS.s, ACTIONS.toggle_transcript],
+		[KEYS.e, ACTIONS.toggle_translation],
+		[KEYS.v, ACTIONS.clear_transcript],
+		[KEYS.space, ACTIONS.retry],
+		[KEYS.z, ACTIONS.menu],
+	])
+
+	function get_action_by_key(key: KeyName): ActionName | undefined {
+		return action_by_key.get(key)
+	}
+
+	const on_keydown = create_on_keydown(get_action_by_key)
+
+	$effect(() => {
+		globalThis.addEventListener('keydown', on_keydown)
+		return () => {
+			globalThis.removeEventListener('keydown', on_keydown)
+		}
+	})
 </script>
 
 <ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />

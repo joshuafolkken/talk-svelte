@@ -4,6 +4,7 @@
 	import IconButton from '$lib/components/ui/IconButton.svelte'
 	import Section from '$lib/components/ui/Section.svelte'
 	import { BUTTON_SIZES, BUTTON_STYLES } from '$lib/constants'
+	import { ACTIONS } from '$lib/constants/actions'
 	import type { VoidCallback } from '$lib/types'
 
 	interface Props {
@@ -26,6 +27,7 @@
 		onclick={on_record}
 		class={recording_style}
 		label={is_recording ? 'Stop' : 'Record'}
+		data_action={ACTIONS.toggle_record}
 	>
 		{#if is_recording}
 			<StopIcon />
