@@ -1,5 +1,7 @@
 export const KEYS = {
 	a: 'a',
+	w: 'w',
+	s: 's',
 	d: 'd',
 	space: ' ',
 	r: 'r',

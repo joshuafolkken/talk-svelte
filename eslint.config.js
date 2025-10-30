@@ -897,6 +897,9 @@ export default defineConfig(
 					},
 				},
 			],
+
+			// SonarJS の no-unused-collection ルールは Svelte の AST 解析でバグがあるため無効化
+			'sonarjs/no-unused-collection': 'off',
 		},
 	},
 	{

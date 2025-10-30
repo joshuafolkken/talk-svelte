@@ -49,6 +49,7 @@
 	.btn-content-glass {
 		@apply w-full rounded-3xl border border-white/30 px-6 py-2.5 text-center text-white/70 shadow-lg transition-all duration-200;
 		@apply hover:scale-105 hover:border-white/60 hover:shadow-2xl active:scale-95 active:shadow;
+		@apply focus:outline-none focus-visible:scale-105 focus-visible:border-white/60 focus-visible:shadow-2xl;
 		background: var(--glass-bg);
 		backdrop-filter: var(--glass-blur);
 	}

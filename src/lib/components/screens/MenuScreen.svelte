@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { normalize_key } from '$lib/keyboard/create-on-keydown'
+	import { KEYS } from '$lib/keyboard/keys'
+
 	const phrase_collections = [
 		{ index: 0, title: '#1' },
 		{ index: 1, title: '#2' },
@@ -14,6 +17,59 @@
 			// URL更新に失敗した場合は何もしない
 		}
 	}
+
+	let active_index = 0
+	const buttons: Array<HTMLButtonElement | undefined> = []
+
+	function register(node: HTMLButtonElement, index: number): { destroy: () => void } {
+		buttons[index] = node
+		return {
+			destroy: () => {
+				if (buttons[index] === node) buttons[index] = undefined
+			},
+		}
+	}
+
+	function clamp(value: number, min: number, max: number): number {
+		return Math.min(max, Math.max(min, value))
+	}
+
+	function focus_by_index(index: number): void {
+		active_index = clamp(index, 0, phrase_collections.length - 1)
+		const button = buttons[active_index]
+		if (button !== undefined) button.focus()
+	}
+
+	const handlers: Record<string, () => void> = {
+		[KEYS.w]: () => {
+			focus_by_index(active_index - 1)
+		},
+		[KEYS.s]: () => {
+			focus_by_index(active_index + 1)
+		},
+		[KEYS.space]: () => {
+			buttons[active_index]?.click()
+		},
+	}
+
+	function handle_keydown(event: KeyboardEvent): void {
+		const key = normalize_key(event)
+		const handler = handlers[key]
+		if (handler === undefined) return
+		event.preventDefault()
+		handler()
+	}
+
+	$effect(() => {
+		// 初期フォーカスを最初のボタンに設定
+		queueMicrotask(() => {
+			focus_by_index(0)
+		})
+		globalThis.addEventListener('keydown', handle_keydown)
+		return () => {
+			globalThis.removeEventListener('keydown', handle_keydown)
+		}
+	})
 </script>
 
 <div class="card-glass p-6">
@@ -23,6 +79,7 @@
 	<div class="space-y-4">
 		{#each phrase_collections as collection (collection.index)}
 			<button
+				use:register={collection.index}
 				onclick={() => {
 					select_collection(collection.index)
 				}}
