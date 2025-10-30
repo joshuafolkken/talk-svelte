@@ -8,7 +8,9 @@
 		use_page_state()
 
 	// URLパラメータでメニュー表示を制御
-	const should_show_menu = $derived(url_parameters.set === undefined || url_parameters.set === '')
+	const should_show_menu = $derived(
+		url_parameters.collection === undefined || url_parameters.collection === '',
+	)
 </script>
 
 <div class="relative min-h-screen overflow-hidden">

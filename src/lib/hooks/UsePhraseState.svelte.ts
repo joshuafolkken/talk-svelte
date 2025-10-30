@@ -5,8 +5,8 @@ import type { Phrase } from '$lib/data/phrases/common'
 import { shuffle_array } from '$lib/utils/arrays'
 
 // eslint-disable-next-line complexity -- complexity is acceptable for this function
-function get_set_index(): number {
-	const value = page.url.searchParams.get('set') ?? undefined
+function get_collection_index(): number {
+	const value = page.url.searchParams.get('collection') ?? undefined
 	const int_index = value === undefined || value === '' ? 0 : Number.parseInt(value, 10)
 	return int_index >= 0 && int_index < get_bttf_phrases(int_index).length ? int_index : 0
 }
@@ -28,8 +28,8 @@ export function use_phrase_state(): {
 		if (!browser || is_shuffled) return
 
 		is_shuffled = true
-		const set_index = get_set_index()
-		phrases = shuffle_array(get_bttf_phrases(set_index))
+		const collection_index = get_collection_index()
+		phrases = shuffle_array(get_bttf_phrases(collection_index))
 	})
 
 	const total = $derived(phrases.length)
