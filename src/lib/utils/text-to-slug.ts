@@ -26,6 +26,8 @@ export function text_to_slug(text: string): string {
 	const slug = trimmed
 		.toLowerCase()
 		.replaceAll("'", '-')
+		.replaceAll('.', '-')
+		.replaceAll(',', '-')
 		.replaceAll(/[^\s\w-]/gu, '')
 		.trim()
 		.replaceAll(/\s+/gu, '-')

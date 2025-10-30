@@ -8,6 +8,10 @@
 			index: 1,
 			title: '#2',
 		},
+		{
+			index: 2,
+			title: '#3',
+		},
 	]
 
 	function select_set(set_index: number): void {
