@@ -66,12 +66,12 @@
 	const action_by_key = new Map<KeyName, ActionName>([
 		[KEYS.a, ACTIONS.prev],
 		[KEYS.d, ACTIONS.next],
-		[KEYS.r, ACTIONS.toggle_play],
+		[KEYS.space, ACTIONS.toggle_play],
 		[KEYS.f, ACTIONS.toggle_record],
-		[KEYS.s, ACTIONS.toggle_transcript],
+		[KEYS.q, ACTIONS.toggle_transcript],
 		[KEYS.e, ACTIONS.toggle_translation],
 		[KEYS.v, ACTIONS.clear_transcript],
-		[KEYS.space, ACTIONS.retry],
+		[KEYS.r, ACTIONS.retry],
 		[KEYS.z, ACTIONS.menu],
 	])
 

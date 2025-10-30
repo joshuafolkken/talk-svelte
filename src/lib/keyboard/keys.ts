@@ -4,7 +4,7 @@ export const KEYS = {
 	space: ' ',
 	r: 'r',
 	f: 'f',
-	s: 's',
+	q: 'q',
 	e: 'e',
 	v: 'v',
 	z: 'z',
