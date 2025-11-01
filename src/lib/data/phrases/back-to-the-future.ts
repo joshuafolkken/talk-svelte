@@ -28,19 +28,19 @@ const en = new Map<string, string>([
 	['the-plutonium-chamber-x', 'The plutonium chamber!'],
 	['the-temporal-displacement-x', 'The temporal displacement!'],
 	['this-is-unbelievable-x', 'This is unbelievable!'],
-	['this-is-crazy-x', 'This is crazy!'],
+	['what-the-hell-x', 'What the hell!'],
 
 	['i-m-going-to-be-late-x', "I'm going to be late!"],
-	['what-the-hell-x', 'What the hell!'],
 	['i-m-late-for-school-x', "I'm late for school!"],
 	['nobody-calls-me-chicken-x', 'Nobody calls me chicken!'],
 	['where-the-hell-are-they-q', 'Where the hell are they?'],
-
 	['the-time-circuits-are-on-x', 'The time circuits are on!'],
+
 	['i-can-t-believe-this-x', "I can't believe this!"],
 	['i-m-having-a-nightmare-x', "I'm having a nightmare!"],
 	['i-m-going-to-be-late-for-school-x', "I'm going to be late for school!"],
 	['i-m-going-to-be-late-for-my-own-birth-x', "I'm going to be late for my own birth!"],
+	['year-well-history-is-gonna-be-change', 'Year, well, history is gonna change.'],
 
 	['where-we-re-going-we-don-t-need-roads', "Where we're going, we don't need roads."],
 	['roads-where-we-re-going-we-don-t-need-roads', "Roads? Where we're going, we don't need roads."],
@@ -74,26 +74,26 @@ const phrase_key_groups = [
 		'back-to-the-future-x',
 		'i-m-from-the-future-x',
 	],
-	// [
-	// 	'the-flux-capacitor-x',
-	// 	'the-plutonium-chamber-x',
-	// 	'the-temporal-displacement-x',
-	// 	'this-is-unbelievable-x',
-	// 	'this-is-crazy-x',
-	// ],
+	[
+		'the-flux-capacitor-x',
+		'the-plutonium-chamber-x',
+		'the-temporal-displacement-x',
+		'this-is-unbelievable-x',
+		'what-the-hell-x',
+	],
 	// [
 	// 	'i-m-going-to-be-late-x',
-	// 	'what-the-hell-x',
 	// 	'i-m-late-for-school-x',
 	// 	'nobody-calls-me-chicken-x',
 	// 	'where-the-hell-are-they-q',
+	// 	'the-time-circuits-are-on-x',
 	// ],
 	// [
-	// 	'the-time-circuits-are-on-x',
 	// 	'i-can-t-believe-this-x',
 	// 	'i-m-having-a-nightmare-x',
 	// 	'i-m-going-to-be-late-for-school-x',
 	// 	'i-m-going-to-be-late-for-my-own-birth-x',
+	// 	'year-well-history-is-gonna-be-change',
 	// ],
 	// [
 	// 	'where-we-re-going-we-don-t-need-roads',
@@ -130,19 +130,19 @@ const ja = new Map<string, string>([
 	['the-plutonium-chamber-x', 'プルトニウム・チェンバー！'],
 	['the-temporal-displacement-x', '時間移動！'],
 	['this-is-unbelievable-x', 'これは信じられない！'],
-	['this-is-crazy-x', 'これはクレイジー！'],
+	['what-the-hell-x', '何だって！'],
 
 	['i-m-going-to-be-late-x', '遅刻しそう！'],
-	['what-the-hell-x', '何だって！'],
 	['i-m-late-for-school-x', '学校に遅刻する！'],
 	['nobody-calls-me-chicken-x', '誰にもチキンとは呼ばせない！'],
 	['where-the-hell-are-they-q', '一体どこに行ったんだ？'],
-
 	['the-time-circuits-are-on-x', 'タイム回路がオンだ！'],
+
 	['i-can-t-believe-this-x', 'これを信じられない！'],
 	['i-m-having-a-nightmare-x', '悪夢を見てる！'],
 	['i-m-going-to-be-late-for-school-x', '学校に遅刻しそう！'],
 	['i-m-going-to-be-late-for-my-own-birth-x', '自分の誕生に遅刻しそう！'],
+	['year-well-history-is-gonna-be-change', 'ええ、でも歴史は変わるものですよ。'],
 
 	['where-we-re-going-we-don-t-need-roads', '行く先には道路は要らない'],
 	['roads-where-we-re-going-we-don-t-need-roads', '道路？行く先には道路は要らない'],
