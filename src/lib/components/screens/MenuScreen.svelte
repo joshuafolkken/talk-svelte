@@ -8,6 +8,8 @@
 		{ index: 2, title: '#3' },
 		{ index: 3, title: '#4' },
 		{ index: 4, title: '#5' },
+		{ index: 5, title: '#6' },
+		{ index: 6, title: '#7' },
 	]
 
 	function select_collection(index: number): void {

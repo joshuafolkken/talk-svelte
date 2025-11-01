@@ -37,6 +37,19 @@ const en = new Map<string, string>([
 	// ['marty-is-that-you-q', 'Marty, is that you?'],
 	['hey-hey-doc-x', 'Hey, hey, Doc!'],
 
+	['where-are-you-q', 'Where are you?'],
+	['wait-a-minute-x', 'Wait a minute!'],
+	['where-s-einstein-q', "Where's Einstein?"],
+	['right', 'Right.'],
+	['precisely', 'Precisely.'],
+
+	['all-right', 'All right.'],
+	['come-on', 'Come on.'],
+	['oh-yes-sir', 'Oh, yes, sir.'],
+	// ['you-re-a-slacker-x', "You're a slacker!"],
+	['next-please', 'Next, please.'],
+	['okay', 'Okay.'],
+
 	['i-m-going-to-be-late-x', "I'm going to be late!"],
 	['i-m-late-for-school-x', "I'm late for school!"],
 	['nobody-calls-me-chicken-x', 'Nobody calls me chicken!'],
@@ -96,6 +109,9 @@ const phrase_key_groups = [
 		// 'marty-is-that-you-q',
 		'hey-hey-doc-x',
 	],
+	['where-are-you-q', 'wait-a-minute-x', 'where-s-einstein-q', 'right', 'precisely'],
+	['all-right', 'come-on', 'oh-yes-sir', 'next-please', 'okay'],
+
 	// [
 	// 	'i-m-going-to-be-late-x',
 	// 	'i-m-late-for-school-x',
@@ -154,6 +170,19 @@ const ja = new Map<string, string>([
 	// ['marty-is-that-you-q', 'マーティ、君か？'],
 	['hey-hey-doc-x', 'ねえ、ねえ、ドク！'],
 
+	['where-are-you-q', 'どこにいるの？'],
+	['wait-a-minute-x', 'ちょっと待って！'],
+	['where-s-einstein-q', 'アインシュタインはどこ？'],
+	['right', '分かった。'],
+	['precisely', 'まったくそのとおり。'],
+
+	['all-right', 'いいよ。'],
+	['come-on', 'Come on.'],
+	['oh-yes-sir', 'Oh, yes, sir.'],
+	// ['you-re-a-slacker-x', "You're a slacker!"],
+	['next-please', 'Next, please.'],
+	['okay', 'Okay.'],
+
 	['i-m-going-to-be-late-x', '遅刻しそう！'],
 	['i-m-late-for-school-x', '学校に遅刻する！'],
 	['nobody-calls-me-chicken-x', '誰にもチキンとは呼ばせない！'],
@@ -186,4 +215,4 @@ function get_all_bttf_phrases(): Array<Phrase> {
 	return get_all_phrase_entries(phrase_key_groups, en, ja)
 }
 
-export { get_bttf_phrases, get_all_bttf_phrases }
+export { get_bttf_phrases, get_all_bttf_phrases, phrase_key_groups }
