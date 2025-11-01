@@ -6,6 +6,10 @@ export function normalize_transcript(transcript: string): string {
 		.toLowerCase()
 		.replaceAll('rock and roll', "rock 'n' roll")
 		.replaceAll('okay', 'ok')
+		.replaceAll('8:00', "eight o'clock")
+		.replaceAll('got to go', 'gotta go')
+		.replaceAll('shoes untied', "shoe's untied")
+		.replaceAll('god damn', 'goddamn')
 }
 
 export function decensor(text: string): string {
