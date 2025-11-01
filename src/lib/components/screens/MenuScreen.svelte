@@ -10,6 +10,13 @@
 		{ index: 4, title: '#5' },
 		{ index: 5, title: '#6' },
 		{ index: 6, title: '#7' },
+		{ index: 7, title: '#8' },
+		{ index: 8, title: '#9' },
+		{ index: 9, title: '#10' },
+		{ index: 10, title: '#11' },
+		{ index: 11, title: '#12' },
+		{ index: 12, title: '#13' },
+		{ index: 13, title: '#14' },
 	]
 
 	function select_collection(index: number): void {
@@ -76,23 +83,29 @@
 	})
 </script>
 
-<div class="card-glass p-6">
-	<h1 class="mb-6 text-center text-xl font-bold text-white">Back to the Future</h1>
-	<p class="mb-8 text-center text-sm text-gray-300">Choose your future!</p>
+<div class="card-glass">
+	<div class="px-6 pt-6">
+		<h1 class="mb-6 text-center text-xl font-bold text-white">Back to the Future</h1>
+		<p class=" text-center text-sm text-gray-300">Choose your future!</p>
+	</div>
 
-	<div class="space-y-4">
-		{#each phrase_collections as collection (collection.index)}
-			<button
-				use:register={collection.index}
-				onclick={() => {
-					select_collection(collection.index)
-				}}
-				class="btn-content-glass w-full"
-			>
-				<h3 class="text-md font-semibold text-white">
-					{collection.title}
-				</h3>
-			</button>
-		{/each}
+	<div class="py-5">
+		<div class="max-h-[540px] overflow-y-auto px-6 py-1">
+			<div class="space-y-4">
+				{#each phrase_collections as collection (collection.index)}
+					<button
+						use:register={collection.index}
+						onclick={() => {
+							select_collection(collection.index)
+						}}
+						class="btn-content-glass w-full"
+					>
+						<h3 class="text-md font-semibold text-white">
+							{collection.title}
+						</h3>
+					</button>
+				{/each}
+			</div>
+		</div>
 	</div>
 </div>

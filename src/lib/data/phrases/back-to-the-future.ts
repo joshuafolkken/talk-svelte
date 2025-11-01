@@ -50,6 +50,50 @@ const en = new Map<string, string>([
 	['next-please', 'Next, please.'],
 	['okay', 'Okay.'],
 
+	['he-s-right-here', "He's right here."],
+	['it-s-eight-o-clock', "It's eight o'clock"],
+	['thank-you', 'Thank you.'],
+	['you-re-really-good', "You're really good."],
+	['yeah-i-know-i-know', 'Yeah, I know, I know.'],
+
+	['that-s-good-advice', "That's good advice."],
+	['all-right-okay', 'All right, okay.'],
+	['i-mean', 'I mean...'],
+	['save-the-tower', 'Save the tower.'],
+	['that-is-hot', 'That is hot.'],
+
+	['stop-it', 'Stop it.'],
+	['what-q', 'What?'],
+	['here-you-go', 'Here you go.'],
+	['here-s-a-quarter', "Here's a quarter."],
+	['where-were-we-q', 'Where were we?'],
+
+	['it-s-my-dad', "It's my dad."],
+	['i-ve-gotta-go', "I've gotta go."],
+	['bye', 'Bye.'],
+	['just-perfect', 'Just perfect.'],
+	['it-s-your-car-x', "It's your car!"],
+
+	['think-mcfly-think-x', 'Think McFly, think!'],
+	['of-course', 'Of course.'],
+	['of-course-not', 'Of course not.'],
+	['your-shoe-s-untied', "Your shoe's untied."],
+	['he-wrecked-it', 'He wrecked it.'],
+
+	['i-m-sorry', "I'm sorry."],
+	['goddamn-it-x', 'Goddamn it!'],
+	['i-m-late-x', "I'm late!"],
+	['watch-your-mouth-x', 'Watch your mouth!'],
+	['make-it-fast', 'Make it fast.'],
+
+	['see-you-later', 'See you later.'],
+	['he-s-so-funny', "He's so funny."],
+	['it-ll-just-happen', "It'll just happen."],
+	['bird-watching-q', 'Bird watching?'],
+	['what-lorraine-what-q', 'What, Lorraine? What?'],
+
+	['anyway', 'Anyway...'],
+
 	['i-m-going-to-be-late-x', "I'm going to be late!"],
 	['i-m-late-for-school-x', "I'm late for school!"],
 	['nobody-calls-me-chicken-x', 'Nobody calls me chicken!'],
@@ -111,6 +155,28 @@ const phrase_key_groups = [
 	],
 	['where-are-you-q', 'wait-a-minute-x', 'where-s-einstein-q', 'right', 'precisely'],
 	['all-right', 'come-on', 'oh-yes-sir', 'next-please', 'okay'],
+
+	[
+		'he-s-right-here',
+		'it-s-eight-o-clock',
+		'thank-you',
+		'you-re-really-good',
+		'yeah-i-know-i-know',
+	],
+	['that-s-good-advice', 'all-right-okay', 'i-mean', 'save-the-tower', 'that-is-hot'],
+	['stop-it', 'what-q', 'here-you-go', 'here-s-a-quarter', 'where-were-we-q'],
+	['it-s-my-dad', 'i-ve-gotta-go', 'bye', 'just-perfect', 'it-s-your-car-x'],
+	['think-mcfly-think-x', 'of-course', 'of-course-not', 'your-shoe-s-untied', 'he-wrecked-it'],
+	['i-m-sorry', 'goddamn-it-x', 'i-m-late-x', 'watch-your-mouth-x', 'make-it-fast'],
+	[
+		'see-you-later',
+		'he-s-so-funny',
+		'it-ll-just-happen',
+		'bird-watching-q',
+		'what-lorraine-what-q',
+	],
+
+	['anyway'],
 
 	// [
 	// 	'i-m-going-to-be-late-x',
@@ -182,6 +248,50 @@ const ja = new Map<string, string>([
 	// ['you-re-a-slacker-x', "You're a slacker!"],
 	['next-please', 'Next, please.'],
 	['okay', 'Okay.'],
+
+	['he-s-right-here', '彼はここにいる。'],
+	['it-s-eight-o-clock', '8時だ。'],
+	['thank-you', 'ありがとう。'],
+	['you-re-really-good', 'あなたは本当にいいよ。'],
+	['yeah-i-know-i-know', 'ああ、分かってるよ、分かってる。'],
+
+	['that-s-good-advice', 'それはいいアドバイスだね。'],
+	['all-right-okay', '分かった、そうだね。'],
+	['i-mean', 'つまり...'],
+	['save-the-tower', 'タワーを守ろう。'],
+	['that-is-hot', 'イカスな。'],
+
+	['stop-it', 'やめて。'],
+	['what-q', '何？'],
+	['here-you-go', 'さあ、どうぞ。'],
+	['here-s-a-quarter', 'さあ25セント。'],
+	['where-were-we-q', 'どこまで話してた？'],
+
+	['it-s-my-dad', 'パパだ。'],
+	['i-ve-gotta-go', '行かなきゃ。'],
+	['bye', 'じゃあね。'],
+	['just-perfect', '全く最高だ。'],
+	['it-s-your-car-x', 'お前の車だ！'],
+
+	['think-mcfly-think-x', '考えろよ、マクフライ、考えろ！'],
+	['of-course', 'もちろん。'],
+	['of-course-not', 'もちろん違う。'],
+	['your-shoe-s-untied', '靴紐がほどけてるぞ。'],
+	['he-wrecked-it', '彼が壊したんだ。'],
+
+	['i-m-sorry', '申し訳ない。'],
+	['goddamn-it-x', 'ちくしょう！'],
+	['i-m-late-x', '遅刻だ！'],
+	['watch-your-mouth-x', '口を慎みなさい！'],
+	['make-it-fast', '早くしてよ。'],
+
+	['see-you-later', 'じゃあね、また。'],
+	['he-s-so-funny', '彼は面白いな。'],
+	['it-ll-just-happen', '自然に起こるのよ。'],
+	['bird-watching-q', 'バードウォッチング?'],
+	['what-lorraine-what-q', 'えっ、ロレーン？なんだい？'],
+
+	['anyway', 'とにかく...'],
 
 	['i-m-going-to-be-late-x', '遅刻しそう！'],
 	['i-m-late-for-school-x', '学校に遅刻する！'],
