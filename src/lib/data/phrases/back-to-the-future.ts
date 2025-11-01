@@ -30,6 +30,13 @@ const en = new Map<string, string>([
 	['this-is-unbelievable-x', 'This is unbelievable!'],
 	['what-the-hell-x', 'What the hell!'],
 
+	['hello-anybody-home-q', 'Hello, anybody home?'],
+	['what-s-going-on-q', "What's going on?"],
+	['that-s-disgusting', "That's disgusting."],
+	['rock-n-roll-x', "Rock 'N' Roll!"],
+	// ['marty-is-that-you-q', 'Marty, is that you?'],
+	['hey-hey-doc-x', 'Hey, hey, Doc!'],
+
 	['i-m-going-to-be-late-x', "I'm going to be late!"],
 	['i-m-late-for-school-x', "I'm late for school!"],
 	['nobody-calls-me-chicken-x', 'Nobody calls me chicken!'],
@@ -81,6 +88,14 @@ const phrase_key_groups = [
 		'this-is-unbelievable-x',
 		'what-the-hell-x',
 	],
+	[
+		'hello-anybody-home-q',
+		'what-s-going-on-q',
+		'that-s-disgusting',
+		'rock-n-roll-x',
+		// 'marty-is-that-you-q',
+		'hey-hey-doc-x',
+	],
 	// [
 	// 	'i-m-going-to-be-late-x',
 	// 	'i-m-late-for-school-x',
@@ -131,6 +146,13 @@ const ja = new Map<string, string>([
 	['the-temporal-displacement-x', '時間移動！'],
 	['this-is-unbelievable-x', 'これは信じられない！'],
 	['what-the-hell-x', '何だって！'],
+
+	['hello-anybody-home-q', 'こんにちは、だれかいる？'],
+	['what-s-going-on-q', 'どうなってるんだ？'],
+	['that-s-disgusting', 'まいったな。'],
+	['rock-n-roll-x', 'ロックンロールだ！'],
+	// ['marty-is-that-you-q', 'マーティ、君か？'],
+	['hey-hey-doc-x', 'ねえ、ねえ、ドク！'],
 
 	['i-m-going-to-be-late-x', '遅刻しそう！'],
 	['i-m-late-for-school-x', '学校に遅刻する！'],

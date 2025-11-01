@@ -2,6 +2,7 @@ export function normalize_transcript(transcript: string): string {
 	return transcript
 		.replaceAll(/[,.!?…]/gu, '')
 		.replaceAll('\u2019', "'")
+		.replaceAll('rock and roll', "rock 'n' roll")
 		.trim()
 		.toLowerCase()
 }
