@@ -4,6 +4,8 @@ export function normalize_transcript(transcript: string): string {
 		.replaceAll('\u2019', "'")
 		.trim()
 		.toLowerCase()
+		.replaceAll('rock and roll', "rock 'n' roll")
+		.replaceAll('okay', 'ok')
 }
 
 export function decensor(text: string): string {
