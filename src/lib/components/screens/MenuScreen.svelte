@@ -2,6 +2,9 @@
 	import { phrase_key_collections } from '$lib/data/phrases/back-to-the-future'
 	import { normalize_key } from '$lib/keyboard/create-on-keydown'
 	import { KEYS } from '$lib/keyboard/keys'
+	import { storage } from '$lib/utils/storage'
+
+	const LAST_SELECTED_COLLECTION_KEY = 'last_selected_collection'
 
 	const phrase_collections = phrase_key_collections.map((_, index) => ({
 		index,
@@ -9,6 +12,8 @@
 	}))
 
 	function select_collection(index: number): void {
+		storage.set_number(LAST_SELECTED_COLLECTION_KEY, index)
+
 		try {
 			const url = new URL(globalThis.location.href)
 			url.searchParams.set('collection', index.toString())
@@ -63,8 +68,10 @@
 	$effect(() => {
 		// 初期フォーカスを最初のボタンに設定
 		queueMicrotask(() => {
-			focus_by_index(0)
+			const last_selected_collection = storage.get_number(LAST_SELECTED_COLLECTION_KEY) ?? 0
+			focus_by_index(last_selected_collection)
 		})
+
 		globalThis.addEventListener('keydown', handle_keydown)
 		return () => {
 			globalThis.removeEventListener('keydown', handle_keydown)
