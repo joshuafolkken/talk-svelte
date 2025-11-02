@@ -1,6 +1,6 @@
 import { browser } from '$app/environment'
 import { page } from '$app/state'
-import { get_bttf_phrases, phrase_key_groups } from '$lib/data/phrases/back-to-the-future'
+import { get_bttf_phrases, phrase_key_collections } from '$lib/data/phrases/back-to-the-future'
 import type { Phrase } from '$lib/data/phrases/common'
 import { shuffle_array } from '$lib/utils/arrays'
 
@@ -8,7 +8,7 @@ import { shuffle_array } from '$lib/utils/arrays'
 function get_collection_index(): number {
 	const value = page.url.searchParams.get('collection') ?? undefined
 	const int_index = value === undefined || value === '' ? 0 : Number.parseInt(value, 10)
-	return int_index >= 0 && int_index < phrase_key_groups.length ? int_index : 0
+	return int_index >= 0 && int_index < phrase_key_collections.length ? int_index : 0
 }
 
 export function use_phrase_state(): {
