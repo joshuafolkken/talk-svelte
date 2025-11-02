@@ -925,6 +925,13 @@ export default defineConfig(
 			'max-statements': ['error', 15],
 		},
 	},
+	{
+		files: ['**/phrases/*.ts'],
+		rules: {
+			'max-lines': 'off',
+			'sonarjs/no-duplicate-string': 'off',
+		},
+	},
 	// {
 	// 	// テストファイルではルールを緩和
 	// 	files: ['**/*.test.ts', '**/*.spec.ts', '**/*.test.svelte.ts', '**/*.spec.svelte.ts'],

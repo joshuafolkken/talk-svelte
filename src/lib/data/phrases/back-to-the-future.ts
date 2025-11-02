@@ -1,7 +1,5 @@
 import { get_all_phrase_entries, get_phrase_entries, type Phrase } from './common'
 
-/* eslint-disable sonarjs/no-duplicate-string */
-
 const en = new Map<string, string>([
 	['mcfly-x', 'McFly!'],
 	// ['doc-x', 'Doc!'],
@@ -93,6 +91,40 @@ const en = new Map<string, string>([
 	['what-lorraine-what-q', 'What, Lorraine? What?'],
 
 	['anyway', 'Anyway...'],
+	['don-t-forget-now', "Don't forget now."],
+	['our-first-date', 'Our first date.'],
+	['don-t-be-silly', "Don't be silly."],
+	['where-s-the-doc-q', "Where's the Doc?"],
+
+	['you-made-it', 'You made it.'],
+	['stay-with-me', 'Stay with me.'],
+	['okay-i-will', 'Okay, I will.'],
+	['we-ll-proceed', "We'll proceed."],
+	['not-now-not-now', 'Not now, not now.'],
+
+	['i-m-ready', "I'm ready."],
+	['good-evening', 'Good evening.'],
+	['it-s-saturday-morning', "It's Saturday morning."],
+	['sit-down', 'Sit down.'],
+	['that-s-it', "That's it."],
+
+	['yeah-okay-got-it', 'Yeah, Okay, got it.'],
+	['not-me-the-car-the-car-x', 'Not me, the car, the car!'],
+	['watch-this-watch-this-x', 'Watch this, watch this!'],
+	['jesus-christ-x', 'Jesus Christ!'],
+	['you-disintegrated-einstein', 'You disintegrated Einstein.'],
+
+	['calm-down-marty', 'Calm down, Marty.'],
+	['look-out-x', 'Look out!'],
+	['it-s-cold', "It's cold."],
+	['you-little-devil-x', 'You little devil!'],
+	['he-s-all-right', "He's all right."],
+
+	['he-s-fine', "He's fine."],
+	['i-don-t-get-it', "I don't get it."],
+	['what-happened-q', 'What happened?'],
+	['this-is-great', 'This is great'],
+	['keep-rolling-keep-rolling-there', 'Keep rolling, keep rolling there.'],
 
 	['i-m-going-to-be-late-x', "I'm going to be late!"],
 	['i-m-late-for-school-x', "I'm late for school!"],
@@ -121,7 +153,7 @@ const en = new Map<string, string>([
 	// ],
 ])
 
-const phrase_key_groups = [
+const phrase_key_collections = [
 	// ['mcfly-x', 'doc-x', 'great-scott-x', 'time-machine-x', 'the-future-x'],
 	['mcfly-x', 'great-scott-x', 'time-machine-x', 'the-future-x', 'holy-shit-x'],
 	[
@@ -176,7 +208,24 @@ const phrase_key_groups = [
 		'what-lorraine-what-q',
 	],
 
-	['anyway'],
+	['anyway', 'don-t-forget-now', 'our-first-date', 'don-t-be-silly', 'where-s-the-doc-q'],
+	['you-made-it', 'stay-with-me', 'okay-i-will', 'we-ll-proceed', 'not-now-not-now'],
+	['i-m-ready', 'good-evening', 'it-s-saturday-morning', 'sit-down', 'that-s-it'],
+	[
+		'yeah-okay-got-it',
+		'not-me-the-car-the-car-x',
+		'watch-this-watch-this-x',
+		'jesus-christ-x',
+		'you-disintegrated-einstein',
+	],
+	['calm-down-marty', 'look-out-x', 'it-s-cold', 'you-little-devil-x', 'he-s-all-right'],
+	[
+		'he-s-fine',
+		'i-don-t-get-it',
+		'what-happened-q',
+		'this-is-great',
+		'keep-rolling-keep-rolling-there',
+	],
 
 	// [
 	// 	'i-m-going-to-be-late-x',
@@ -292,6 +341,40 @@ const ja = new Map<string, string>([
 	['what-lorraine-what-q', 'えっ、ロレーン？なんだい？'],
 
 	['anyway', 'とにかく...'],
+	['don-t-forget-now', '忘れないでね。'],
+	['our-first-date', '私達の初めてのデート。'],
+	['don-t-be-silly', 'そんなバカな。'],
+	['where-s-the-doc-q', 'ドクはどこ？'],
+
+	['you-made-it', '間に合ったね。'],
+	['stay-with-me', '聞いてくれ。'],
+	['okay-i-will', 'よし、やるよ。'],
+	['we-ll-proceed', '始めよう。'],
+	['not-now-not-now', '今はじゃない、まだだ。'],
+
+	['i-m-ready', '準備いいよ。'],
+	['good-evening', 'こんばんは。'],
+	['it-s-saturday-morning', '土曜日の朝です。'],
+	['sit-down', '座って。'],
+	['that-s-it', 'それだ。'],
+
+	['yeah-okay-got-it', 'ああ、分かったよ、大丈夫だ。'],
+	['not-me-the-car-the-car-x', '私じゃない、車、車だ！'],
+	['watch-this-watch-this-x', 'よく見ろ！見るんだ！'],
+	['jesus-christ-x', 'なんてこった！'],
+	['you-disintegrated-einstein', 'アインシュタインを消しちゃった。'],
+
+	['calm-down-marty', '落ちつくんだ、マーティ。'],
+	['look-out-x', '危ない！'],
+	['it-s-cold', '冷たい。'],
+	['you-little-devil-x', '可愛いやつめ！'],
+	['he-s-all-right', '彼は大丈夫だ。'],
+
+	['he-s-fine', '彼は元気だ。'],
+	['i-don-t-get-it', '分からないよ。'],
+	['what-happened-q', '何が起きたの？'],
+	['this-is-great', 'これはすごい。'],
+	['keep-rolling-keep-rolling-there', '回し続けて、回しておいてくれ。'],
 
 	['i-m-going-to-be-late-x', '遅刻しそう！'],
 	['i-m-late-for-school-x', '学校に遅刻する！'],
@@ -318,11 +401,11 @@ const ja = new Map<string, string>([
 ])
 
 function get_bttf_phrases(index: number): Array<Phrase> {
-	return get_phrase_entries(index, phrase_key_groups, en, ja)
+	return get_phrase_entries(index, phrase_key_collections, en, ja)
 }
 
 function get_all_bttf_phrases(): Array<Phrase> {
-	return get_all_phrase_entries(phrase_key_groups, en, ja)
+	return get_all_phrase_entries(phrase_key_collections, en, ja)
 }
 
-export { get_bttf_phrases, get_all_bttf_phrases, phrase_key_groups }
+export { get_bttf_phrases, get_all_bttf_phrases, phrase_key_collections }
