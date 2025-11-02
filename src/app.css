@@ -32,7 +32,7 @@
 	/* Common button styles */
 	.btn-glass {
 		@apply flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-white shadow-lg transition-all duration-200;
-		@apply hover:scale-105 hover:border-white/60 hover:shadow-2xl;
+		@apply hover:scale-103 hover:border-white/60 hover:shadow-2xl;
 		background: var(--glass-bg);
 		backdrop-filter: var(--glass-blur);
 	}
@@ -52,7 +52,7 @@
 	/* Content box */
 	.btn-content-glass {
 		@apply w-full rounded-3xl border border-white/30 px-6 py-2.5 text-center text-white/70 shadow-lg transition-all duration-200;
-		@apply hover:scale-105 hover:border-white/60 hover:shadow-2xl;
+		@apply hover:scale-103 hover:border-white/60 hover:shadow-2xl;
 		@apply focus:outline-none focus-visible:scale-105 focus-visible:border-white/60 focus-visible:shadow-2xl;
 		background: var(--glass-bg);
 		backdrop-filter: var(--glass-blur);
@@ -93,7 +93,7 @@
 	/* @media (hover: none) and (pointer: coarse) { */
 	.btn-glass:active,
 	.btn-content-glass:active {
-		transform: scale(1.05);
+		transform: scale(1.02);
 		box-shadow:
 			0 0 0 0 rgba(255, 255, 255, 0.7),
 			0 4px 20px rgba(255, 255, 255, 0.6),
