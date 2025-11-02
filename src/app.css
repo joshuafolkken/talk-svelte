@@ -14,6 +14,10 @@
 		@apply min-h-screen bg-gray-900 text-white;
 	}
 
+	button {
+		@apply cursor-pointer;
+	}
+
 	.glass-content {
 		background: var(--glass-bg);
 		backdrop-filter: var(--glass-blur);
