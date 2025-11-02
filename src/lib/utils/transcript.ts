@@ -10,6 +10,8 @@ export function normalize_transcript(transcript: string): string {
 		.replaceAll('got to go', 'gotta go')
 		.replaceAll('shoes untied', "shoe's untied")
 		.replaceAll('god damn', 'goddamn')
+		.replaceAll('give me a tab', 'gimme a tab')
+		.replaceAll('give me a pepsi free', 'gimme a pepsi-free')
 }
 
 export function decensor(text: string): string {
