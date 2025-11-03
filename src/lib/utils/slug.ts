@@ -20,7 +20,7 @@ function add_suffix(slug: string, text: string): string {
 	return slug
 }
 
-export function text_to_slug(text: string): string {
+function to_slug(text: string): string {
 	const trimmed = text.trim()
 
 	const slug = trimmed
@@ -35,4 +35,8 @@ export function text_to_slug(text: string): string {
 
 	const cleaned_slug = trim_hyphens(slug)
 	return add_suffix(cleaned_slug, trimmed)
+}
+
+export const slug = {
+	to_slug,
 }

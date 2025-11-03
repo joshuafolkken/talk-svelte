@@ -19,7 +19,7 @@
 	{#if responsive.is_ready}
 		<div
 			class="m-4 mx-auto max-w-sm transition-transform"
-			style="transform: scale({responsive.scale_factor}); transform-origin: top center;"
+			style="transform: scale({responsive.scale}); transform-origin: top center;"
 		>
 			{#if should_show_menu}
 				<MenuScreen />

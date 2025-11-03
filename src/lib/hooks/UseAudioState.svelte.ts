@@ -1,4 +1,4 @@
-import { pause_audio, play_audio, reset_audio } from '$lib/utils/audio'
+import { audio } from '$lib/utils/audio'
 
 export function use_audio_state(): {
 	is_playing: boolean
@@ -14,7 +14,7 @@ export function use_audio_state(): {
 
 	async function play(): Promise<void> {
 		try {
-			await play_audio(audio_element)
+			await audio.play(audio_element)
 			is_playing = true
 		} catch {
 			is_playing = false
@@ -22,12 +22,12 @@ export function use_audio_state(): {
 	}
 
 	function pause(): void {
-		pause_audio(audio_element)
+		audio.pause(audio_element)
 		is_playing = false
 	}
 
 	function reset(): void {
-		reset_audio(audio_element)
+		audio.reset(audio_element)
 		is_playing = false
 	}
 

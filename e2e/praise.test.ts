@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test'
-import { get_praise_phrases } from '$lib/data/phrases/praise'
+import { praise } from '$lib/data/phrases/praise'
 
 const STATUS_CODE_OK = 200
 
-const praise_phrases = get_praise_phrases(0)
-const keys = praise_phrases.map((phrase) => phrase.key)
+const phrases = praise.get_phrases(0)
+const keys = phrases.map((phrase) => phrase.key)
 
 for (const key of keys) {
 	test(`praise audio file: ${key}`, async ({ page }) => {

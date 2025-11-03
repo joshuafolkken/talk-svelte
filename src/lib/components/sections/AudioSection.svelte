@@ -4,9 +4,10 @@
 	import { PauseIcon, PlayIcon } from '$lib/components/icons'
 	import IconButton from '$lib/components/ui/IconButton.svelte'
 	import Section from '$lib/components/ui/Section.svelte'
-	import { AUDIO_PATH, BUTTON_SIZES } from '$lib/constants'
 	import { ACTIONS } from '$lib/constants/actions'
-	import type { Phrase } from '$lib/data/phrases/common'
+	import { AUDIO } from '$lib/constants/audio'
+	import { UI } from '$lib/constants/ui'
+	import type { Phrase } from '$lib/data/phrases/phrases'
 	import type { VoidCallback } from '$lib/types'
 
 	interface Props {
@@ -35,7 +36,7 @@
 		audio_element = $bindable(),
 	}: Props = $props()
 
-	const audio_path = $derived(asset(`/${AUDIO_PATH}/${phrase.key}.mp3`))
+	const audio_path = $derived(asset(`/${AUDIO.PATH}/${phrase.key}.mp3`))
 </script>
 
 <Section heading="Listen">
@@ -49,10 +50,10 @@
 	></audio>
 
 	<IconButton
-		size={BUTTON_SIZES.lg}
+		size={UI.BUTTON_SIZES.LG}
 		onclick={on_play_audio}
 		label={is_playing ? 'Pause' : 'Play'}
-		data_action={ACTIONS.toggle_play}
+		data_action={ACTIONS.TOGGLE_PLAY}
 	>
 		{#if is_playing}
 			<PauseIcon />
@@ -67,7 +68,7 @@
 			label="Script"
 			content={phrase.script}
 			on_toggle={on_toggle_transcript}
-			data_action={ACTIONS.toggle_transcript}
+			data_action={ACTIONS.TOGGLE_TRANSCRIPT}
 		/>
 
 		<ToggleRevealButton
@@ -75,7 +76,7 @@
 			label="Meaning"
 			content={phrase.translation}
 			on_toggle={on_toggle_translation}
-			data_action={ACTIONS.toggle_translation}
+			data_action={ACTIONS.TOGGLE_TRANSLATION}
 		/>
 	</div>
 </Section>

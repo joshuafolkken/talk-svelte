@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE } from '$lib/constants'
+import { APP } from '$lib/constants/app'
 import type {
 	ErrorCallback,
 	SpeechRecognition,
@@ -6,7 +6,7 @@ import type {
 	SpeechRecognitionEvent,
 	TranscriptCallback,
 } from '$lib/types/speech-recognition.types'
-import { is_android } from './device'
+import { device } from './device'
 
 export class SpeechToText {
 	readonly #recognition: SpeechRecognition | undefined
@@ -25,7 +25,7 @@ export class SpeechToText {
 	#add_event_listener(recognition: SpeechRecognition): void {
 		recognition.addEventListener('error', this.#handle_error.bind(this))
 
-		if (is_android()) {
+		if (device.is_android()) {
 			recognition.addEventListener('result', this.#handle_result_android.bind(this))
 			recognition.addEventListener('end', this.#handle_end_android.bind(this))
 		} else {
@@ -167,7 +167,7 @@ export class SpeechToText {
 		}
 	}
 
-	start(lang: string = DEFAULT_LANGUAGE): void {
+	start(lang: string = APP.DEFAULT_LANGUAGE): void {
 		if (this.#recognition === undefined) {
 			this.#on_error('SpeechRecognition is not initialized')
 			return

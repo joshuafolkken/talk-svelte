@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test'
-import { get_bttf_phrases } from '$lib/data/phrases/back-to-the-future'
+import { back_to_the_future } from '$lib/data/phrases/back-to-the-future'
 
 test('audio src matches displayed phrase', async ({ page }) => {
 	await page.goto('?collection=0')
 	await page.getByTestId('toggle-script').click()
 
 	const displayed_transcript = await page.getByTestId('script-content').textContent()
-	const bttf_phrases = get_bttf_phrases(0)
-	const matching_phrase = bttf_phrases.find((pr) => pr.script === displayed_transcript)
+	const phrases = back_to_the_future.get_phrases(0)
+	const matching_phrase = phrases.find((pr) => pr.script === displayed_transcript)
 
 	if (matching_phrase === undefined) {
 		throw new Error(`Matching phrase not found for: ${displayed_transcript ?? ''}`)

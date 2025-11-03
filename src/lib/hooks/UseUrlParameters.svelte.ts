@@ -1,6 +1,6 @@
 import { browser } from '$app/environment'
 import { page } from '$app/state'
-import { DEFAULT_LANGUAGE } from '$lib/constants'
+import { APP } from '$lib/constants/app'
 
 function get_url_parameter(name: string): string | undefined {
 	return page.url.searchParams.get(name) ?? undefined
@@ -12,7 +12,7 @@ export function use_url_parameters(): {
 	time: string | undefined
 	collection: string | undefined
 } {
-	let lang = $state(DEFAULT_LANGUAGE)
+	let lang: string = $state(APP.DEFAULT_LANGUAGE)
 	let video_id = $state<string>()
 	let time = $state<string>()
 	let collection = $state<string>()
@@ -20,7 +20,7 @@ export function use_url_parameters(): {
 	$effect(() => {
 		if (!browser) return
 
-		lang = get_url_parameter('lang') ?? DEFAULT_LANGUAGE
+		lang = get_url_parameter('lang') ?? APP.DEFAULT_LANGUAGE
 		video_id = get_url_parameter('v')
 		time = get_url_parameter('t')
 		collection = get_url_parameter('collection')

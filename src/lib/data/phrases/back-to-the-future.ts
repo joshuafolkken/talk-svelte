@@ -1,4 +1,4 @@
-import { get_all_phrase_entries, get_phrase_entries, type Phrase } from './common'
+import { phrases, type Phrase } from './phrases'
 
 const en = new Map<string, string>([
 	['mcfly-x', 'McFly!'],
@@ -183,7 +183,7 @@ const en = new Map<string, string>([
 	// ],
 ])
 
-const phrase_key_collections = [
+const key_collections = [
 	// ['mcfly-x', 'doc-x', 'great-scott-x', 'time-machine-x', 'the-future-x'],
 	['mcfly-x', 'great-scott-x', 'time-machine-x', 'the-future-x', 'holy-shit-x'],
 	[
@@ -399,7 +399,7 @@ const ja = new Map<string, string>([
 	['sit-down', '座って。'],
 	['that-s-it', 'それだ。'],
 
-	['yeah-okay-got-it', 'ああ、分かったよ、大丈夫だ。'],
+	['yeah-okay-got-it', 'ああ、オーケー、分かった。'],
 	['not-me-the-car-the-car-x', '私じゃない、車、車だ！'],
 	['watch-this-watch-this-x', 'よく見ろ！見るんだ！'],
 	['jesus-christ-x', 'なんてこった！'],
@@ -471,12 +471,16 @@ const ja = new Map<string, string>([
 	// ],
 ])
 
-function get_bttf_phrases(index: number): Array<Phrase> {
-	return get_phrase_entries(index, phrase_key_collections, en, ja)
+function get_phrases(index: number): Array<Phrase> {
+	return phrases.get(index, key_collections, en, ja)
 }
 
-function get_all_bttf_phrases(): Array<Phrase> {
-	return get_all_phrase_entries(phrase_key_collections, en, ja)
+function get_all_phrases(): Array<Phrase> {
+	return phrases.get_all(key_collections, en, ja)
 }
 
-export { get_bttf_phrases, get_all_bttf_phrases, phrase_key_collections }
+export const back_to_the_future = {
+	key_collections,
+	get_phrases,
+	get_all_phrases,
+}

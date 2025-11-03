@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { phrase_key_collections } from '$lib/data/phrases/back-to-the-future'
-	import { normalize_key } from '$lib/keyboard/create-on-keydown'
-	import { KEYS } from '$lib/keyboard/keys'
+	import { back_to_the_future } from '$lib/data/phrases/back-to-the-future'
+	import { keyboard } from '$lib/keyboard/keyboard'
+	import { on_keydown } from '$lib/keyboard/on-keydown'
 	import { storage } from '$lib/utils/storage'
 
 	const LAST_SELECTED_COLLECTION_KEY = 'last_selected_collection'
 
-	const phrase_collections = phrase_key_collections.map((_, index) => ({
+	const collections = back_to_the_future.key_collections.map((_, index) => ({
 		index,
 		title: `#${String(index + 1)}`,
 	}))
@@ -40,25 +40,25 @@
 	}
 
 	function focus_by_index(index: number): void {
-		active_index = clamp(index, 0, phrase_collections.length - 1)
+		active_index = clamp(index, 0, collections.length - 1)
 		const button = buttons[active_index]
 		if (button !== undefined) button.focus()
 	}
 
 	const handlers: Record<string, () => void> = {
-		[KEYS.w]: () => {
+		[keyboard.KEYS.W]: () => {
 			focus_by_index(active_index - 1)
 		},
-		[KEYS.s]: () => {
+		[keyboard.KEYS.S]: () => {
 			focus_by_index(active_index + 1)
 		},
-		[KEYS.space]: () => {
+		[keyboard.KEYS.SPACE]: () => {
 			buttons[active_index]?.click()
 		},
 	}
 
 	function handle_keydown(event: KeyboardEvent): void {
-		const key = normalize_key(event)
+		const key = on_keydown.normalize(event)
 		const handler = handlers[key]
 		if (handler === undefined) return
 		event.preventDefault()
@@ -88,7 +88,7 @@
 	<div class="py-5">
 		<div class="max-h-[540px] overflow-y-auto px-6 py-1">
 			<div class="space-y-4">
-				{#each phrase_collections as collection (collection.index)}
+				{#each collections as collection (collection.index)}
 					<button
 						use:register={collection.index}
 						onclick={() => {

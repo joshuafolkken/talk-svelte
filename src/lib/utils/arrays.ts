@@ -1,5 +1,5 @@
 // Fisher-Yates シャッフルアルゴリズム
-function shuffle_array<T>(array: Array<T>): Array<T> {
+function shuffle<T>(array: Array<T>): Array<T> {
 	const shuffled = [...array]
 	for (let index = shuffled.length - 1; index > 0; index--) {
 		// eslint-disable-next-line sonarjs/pseudo-random
@@ -11,4 +11,6 @@ function shuffle_array<T>(array: Array<T>): Array<T> {
 	return shuffled
 }
 
-export { shuffle_array }
+export const arrays = {
+	shuffle,
+}

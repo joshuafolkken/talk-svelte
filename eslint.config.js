@@ -155,7 +155,7 @@ export default defineConfig(
 				// オブジェクトリテラルのプロパティは snake_case（外部APIとの互換性のため例外を許可）
 				{
 					selector: 'objectLiteralProperty',
-					format: ['snake_case'],
+					format: ['snake_case', 'UPPER_CASE'],
 					leadingUnderscore: 'allow',
 					filter: {
 						// 一般的な HTTP ヘッダー名のパターンのみ許可
@@ -515,6 +515,17 @@ export default defineConfig(
 					selector: 'WithStatement',
 					message:
 						'`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
+				},
+				{
+					selector: 'ExportNamedDeclaration > FunctionDeclaration:not([id.name=/^use_/])',
+					message:
+						'Individual named exports (functions) are not allowed. Use object export instead. Example: export const module_name = { function_name }',
+				},
+				{
+					selector:
+						'ExportNamedDeclaration > VariableDeclaration[declarations.length=1] > VariableDeclarator[id.type="Identifier"]:not([id.name=/^[A-Z_]+$/]):not([init.type="ObjectExpression"]):not([init.type="ArrayExpression"])',
+					message:
+						'Individual named exports (constants) are not allowed (except UPPER_CASE). Use object export instead. Example: export const module_name = { constant_name }',
 				},
 			],
 			// delete演算子を変数に使用することを禁止
