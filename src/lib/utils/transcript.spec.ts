@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { is_transcript_correct } from './transcript.js'
+import { transcript } from './transcript.js'
 
 const cases = [
 	{ expected: 'Love it!', actual: 'love it', result: true },
@@ -9,8 +9,8 @@ const cases = [
 ] satisfies Array<{ expected: string; actual: string; result: boolean }>
 
 test.each(cases)(
-	'is_transcript_correct("$expected", "$actual") -> $result',
+	'transcript.is_correct("$expected", "$actual") -> $result',
 	({ expected, actual, result }) => {
-		expect(is_transcript_correct(expected, actual)).toBe(result)
+		expect(transcript.is_correct(expected, actual)).toBe(result)
 	},
 )

@@ -2,9 +2,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import fetch from 'node-fetch'
-import { get_all_bttf_phrases } from '../src/lib/data/phrases/back-to-the-future.js'
-import { get_all_praise_phrases } from '../src/lib/data/phrases/praise.js'
-import { text_to_slug } from '../src/lib/utils/text-to-slug.js'
+import { back_to_the_future } from '../src/lib/data/phrases/back-to-the-future.js'
+import { praise } from '../src/lib/data/phrases/praise.js'
+import { slug } from '../src/lib/utils/slug.js'
 
 const ARGV_SLICE_START = 2
 
@@ -41,7 +41,7 @@ Options:
 	process.exit(0)
 }
 
-const text = [...get_all_praise_phrases(), ...get_all_bttf_phrases()]
+const text = [...praise.get_all_phrases(), ...back_to_the_future.get_all_phrases()]
 	.map((phrase) => phrase.script)
 	.join('\n')
 
@@ -194,7 +194,7 @@ async function process_line(
 	index: number,
 	total: number,
 ): Promise<'generated' | 'skipped' | 'failed'> {
-	const safe_name = text_to_slug(line)
+	const safe_name = slug.to_slug(line)
 	const output_path = path.join(OUTPUT_DIRECTORY, `${safe_name}.mp3`)
 
 	console.info(`[${String(index + 1)}/${String(total)}] ${line}`)

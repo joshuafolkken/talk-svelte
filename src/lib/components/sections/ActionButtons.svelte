@@ -7,8 +7,8 @@
 		TrophyIcon,
 	} from '$lib/components/icons'
 	import IconButton from '$lib/components/ui/IconButton.svelte'
-	import { BUTTON_STYLES } from '$lib/constants'
 	import { ACTIONS } from '$lib/constants/actions'
+	import { UI } from '$lib/constants/ui'
 	import type { VoidCallback } from '$lib/types'
 
 	interface Props {
@@ -31,8 +31,8 @@
 		on_toggle_completed,
 	}: Props = $props()
 
-	const like_button_style = $derived(is_liked ? BUTTON_STYLES.liked_active : '')
-	const trophy_button_style = $derived(is_completed ? BUTTON_STYLES.trophy_active : '')
+	const like_button_style = $derived(is_liked ? UI.BUTTON_STYLES.LIKED_ACTIVE : '')
+	const trophy_button_style = $derived(is_completed ? UI.BUTTON_STYLES.TROPHY_ACTIVE : '')
 </script>
 
 <div class="mt-5 flex flex-wrap items-center justify-center gap-4">
@@ -40,15 +40,15 @@
 		<HeartIcon {is_liked} />
 	</IconButton>
 
-	<IconButton onclick={on_retry} data_action={ACTIONS.retry}>
+	<IconButton onclick={on_retry} data_action={ACTIONS.RETRY}>
 		<RetryIcon />
 	</IconButton>
 
-	<IconButton onclick={on_preview} data_action={ACTIONS.prev}>
+	<IconButton onclick={on_preview} data_action={ACTIONS.PREV}>
 		<ArrowLeftIcon />
 	</IconButton>
 
-	<IconButton onclick={on_next} data_action={ACTIONS.next}>
+	<IconButton onclick={on_next} data_action={ACTIONS.NEXT}>
 		<ArrowRightIcon />
 	</IconButton>
 

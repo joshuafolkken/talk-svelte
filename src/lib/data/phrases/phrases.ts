@@ -1,10 +1,10 @@
-export interface Phrase {
+interface Phrase {
 	key: string
 	script: string
 	translation: string
 }
 
-export function create_phrase_entries(
+function create(
 	keys: Array<string>,
 	en: Map<string, string>,
 	ja: Map<string, string>,
@@ -19,7 +19,7 @@ export function create_phrase_entries(
 }
 
 // eslint-disable-next-line max-params
-export function get_phrase_entries(
+function get(
 	index: number,
 	phrase_key_groups: Array<Array<string>>,
 	en: Map<string, string>,
@@ -31,14 +31,22 @@ export function get_phrase_entries(
 		throw new Error(`Group at index ${String(index)} not found`)
 	}
 
-	return create_phrase_entries(keys, en, ja)
+	return create(keys, en, ja)
 }
 
-export function get_all_phrase_entries(
+function get_all(
 	phrase_key_groups: Array<Array<string>>,
 	en: Map<string, string>,
 	ja: Map<string, string>,
 ): Array<Phrase> {
 	const all_keys = phrase_key_groups.flat()
-	return create_phrase_entries(all_keys, en, ja)
+	return create(all_keys, en, ja)
+}
+
+export type { Phrase }
+
+export const phrases = {
+	create,
+	get,
+	get_all,
 }

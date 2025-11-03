@@ -1,15 +1,15 @@
 import { browser } from '$app/environment'
-import { calculate_scale_factor, debounce } from '$lib/utils/responsive'
+import { responsive } from '$lib/utils/responsive'
 
 export function use_responsive(): {
-	scale_factor: number
+	scale: number
 	is_ready: boolean
 } {
-	let scale_factor = $state(1)
+	let scale = $state(1)
 	let is_ready = $state(false)
 
 	function update_scale(): void {
-		scale_factor = calculate_scale_factor()
+		scale = responsive.calculate_scale()
 	}
 
 	$effect(() => {
@@ -19,10 +19,10 @@ export function use_responsive(): {
 			}
 		}
 
-		scale_factor = calculate_scale_factor()
+		scale = responsive.calculate_scale()
 		is_ready = true
 
-		const debounced_update_scale = debounce(update_scale)
+		const debounced_update_scale = responsive.debounce(update_scale)
 
 		window.addEventListener('resize', debounced_update_scale)
 
@@ -34,7 +34,7 @@ export function use_responsive(): {
 	// prettier-ignore
 	return {
 		// States
-		get scale_factor() { return scale_factor },
+		get scale() { return scale },
 		get is_ready() { return is_ready },
 	}
 }

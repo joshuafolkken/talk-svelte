@@ -2,14 +2,14 @@
 /* eslint-disable max-lines */
 
 import type { Question } from '$lib/types/question'
-import { shuffle_array } from '$lib/utils/arrays'
-import { text_to_slug } from '$lib/utils/text-to-slug'
+import { arrays } from '$lib/utils/arrays'
+import { slug } from '$lib/utils/slug'
 
 // audio_uri を自動生成するヘルパー関数
 /* eslint-disable-next-line id-length */
 function q(transcript: string, translation: string): Question {
 	return {
-		audio_uri: text_to_slug(transcript),
+		audio_uri: slug.to_slug(transcript),
 		transcript,
 		translation,
 	}
@@ -611,7 +611,7 @@ const questions: Array<Question> = [
 ]
 
 function get_shuffled_questions(): Array<Question> {
-	return shuffle_array(questions)
+	return arrays.shuffle(questions)
 }
 
 export { get_shuffled_questions, questions }

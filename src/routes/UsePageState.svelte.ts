@@ -5,7 +5,7 @@ import { use_recording_state } from '$lib/hooks/UseRecordingState.svelte'
 import { use_responsive } from '$lib/hooks/UseResponsive.svelte'
 import { use_ui_state } from '$lib/hooks/UseUiState.svelte'
 import { use_url_parameters } from '$lib/hooks/UseUrlParameters.svelte'
-import { is_transcript_included } from '$lib/utils/transcript'
+import { transcript } from '$lib/utils/transcript'
 
 export function use_page_state(): {
 	audio: ReturnType<typeof use_audio_state>
@@ -40,7 +40,7 @@ export function use_page_state(): {
 	// Handle transcript correctness
 	$effect(() => {
 		if (recording.is_correct) return
-		if (is_transcript_included(phrase.current.script, recording.user_transcript)) {
+		if (transcript.is_included(phrase.current.script, recording.user_transcript)) {
 			void handle_correct_transcript()
 		}
 	})

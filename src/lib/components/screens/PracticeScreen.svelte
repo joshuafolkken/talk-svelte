@@ -3,16 +3,16 @@
 	import AudioSection from '$lib/components/sections/AudioSection.svelte'
 	import RecordingSection from '$lib/components/sections/RecordingSection.svelte'
 	import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
-	import { APP_TITLE } from '$lib/constants'
 	import { ACTIONS, type ActionName } from '$lib/constants/actions'
+	import { APP } from '$lib/constants/app'
 	import type { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
 	import type { use_phrase_state } from '$lib/hooks/UsePhraseState.svelte'
 	import type { use_recording_state } from '$lib/hooks/UseRecordingState.svelte'
 	import type { use_ui_state } from '$lib/hooks/UseUiState.svelte'
 	import type { use_url_parameters } from '$lib/hooks/UseUrlParameters.svelte'
-	import { create_on_keydown } from '$lib/keyboard/create-on-keydown'
-	import { KEYS, type KeyName } from '$lib/keyboard/keys'
-	import { is_iphone } from '$lib/utils/device'
+	import { keyboard, type KeyName } from '$lib/keyboard/keyboard'
+	import { on_keydown } from '$lib/keyboard/on-keydown'
+	import { device } from '$lib/utils/device'
 
 	interface Props {
 		audio: ReturnType<typeof use_audio_state>
@@ -45,7 +45,7 @@
 	}
 
 	function autoplay(): void {
-		if (is_iphone()) return
+		if (device.is_iphone()) return
 		void audio.play()
 	}
 
@@ -64,32 +64,32 @@
 	}
 
 	const action_by_key = new Map<KeyName, ActionName>([
-		[KEYS.a, ACTIONS.prev],
-		[KEYS.d, ACTIONS.next],
-		[KEYS.space, ACTIONS.toggle_play],
-		[KEYS.f, ACTIONS.toggle_record],
-		[KEYS.q, ACTIONS.toggle_transcript],
-		[KEYS.e, ACTIONS.toggle_translation],
-		[KEYS.v, ACTIONS.clear_transcript],
-		[KEYS.r, ACTIONS.retry],
-		[KEYS.z, ACTIONS.menu],
+		[keyboard.KEYS.A, ACTIONS.PREV],
+		[keyboard.KEYS.D, ACTIONS.NEXT],
+		[keyboard.KEYS.SPACE, ACTIONS.TOGGLE_PLAY],
+		[keyboard.KEYS.F, ACTIONS.TOGGLE_RECORD],
+		[keyboard.KEYS.Q, ACTIONS.TOGGLE_TRANSCRIPT],
+		[keyboard.KEYS.E, ACTIONS.TOGGLE_TRANSLATION],
+		[keyboard.KEYS.V, ACTIONS.CLEAR_TRANSCRIPT],
+		[keyboard.KEYS.R, ACTIONS.RETRY],
+		[keyboard.KEYS.Z, ACTIONS.MENU],
 	])
 
 	function get_action_by_key(key: KeyName): ActionName | undefined {
 		return action_by_key.get(key)
 	}
 
-	const on_keydown = create_on_keydown(get_action_by_key)
+	const handle_keydown = on_keydown.create(get_action_by_key)
 
 	$effect(() => {
-		globalThis.addEventListener('keydown', on_keydown)
+		globalThis.addEventListener('keydown', handle_keydown)
 		return () => {
-			globalThis.removeEventListener('keydown', on_keydown)
+			globalThis.removeEventListener('keydown', handle_keydown)
 		}
 	})
 </script>
 
-<ProgressBar current={phrase.current_number} total={phrase.total} title={APP_TITLE} />
+<ProgressBar current={phrase.current_number} total={phrase.total} title={APP.TITLE} />
 
 <div class="card-glass">
 	<AudioSection

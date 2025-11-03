@@ -1,8 +1,8 @@
 import { existsSync, readdirSync } from 'node:fs'
 import path from 'node:path'
 import { expect, test } from 'vitest'
-import { get_all_bttf_phrases, get_bttf_phrases } from './back-to-the-future.js'
-import { get_all_praise_phrases, get_praise_phrases } from './praise.js'
+import { back_to_the_future } from './back-to-the-future.js'
+import { praise } from './praise.js'
 
 const STATIC_DIRECTORY = 'static'
 const AUDIO_DIRECTORY = 'audio'
@@ -11,7 +11,7 @@ const MIN_PHRASES_COUNT = 0
 const INVALID_GROUP_INDEX = 999
 
 // Back to the Future phrases tests
-const all_bttf_phrases = get_all_bttf_phrases()
+const all_bttf_phrases = back_to_the_future.get_all_phrases()
 
 test.each(all_bttf_phrases)('bttf phrase mp3 file exists: $key', (phrase) => {
 	const audio_directory_path = path.join(process.cwd(), STATIC_DIRECTORY, AUDIO_DIRECTORY)
@@ -54,7 +54,7 @@ test.each(all_bttf_phrases)('bttf phrase has non-empty translation: $key', (phra
 })
 
 // Praise phrases tests
-const all_praise_phrases = get_all_praise_phrases()
+const all_praise_phrases = praise.get_all_phrases()
 
 test.each(all_praise_phrases)('praise phrase mp3 file exists: $key', (phrase) => {
 	const audio_directory_path = path.join(process.cwd(), STATIC_DIRECTORY, AUDIO_DIRECTORY)
@@ -147,20 +147,20 @@ const bttf_group_indices = [0] // Based on actual phrase_key_groups length in ba
 const praise_group_indices = [0] // Based on actual phrase_key_groups length in praise.ts
 
 test.each(bttf_group_indices)('bttf phrase group %d returns correct phrases', (index) => {
-	test_phrase_group(index, get_bttf_phrases)
+	test_phrase_group(index, back_to_the_future.get_phrases)
 })
 
 test.each(praise_group_indices)('praise phrase group %d returns correct phrases', (index) => {
-	test_phrase_group(index, get_praise_phrases)
+	test_phrase_group(index, praise.get_phrases)
 })
 
 // Test error handling for invalid group indices
 test('bttf phrases throw error for invalid group index', () => {
 	const error_message = `Group at index ${String(INVALID_GROUP_INDEX)} not found`
-	expect(() => get_bttf_phrases(INVALID_GROUP_INDEX)).toThrow(error_message)
+	expect(() => back_to_the_future.get_phrases(INVALID_GROUP_INDEX)).toThrow(error_message)
 })
 
 test('praise phrases throw error for invalid group index', () => {
 	const error_message = `Group at index ${String(INVALID_GROUP_INDEX)} not found`
-	expect(() => get_praise_phrases(INVALID_GROUP_INDEX)).toThrow(error_message)
+	expect(() => praise.get_phrases(INVALID_GROUP_INDEX)).toThrow(error_message)
 })

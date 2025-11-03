@@ -1,8 +1,7 @@
 import { browser } from '$app/environment'
 import { asset } from '$app/paths'
-import { AUDIO_PATH } from '$lib/constants'
-import { AUDIO_PRELOAD_STRATEGY, AUDIO_RESET_TIME } from '$lib/constants/audio'
-import { get_praise_phrases, next } from '$lib/data/phrases/praise'
+import { AUDIO } from '$lib/constants/audio'
+import { praise } from '$lib/data/phrases/praise'
 import { SvelteMap } from 'svelte/reactivity'
 
 export function use_praise_audio_state(): {
@@ -14,20 +13,20 @@ export function use_praise_audio_state(): {
 	function initialize(): void {
 		if (!browser) return
 
-		for (const prise_phrase of get_praise_phrases(0)) {
-			const audio = new Audio(asset(`/${AUDIO_PATH}/${prise_phrase.key}.mp3`))
-			audio.preload = AUDIO_PRELOAD_STRATEGY
+		for (const prise_phrase of praise.get_phrases(0)) {
+			const audio = new Audio(asset(`/${AUDIO.PATH}/${prise_phrase.key}.mp3`))
+			audio.preload = AUDIO.PRELOAD_STRATEGY
 			praise_audio_map.set(prise_phrase.key, audio)
 		}
 	}
 
 	async function play(): Promise<void> {
-		const praise_phrase_key = next()
+		const praise_phrase_key = praise.next()
 		if (praise_phrase_key.length === 0) return
 
 		const praise_audio = praise_audio_map.get(praise_phrase_key)
 		if (praise_audio === undefined) return
-		praise_audio.currentTime = AUDIO_RESET_TIME
+		praise_audio.currentTime = AUDIO.RESET_TIME
 		await praise_audio.play()
 	}
 

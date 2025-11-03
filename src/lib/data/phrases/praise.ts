@@ -1,6 +1,4 @@
-import { get_all_phrase_entries, get_phrase_entries, type Phrase } from './common'
-
-/* eslint-disable sonarjs/no-duplicate-string */
+import { phrases, type Phrase } from './phrases'
 
 const en = new Map<string, string>([
 	// Basic praise (low)
@@ -37,7 +35,7 @@ const en = new Map<string, string>([
 	['legendary-x', 'Legendary!'],
 ])
 
-const phrase_key_groups = [
+const key_collections = [
 	['good-x', 'nice-x', 'nice-work-x', 'well-done-x', 'great-job-x'],
 	// ['you-did-it-x', 'awesome-x'],
 	// ['excellent-x', 'fantastic-x', 'brilliant-x'],
@@ -81,20 +79,20 @@ const ja = new Map<string, string>([
 	['legendary-x', '伝説的！'],
 ])
 
-function get_praise_phrases(index: number): Array<Phrase> {
-	return get_phrase_entries(index, phrase_key_groups, en, ja)
+function get_phrases(index: number): Array<Phrase> {
+	return phrases.get(index, key_collections, en, ja)
 }
 
-function get_all_praise_phrases(): Array<Phrase> {
-	return get_all_phrase_entries(phrase_key_groups, en, ja)
+function get_all_phrases(): Array<Phrase> {
+	return phrases.get_all(key_collections, en, ja)
 }
 
 let current_index = 0
 
 function next(): string {
-	const phrases = get_praise_phrases(0)
-	const phrase = phrases.at(current_index)
-	current_index = (current_index + 1) % phrases.length
+	const current_phrases = get_phrases(0)
+	const phrase = current_phrases.at(current_index)
+	current_index = (current_index + 1) % current_phrases.length
 	return phrase?.key ?? ''
 }
 
@@ -102,4 +100,9 @@ function reset(): void {
 	current_index = 0
 }
 
-export { get_praise_phrases, get_all_praise_phrases, next, reset }
+export const praise = {
+	get_phrases,
+	get_all_phrases,
+	next,
+	reset,
+}

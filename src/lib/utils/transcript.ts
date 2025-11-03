@@ -1,4 +1,4 @@
-export function normalize_transcript(transcript: string): string {
+function normalize(transcript: string): string {
 	return transcript
 		.replaceAll(/[,.!?…]/gu, '')
 		.replaceAll('\u2019', "'")
@@ -14,17 +14,24 @@ export function normalize_transcript(transcript: string): string {
 		.replaceAll('give me a pepsi free', 'gimme a pepsi-free')
 }
 
-export function decensor(text: string): string {
+function decensor(text: string): string {
 	return text.replaceAll('s***', 'shit')
 }
 
-export function is_transcript_correct(expected: string, actual: string): boolean {
-	return normalize_transcript(expected) === normalize_transcript(actual)
+function is_correct(expected: string, actual: string): boolean {
+	return normalize(expected) === normalize(actual)
 }
 
-export function is_transcript_included(expected: string, actual: string): boolean {
+function is_included(expected: string, actual: string): boolean {
 	if (expected.length === 0 || actual.length === 0) return false
-	const normalized_expected = normalize_transcript(expected)
-	const normalized_actual = normalize_transcript(decensor(actual))
+	const normalized_expected = normalize(expected)
+	const normalized_actual = normalize(decensor(actual))
 	return normalized_actual.includes(normalized_expected)
+}
+
+export const transcript = {
+	normalize,
+	decensor,
+	is_correct,
+	is_included,
 }

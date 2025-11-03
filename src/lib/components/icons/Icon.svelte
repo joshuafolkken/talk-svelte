@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ICON_SIZES, type IconSize } from '$lib/constants'
+	import { UI, type IconSize } from '$lib/constants/ui'
 	import type { Snippet } from 'svelte'
 
 	interface Props {
@@ -9,15 +9,18 @@
 	}
 
 	const STROKE_WIDTH = 2
-	const { size = ICON_SIZES.sm, is_filled = false, children }: Props = $props()
+	const { size = UI.ICON_SIZES.SM, is_filled = false, children }: Props = $props()
 
 	const size_classes = $derived.by(() => {
 		switch (size) {
-			case ICON_SIZES.lg: {
+			case UI.ICON_SIZES.LG: {
 				return 'h-8 w-8'
 			}
-			case ICON_SIZES.md: {
+			case UI.ICON_SIZES.MD: {
 				return 'h-6 w-6'
+			}
+			case UI.ICON_SIZES.SM: {
+				return 'h-4 w-4'
 			}
 			default: {
 				return 'h-4 w-4'

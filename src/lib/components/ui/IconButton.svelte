@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BUTTON_SIZES, type ButtonSize } from '$lib/constants'
+	import { UI, type ButtonSize } from '$lib/constants/ui'
 	import type { VoidCallback } from '$lib/types'
 	import type { Snippet } from 'svelte'
 
@@ -14,14 +14,14 @@
 
 	const {
 		onclick,
-		size = BUTTON_SIZES.md,
+		size = UI.BUTTON_SIZES.MD,
 		class: class_names = '',
 		label,
 		children,
 		data_action,
 	}: Props = $props()
 
-	const size_classes = $derived(size === BUTTON_SIZES.lg ? 'h-20 w-20' : 'h-12 w-12')
+	const size_classes = $derived(size === UI.BUTTON_SIZES.LG ? 'h-20 w-20' : 'h-12 w-12')
 </script>
 
 <button
