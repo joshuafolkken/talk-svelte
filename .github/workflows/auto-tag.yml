@@ -71,6 +71,7 @@ jobs:
           fi
 
       - name: Create and push tag
+        id: create_tag
         if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
         run: |
           VERSION="${{ steps.current_version.outputs.version }}"
@@ -83,3 +84,10 @@ jobs:
           git push origin "$TAG"
 
           echo "✅ Created and pushed tag: $TAG"
+          echo "completed=true" >> $GITHUB_OUTPUT
+
+      - name: Trigger next workflow
+        if: steps.create_tag.outputs.completed == 'true'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          event-type: new-tag-created
