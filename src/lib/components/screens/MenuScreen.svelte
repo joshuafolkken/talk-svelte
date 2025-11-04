@@ -96,9 +96,9 @@
 						}}
 						class="btn-content-glass w-full"
 					>
-						<h3 class="text-md font-semibold text-white">
+						<h2 class="text-md font-semibold text-white">
 							{collection.title}
-						</h3>
+						</h2>
 					</button>
 				{/each}
 			</div>

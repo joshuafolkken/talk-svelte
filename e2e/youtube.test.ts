@@ -16,7 +16,7 @@ for (const { goto_path, expected } of cases) {
 		expect(source).toBeTruthy()
 
 		const url = new URL(source ?? '')
-		expect(url.hostname).toBe('www.youtube.com')
+		expect(url.hostname).toBe('www.youtube-nocookie.com')
 		expect(url.pathname).toContain('/embed/')
 
 		const youtube_id = url.pathname.split('/embed/')[1]?.split('?')[0]

@@ -4,6 +4,8 @@
 
 <div
 	class="fixed right-2 bottom-2 text-xs text-gray-400/50 transition duration-300 select-none hover:text-gray-400"
+	role="presentation"
+	aria-hidden="true"
 >
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 	<a href={APP.GITHUB_URL} target="_blank">

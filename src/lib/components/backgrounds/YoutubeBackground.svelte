@@ -19,7 +19,7 @@
 			'rel=0',
 			'modestbranding=1',
 			'playsinline=1',
-			'enablejsapi=1',
+			'enablejsapi=0',
 			`start=${time_in_seconds}`,
 		].join('&')
 	}
@@ -28,7 +28,9 @@
 		update_youtube_parameters()
 	})
 
-	const youtube_url = $derived(`https://www.youtube.com/embed/${video_id}?${youtube_parameters}`)
+	const youtube_url = $derived(
+		`https://www.youtube-nocookie.com/embed/${video_id}?${youtube_parameters}`,
+	)
 </script>
 
 <div class="fixed inset-0 -z-10 overflow-hidden">
@@ -41,6 +43,7 @@
 			allow="autoplay; encrypted-media"
 			allowfullscreen
 			aria-hidden="true"
+			loading="lazy"
 		></iframe>
 
 		<div class="absolute inset-0 bg-black/40"></div>
