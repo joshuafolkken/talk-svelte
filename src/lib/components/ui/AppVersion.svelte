@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="fixed right-2 bottom-2 text-xs text-gray-400/50 transition duration-300 select-none hover:text-gray-400"
+	class="fixed right-2 bottom-2 rounded-md bg-black/30 px-2 py-1 text-xs text-white/60 transition duration-300 select-none hover:bg-black/70 hover:text-white/90"
 	role="presentation"
 	aria-hidden="true"
 >
