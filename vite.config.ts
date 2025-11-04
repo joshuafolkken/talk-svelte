@@ -20,6 +20,14 @@ export default defineConfig({
 	define: {
 		'import.meta.env.APP_VERSION': JSON.stringify(package_json.version),
 	},
+	build: {
+		cssCodeSplit: false, // CSSを1つのファイルに結合してクリティカルリクエストチェーンを短縮
+		rollupOptions: {
+			output: {
+				manualChunks: undefined, // 手動チャンク分割を無効化（CSSの分割も減らす）
+			},
+		},
+	},
 	server: {
 		allowedHosts: [
 			'outspoken-angelique-sepulchrally.ngrok-free.dev',

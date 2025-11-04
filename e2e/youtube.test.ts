@@ -9,8 +9,9 @@ for (const { goto_path, expected } of cases) {
 	test(`youtube: ${goto_path}`, async ({ page }) => {
 		await page.goto(goto_path)
 
+		// 遅延読み込みを待つ（requestIdleCallbackまたはsetTimeoutの遅延を考慮）
 		const youtube_background = page.getByTestId('youtube-background')
-		await expect(youtube_background).toBeVisible()
+		await expect(youtube_background).toBeVisible({ timeout: 3000 })
 
 		const source = await youtube_background.getAttribute('src')
 		expect(source).toBeTruthy()
