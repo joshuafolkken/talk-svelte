@@ -24,6 +24,7 @@ ignorePaths:
   - .git/**/*
   - .gitignore
   - .scannerwork/**/*
+  - google*.html
 words:
   - autodocs
   - bttf
