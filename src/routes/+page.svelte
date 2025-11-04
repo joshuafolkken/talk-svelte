@@ -2,6 +2,7 @@
 	import YoutubeBackground from '$lib/components/backgrounds/YoutubeBackground.svelte'
 	import MenuScreen from '$lib/components/screens/MenuScreen.svelte'
 	import PracticeScreen from '$lib/components/screens/PracticeScreen.svelte'
+	import AppVersion from '$lib/components/ui/AppVersion.svelte'
 	import { use_page_state } from './UsePageState.svelte'
 
 	const { audio, recording, ui, phrase, url_parameters, responsive, reset_all_states } =
@@ -28,4 +29,6 @@
 			{/if}
 		</div>
 	{/if}
+
+	<AppVersion />
 </div>

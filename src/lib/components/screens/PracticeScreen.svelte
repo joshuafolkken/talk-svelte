@@ -89,7 +89,7 @@
 	})
 </script>
 
-<ProgressBar current={phrase.current_number} total={phrase.total} title={APP.TITLE} />
+<ProgressBar current={phrase.current_number} total={phrase.total} title={APP.NAME} />
 
 <div class="card-glass">
 	<AudioSection
