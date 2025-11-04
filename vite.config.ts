@@ -1,8 +1,11 @@
+import fs from 'node:fs'
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { sveltekit } from '@sveltejs/kit/vite'
 import tailwindcss from '@tailwindcss/vite'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { defineConfig } from 'vitest/config'
+
+const package_json = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 
 export default defineConfig({
 	plugins: [
@@ -14,6 +17,9 @@ export default defineConfig({
 			outdir: './src/lib/paraglide',
 		}),
 	],
+	define: {
+		'import.meta.env.APP_VERSION': JSON.stringify(package_json.version),
+	},
 	server: {
 		allowedHosts: [
 			'outspoken-angelique-sepulchrally.ngrok-free.dev',
