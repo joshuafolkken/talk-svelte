@@ -31,6 +31,7 @@ jobs:
           username: ${{ env.USERNAME }}
           port: ${{ env.PORT }}
           key: ${{ env.KEY }}
+          envs: APP_DIR
           script: |
             set -e # Exit on error
 
