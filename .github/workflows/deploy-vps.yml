@@ -37,8 +37,14 @@ jobs:
 
             cd $APP_DIR
 
-            # リモートからタグを取得し、ローカルのタグリストから最新を取得（バージョン番号順でソート）
+            # リモートからタグを取得
             git fetch origin --tags
+
+            # ローカルの変更を破棄（デプロイ時はリモートの状態を優先）
+            git reset --hard HEAD
+            git clean -fd
+
+            # ローカルのタグリストから最新を取得（バージョン番号順でソート）
             LATEST_TAG=$(git tag -l | sort -V | tail -1)
 
             if [ -z "$LATEST_TAG" ]; then
