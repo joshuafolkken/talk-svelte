@@ -45,6 +45,6 @@ jobs:
             npm ci
             NODE_ENV=production npm run build
 
-            pm2 restart talk-svelte || pm2 start ecosystem.config.js
+            pm2 restart talk-svelte || pm2 start ecosystem.config.cjs
 
             echo "✅ Deployment completed successfully"

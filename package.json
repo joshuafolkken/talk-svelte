@@ -1,7 +1,7 @@
 {
 	"name": "talk-svelte",
 	"private": true,
-	"version": "0.112.5",
+	"version": "0.112.6",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -33,8 +33,8 @@
 		"check-commit-message": "tsx scripts/check-commit-message.ts",
 		"prevent-main-commit": "tsx scripts/prevent-main-commit.ts",
 		"generate-voices": "npx dotenv-cli -e .env tsx scripts/generate-voices.ts",
-		"start": "node build/index.js",
-		"start:pm2": "pm2 restart talk-svelte || pm2 start ecosystem.config.js"
+		"start": "npx dotenv-cli -e .env node build/index.js",
+		"start:pm2": "pm2 restart talk-svelte || pm2 start ecosystem.config.cjs"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.2",
