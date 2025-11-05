@@ -56,6 +56,11 @@ jobs:
     name: Deploy to VPS
     needs: build
     runs-on: ubuntu-latest
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
     steps:
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -65,17 +70,13 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          echo "$VPS_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p ${{ secrets.VPS_SSH_PORT }} ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p $VPS_SSH_PORT $VPS_HOST >> ~/.ssh/known_hosts
 
       - name: Deploy to server
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
         run: |
-          ssh -i ~/.ssh/deploy_key -p $VPS_SSH_PORT $VPS_USER@$VPS_HOST << 'ENDSSH'
+          ssh -i ~/.ssh/deploy_key -p $VPS_SSH_PORT ${VPS_USER}@${VPS_HOST} << 'ENDSSH'
             set -e
             cd /var/www/talk-svelte
             
@@ -87,9 +88,9 @@ jobs:
             # デプロイパッケージを転送
           ENDSSH
 
-          scp -i ~/.ssh/deploy_key -P $VPS_SSH_PORT deploy.tar.gz $VPS_USER@$VPS_HOST:/var/www/talk-svelte/
+          scp -i ~/.ssh/deploy_key -P $VPS_SSH_PORT deploy.tar.gz ${VPS_USER}@${VPS_HOST}:/var/www/talk-svelte/
 
-          ssh -i ~/.ssh/deploy_key -p $VPS_SSH_PORT $VPS_USER@$VPS_HOST << 'ENDSSH'
+          ssh -i ~/.ssh/deploy_key -p $VPS_SSH_PORT ${VPS_USER}@${VPS_HOST} << 'ENDSSH'
             set -e
             cd /var/www/talk-svelte
             
