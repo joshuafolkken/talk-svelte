@@ -1,4 +1,4 @@
-<div class="absolute inset-0 -z-10">
+<div class="absolute inset-0 -z-10" data-testid="animated-background">
 	<div class="animate-gradient absolute inset-0"></div>
 
 	<div
