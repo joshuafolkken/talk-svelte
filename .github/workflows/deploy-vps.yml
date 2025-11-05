@@ -37,13 +37,30 @@ jobs:
 
             cd $APP_DIR
 
+            # リモートからタグを取得し、ローカルのタグリストから最新を取得（バージョン番号順でソート）
             git fetch origin --tags
-            LATEST_TAG=$(git describe --tags --abbrev=0)
+            LATEST_TAG=$(git tag -l | sort -V | tail -1)
+
+            if [ -z "$LATEST_TAG" ]; then
+              echo "❌ Error: No tags found"
+              exit 1
+            fi
+
             echo "Deploying tag: $LATEST_TAG"
             git checkout tags/$LATEST_TAG
 
             npm ci
             NODE_ENV=production npm run build
+
+            mkdir -p logs
+
+            if [ ! -f "ecosystem.config.cjs" ]; then
+              echo "❌ Error: ecosystem.config.cjs not found"
+              echo "Current directory: $(pwd)"
+              echo "Files in directory:"
+              ls -la
+              exit 1
+            fi
 
             pm2 restart talk-svelte || pm2 start ecosystem.config.cjs
 
