@@ -27,10 +27,10 @@ jobs:
       - name: Pull & Build on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: $HOST
-          username: $USERNAME
-          port: $PORT
-          key: $KEY
+          host: ${{ env.HOST }}
+          username: ${{ env.USERNAME }}
+          port: ${{ env.PORT }}
+          key: ${{ env.KEY }}
           script: |
             set -e # Exit on error
 
