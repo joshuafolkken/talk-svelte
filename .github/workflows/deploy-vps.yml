@@ -84,16 +84,36 @@ jobs:
           echo "SSH key fingerprint:"
           ssh-keygen -lf ~/.ssh/deploy_key 2>/dev/null || echo "Failed to read SSH key"
 
+          # 公開鍵を抽出（デバッグ用）
+          echo "Extracted public key:"
+          ssh-keygen -y -f ~/.ssh/deploy_key 2>/dev/null || echo "Failed to extract public key"
+
+          # SSH鍵の最初と最後の数行を表示（機密情報を隠すため）
+          echo "SSH key file (first 3 lines):"
+          head -n 3 ~/.ssh/deploy_key || true
+          echo "SSH key file (last 3 lines):"
+          tail -n 3 ~/.ssh/deploy_key || true
+
       - name: Test SSH connection
         run: |
-          ssh -i ~/.ssh/deploy_key \
+          echo "Attempting SSH connection to $VPS_USER@$VPS_HOST:$VPS_SSH_PORT"
+          echo "Using SSH key: ~/.ssh/deploy_key"
+
+          # Verboseモードで接続を試みる（最初の試行）
+          ssh -v -i ~/.ssh/deploy_key \
             -p $VPS_SSH_PORT \
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=~/.ssh/known_hosts \
             -o BatchMode=yes \
             -o ConnectTimeout=10 \
             $VPS_USER@$VPS_HOST \
-            "echo 'SSH connection successful'"
+            "echo 'SSH connection successful'" 2>&1 || {
+              echo "SSH connection failed. Please check:"
+              echo "1. Server's ~/.ssh/authorized_keys contains the public key"
+              echo "2. SSH key permissions are correct (600)"
+              echo "3. Public key extracted above matches the one in authorized_keys"
+              exit 1
+            }
 
       - name: Deploy to server
         run: |
