@@ -32,3 +32,6 @@ storybook-static
 .scannerwork
 project.inlang/cache/
 
+# PM2
+/logs
+

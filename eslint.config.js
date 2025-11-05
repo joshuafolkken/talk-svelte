@@ -24,6 +24,7 @@ export default defineConfig(
 		ignores: [
 			'.storybook/**',
 			'*.config.js',
+			'*.config.cjs',
 			'*.config.ts',
 			'vite.config.js',
 			'vite.config.ts',
