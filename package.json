@@ -1,7 +1,7 @@
 {
 	"name": "talk-svelte",
 	"private": true,
-	"version": "0.111.0",
+	"version": "0.112.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -32,7 +32,9 @@
 		"sonar": "source .env && sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dsonar.branch.name=$(git branch --show-current)",
 		"check-commit-message": "tsx scripts/check-commit-message.ts",
 		"prevent-main-commit": "tsx scripts/prevent-main-commit.ts",
-		"generate-voices": "npx dotenv-cli -e .env tsx scripts/generate-voices.ts"
+		"generate-voices": "npx dotenv-cli -e .env tsx scripts/generate-voices.ts",
+		"start": "node build/index.js",
+		"start:pm2": "pm2 restart talk-svelte || pm2 start ecosystem.config.js"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4.1.2",
