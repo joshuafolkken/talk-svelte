@@ -6,6 +6,7 @@ import { mdsvex } from 'mdsvex'
 const runes = !process.env.STORYBOOK
 const is_static = process.env.ADAPTER === 'static'
 const is_production = process.env.NODE_ENV === 'production'
+const is_github_pages = process.env.GITHUB_PAGES === 'true'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -19,7 +20,7 @@ const config = {
 				})
 			: adapter(),
 		paths: {
-			base: is_production ? '/talk-svelte' : '',
+			base: is_github_pages ? '/talk-svelte' : '',
 		},
 	},
 	extensions: ['.svelte', '.svx'],

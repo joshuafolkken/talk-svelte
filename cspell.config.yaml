@@ -27,6 +27,7 @@ ignorePaths:
   - google*.html
 words:
   - autodocs
+  - autorestart
   - bttf
   - customise
   - darkmode
@@ -67,3 +68,7 @@ words:
   - Vercel
   - vibing
   - Vite
+  - Caddyfile
+  - joshuastudio
+  - fastcgi
+  - ENDSSH

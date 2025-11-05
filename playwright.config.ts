@@ -10,7 +10,7 @@ export default defineConfig({
 	testDir: 'e2e',
 	timeout: 5_000,
 	use: {
-		baseURL: `http://localhost:4173/talk-svelte/`,
+		baseURL: `http://localhost:4173/`,
 	},
 	fullyParallel: true,
 	// workers: process.env.CI ? 2 : 4,
