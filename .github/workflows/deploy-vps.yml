@@ -70,51 +70,73 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # SSH鍵を書き込み（改行を保持）
           echo "$VPS_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p $VPS_SSH_PORT $VPS_HOST >> ~/.ssh/known_hosts
+
+          # known_hostsを設定
+          ssh-keyscan -p $VPS_SSH_PORT $VPS_HOST >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 644 ~/.ssh/known_hosts
+
+          # SSH鍵の形式を確認（デバッグ用）
+          echo "SSH key fingerprint:"
+          ssh-keygen -lf ~/.ssh/deploy_key 2>/dev/null || echo "Failed to read SSH key"
+
+      - name: Test SSH connection
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -p $VPS_SSH_PORT \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            -o BatchMode=yes \
+            -o ConnectTimeout=10 \
+            $VPS_USER@$VPS_HOST \
+            "echo 'SSH connection successful'"
 
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/deploy_key -p $VPS_SSH_PORT ${VPS_USER}@${VPS_HOST} << 'ENDSSH'
-            set -e
-            cd /var/www/talk-svelte
-            
-            # バックアップ作成
-            if [ -d "build" ]; then
-              cp -r build build.backup.$(date +%Y%m%d_%H%M%S) || true
-            fi
-            
-            # デプロイパッケージを転送
-          ENDSSH
+          # デプロイパッケージを転送
+          scp -i ~/.ssh/deploy_key \
+            -P $VPS_SSH_PORT \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            deploy.tar.gz \
+            $VPS_USER@$VPS_HOST:/var/www/talk-svelte/
 
-          scp -i ~/.ssh/deploy_key -P $VPS_SSH_PORT deploy.tar.gz ${VPS_USER}@${VPS_HOST}:/var/www/talk-svelte/
-
-          ssh -i ~/.ssh/deploy_key -p $VPS_SSH_PORT ${VPS_USER}@${VPS_HOST} << 'ENDSSH'
-            set -e
-            cd /var/www/talk-svelte
-            
-            # 既存のファイルをバックアップ
-            if [ -d "build" ]; then
-              mv build build.backup.$(date +%Y%m%d_%H%M%S) || true
-            fi
-            
-            # デプロイパッケージを展開
-            tar -xzf deploy.tar.gz
-            
-            # 依存関係をインストール（productionのみ）
-            npm ci --production
-            
-            # PM2でアプリケーションを再起動
-            pm2 restart talk-svelte || pm2 start ecosystem.config.js
-            
-            # 古いバックアップを削除（5つまで保持）
-            ls -t build.backup.* 2>/dev/null | tail -n +6 | xargs rm -rf || true
-            
-            # デプロイパッケージを削除
-            rm -f deploy.tar.gz
-            
-            echo "✅ Deployment completed successfully"
+          # サーバー側でデプロイ処理を実行
+          ssh -i ~/.ssh/deploy_key \
+            -p $VPS_SSH_PORT \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            -o BatchMode=yes \
+            $VPS_USER@$VPS_HOST \
+            'bash -s' << 'ENDSSH'
+              set -e
+              cd /var/www/talk-svelte
+              
+              # 既存のファイルをバックアップ
+              if [ -d "build" ]; then
+                mv build build.backup.$(date +%Y%m%d_%H%M%S) || true
+              fi
+              
+              # デプロイパッケージを展開
+              tar -xzf deploy.tar.gz
+              
+              # 依存関係をインストール（productionのみ）
+              npm ci --production
+              
+              # PM2でアプリケーションを再起動
+              pm2 restart talk-svelte || pm2 start ecosystem.config.js
+              
+              # 古いバックアップを削除（5つまで保持）
+              ls -t build.backup.* 2>/dev/null | tail -n +6 | xargs rm -rf || true
+              
+              # デプロイパッケージを削除
+              rm -f deploy.tar.gz
+              
+              echo "✅ Deployment completed successfully"
           ENDSSH
 
       - name: Cleanup
