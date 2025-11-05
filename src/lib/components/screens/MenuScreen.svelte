@@ -86,7 +86,7 @@
 	</div>
 
 	<div class="py-5">
-		<div class="max-h-[540px] overflow-y-auto px-6 py-1">
+		<div class="max-h-[536px] overflow-y-auto px-6 py-1">
 			<div class="space-y-4">
 				{#each collections as collection (collection.index)}
 					<button

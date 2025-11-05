@@ -27,8 +27,9 @@
 			{:else}
 				<PracticeScreen {audio} {recording} {ui} {phrase} {url_parameters} {reset_all_states} />
 			{/if}
+			<div class="mt-4 flex justify-end">
+				<AppVersion />
+			</div>
 		</div>
 	{/if}
-
-	<AppVersion />
 </div>
