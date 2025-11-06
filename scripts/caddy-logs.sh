@@ -31,7 +31,7 @@ sudo tail -n 100 -f /var/log/caddy/access.log | jq -r '
     else "Other" end;
   def format_ip(ip):
     ip | split(".") | map(try tonumber catch 0 | tostring | if length == 1 then "0" + . else . end) | join(".");
-  "[\(.ts | strftime("%H:%M:%S"))] " +
+  "[\(.ts | . + 32400 | strftime("%H:%M:%S"))] " +
   status_symbol(.status) + " " +
   "\(.status) " +
   "\(.request.method) " +
