@@ -22,11 +22,15 @@ export default defineConfig({
 	},
 	build: {
 		cssCodeSplit: false, // CSSを1つのファイルに結合してクリティカルリクエストチェーンを短縮
+		cssMinify: true, // CSSの最小化を有効化
 		rollupOptions: {
 			output: {
 				manualChunks: undefined, // 手動チャンク分割を無効化（CSSの分割も減らす）
 			},
 		},
+	},
+	css: {
+		devSourcemap: false, // 開発時のソースマップを無効化してパフォーマンス向上
 	},
 	server: {
 		allowedHosts: [
