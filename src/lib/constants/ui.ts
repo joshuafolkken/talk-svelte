@@ -12,7 +12,10 @@ export const UI = {
 		RECORDING_ACTIVE: 'recording-active',
 		LIKED_ACTIVE: 'liked-active',
 		TROPHY_ACTIVE: 'trophy-active',
+		KEYBOARD_PRESSED: 'keyboard-pressed',
 	},
+	SHORTCUT_DELAY: 80,
+	ANIMATION_DURATION: 200,
 } as const
 
 export type IconSize = (typeof UI.ICON_SIZES)[keyof typeof UI.ICON_SIZES]
