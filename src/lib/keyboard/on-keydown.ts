@@ -1,4 +1,5 @@
 import { ACTIONS, type ActionName } from '$lib/constants/actions'
+import { UI } from '$lib/constants/ui'
 import { keyboard, type KeyName } from './keyboard'
 
 function normalize(event: KeyboardEvent): string {
@@ -10,7 +11,16 @@ function trigger_action(action_id: ActionName): void {
 	const selector = `[data-action="${action_id}"]`
 	const button = globalThis.document.querySelector<HTMLButtonElement>(selector)
 	if (button !== null) {
-		button.click()
+		button.classList.add(UI.BUTTON_STYLES.KEYBOARD_PRESSED)
+
+		setTimeout(() => {
+			button.click()
+		}, UI.SHORTCUT_DELAY)
+
+		setTimeout(() => {
+			button.classList.remove(UI.BUTTON_STYLES.KEYBOARD_PRESSED)
+		}, UI.ANIMATION_DURATION)
+
 		return
 	}
 	if (action_id === ACTIONS.MENU) {
