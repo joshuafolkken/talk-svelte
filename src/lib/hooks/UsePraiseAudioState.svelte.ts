@@ -9,15 +9,19 @@ export function use_praise_audio_state(): {
 	play: () => Promise<void>
 } {
 	const praise_audio_map = new SvelteMap<string, HTMLAudioElement>()
+	let is_initialized = false
 
 	function initialize(): void {
 		if (!browser) return
+		if (is_initialized) return
 
 		for (const prise_phrase of praise.get_phrases(0)) {
 			const audio = new Audio(asset(`/${AUDIO.PATH}/${prise_phrase.key}.mp3`))
-			audio.preload = AUDIO.PRELOAD_STRATEGY
+			audio.preload = AUDIO.PRELOAD.NONE
 			praise_audio_map.set(prise_phrase.key, audio)
 		}
+
+		is_initialized = true
 	}
 
 	async function play(): Promise<void> {
