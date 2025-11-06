@@ -24,15 +24,23 @@ function is_editable_target(element: Element | null): boolean {
 	return element instanceof HTMLElement && element.isContentEditable
 }
 
+function has_modifier_key(event: KeyboardEvent): boolean {
+	return event.shiftKey || event.ctrlKey || event.metaKey || event.altKey
+}
+
 function create(
 	get_action_by_key: (key: KeyName) => ActionName | undefined,
 ): (event: KeyboardEvent) => void {
 	return (event: KeyboardEvent): void => {
 		if (is_editable_target(event.target as Element | null)) return
+		if (has_modifier_key(event)) return
+
 		const key = normalize(event)
 		if (!keyboard.is_supported(key)) return
+
 		const action_id = get_action_by_key(key)
 		if (action_id === undefined) return
+
 		event.preventDefault()
 		trigger_action(action_id)
 	}
