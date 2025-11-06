@@ -2,8 +2,14 @@
 	import '../app.css'
 	import favicon from '$lib/assets/favicon.svg'
 	import { APP } from '$lib/constants/app'
+	import { url } from '$lib/utils/url'
+	import { onMount } from 'svelte'
 
 	let { children } = $props()
+
+	onMount(() => {
+		url.redirect()
+	})
 </script>
 
 <svelte:head>
