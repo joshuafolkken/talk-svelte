@@ -8,29 +8,49 @@
 # this machine's public IP, then replace ":80" below with your
 # domain name.
 
-joshuastudio.com {
+
+talk.joshuafolkken.com {
+        log {
+                output file /var/log/caddy/access.log {
+                        roll_size 100mb
+                        roll_keep 10
+                }
+                # format single_field "{remote_host} - {user} [{when}] \"{method} {uri} {proto}\" {status} {size} \"{header.Referer}\" \"{header.User-Agent}\""
+                # format transform "{combined}"
+                # format single_field common_log
+                # format console {
+                #       time_format iso8601
+                # }
+                format json
+        }
         reverse_proxy localhost:3000
 }
 
-:443 {
-        reverse_proxy localhost:3000
+# リダイレクト設定: joshuafolkken.com → talk.joshuafolkken.com
+joshuafolkken.com {
+        redir https://talk.joshuafolkken.com{uri} permanent
 }
 
-:80 {
-        reverse_proxy localhost:3000
-
-        # Set this path to your site's directory.
-        # root * /usr/share/caddy
-
-        # Enable the static file server.
-        # file_server
-
-        # Another common task is to set up a reverse proxy:
-        # reverse_proxy localhost:8080
-
-        # Or serve a PHP site through php-fpm:
-        # php_fastcgi localhost:9000
+# リダイレクト設定: IPアドレス → joshuafolkken.com
+:443 :80 {
+        redir https://joshuafolkken.com{uri} permanent
 }
+
+# :80 {
+#         reverse_proxy localhost:3000
+
+#         Set this path to your site's directory.
+#         root * /usr/share/caddy
+
+#         Enable the static file server.
+#         file_server
+
+#         Another common task is to set up a reverse proxy:
+#         reverse_proxy localhost:8080
+
+#         Or serve a PHP site through php-fpm:
+#         php_fastcgi localhost:9000
+# }
 
 # Refer to the Caddy docs for more information:
 # https://caddyserver.com/docs/caddyfile
