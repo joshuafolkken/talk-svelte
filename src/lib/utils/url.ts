@@ -8,6 +8,7 @@ function redirect(): void {
 	const target_url = new URL(APP.WEBSITE_URL)
 
 	if (this_url.hostname === target_url.hostname) return
+	if (this_url.hostname === 'localhost') return
 
 	this_url.hostname = target_url.hostname
 	this_url.port = ''
