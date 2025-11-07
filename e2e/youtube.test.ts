@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
 
 const cases = [
-	{ goto_path: '', expected: 'FWG3Dfss3Jc' }, // cspell:disable-line
-	{ goto_path: '?v=Z4J2ecm8m5k', expected: 'Z4J2ecm8m5k' },
+	{ goto_path: '/', expected: 'FWG3Dfss3Jc' }, // cspell:disable-line
+	{ goto_path: '/?v=Z4J2ecm8m5k', expected: 'Z4J2ecm8m5k' },
 ] satisfies Array<{ goto_path: string; expected: string }>
 
 async function is_animated_visible(page: Page): Promise<boolean> {
