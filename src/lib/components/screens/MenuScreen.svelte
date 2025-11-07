@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation'
+	import { resolve } from '$app/paths'
 	import { back_to_the_future } from '$lib/data/phrases/back-to-the-future'
 	import { keyboard } from '$lib/keyboard/keyboard'
 	import { on_keydown } from '$lib/keyboard/on-keydown'
@@ -13,14 +15,7 @@
 
 	function select_collection(index: number): void {
 		storage.set_number(LAST_SELECTED_COLLECTION_KEY, index)
-
-		try {
-			const url = new URL(globalThis.location.href)
-			url.searchParams.set('collection', index.toString())
-			globalThis.location.href = url.toString()
-		} catch {
-			// URL更新に失敗した場合は何もしない
-		}
+		void goto(resolve(`./${String(index)}`))
 	}
 
 	let active_index = 0

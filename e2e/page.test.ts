@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import { back_to_the_future } from '$lib/data/phrases/back-to-the-future'
 
 test('audio src matches displayed phrase', async ({ page }) => {
-	await page.goto('?collection=0')
+	await page.goto('/0')
 	await page.getByTestId('toggle-script').click()
 
 	const displayed_transcript = await page.getByTestId('script-content').textContent()

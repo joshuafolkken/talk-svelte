@@ -1,7 +1,7 @@
 import { browser } from '$app/environment'
 import { responsive } from '$lib/utils/responsive'
 
-export function use_responsive(): {
+export function use_responsive_state(): {
 	scale: number
 	is_ready: boolean
 } {

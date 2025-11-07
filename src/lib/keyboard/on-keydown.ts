@@ -1,3 +1,5 @@
+import { goto } from '$app/navigation'
+import { resolve } from '$app/paths'
 import { ACTIONS, type ActionName } from '$lib/constants/actions'
 import { UI } from '$lib/constants/ui'
 import { keyboard, type KeyName } from './keyboard'
@@ -24,7 +26,7 @@ function trigger_action(action_id: ActionName): void {
 		return
 	}
 	if (action_id === ACTIONS.MENU) {
-		globalThis.location.assign('./')
+		void goto(resolve('../'))
 	}
 }
 

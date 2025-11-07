@@ -5,25 +5,12 @@
 	import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
 	import { ACTIONS, type ActionName } from '$lib/constants/actions'
 	import { APP } from '$lib/constants/app'
-	import type { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
-	import type { use_phrase_state } from '$lib/hooks/UsePhraseState.svelte'
-	import type { use_recording_state } from '$lib/hooks/UseRecordingState.svelte'
-	import type { use_ui_state } from '$lib/hooks/UseUiState.svelte'
-	import type { use_url_parameters } from '$lib/hooks/UseUrlParameters.svelte'
 	import { keyboard, type KeyName } from '$lib/keyboard/keyboard'
 	import { on_keydown } from '$lib/keyboard/on-keydown'
 	import { device } from '$lib/utils/device'
+	import { use_practice_state } from './UsePracticeState.svelte'
 
-	interface Props {
-		audio: ReturnType<typeof use_audio_state>
-		recording: ReturnType<typeof use_recording_state>
-		ui: ReturnType<typeof use_ui_state>
-		phrase: ReturnType<typeof use_phrase_state>
-		url_parameters: ReturnType<typeof use_url_parameters>
-		reset_all_states: () => void
-	}
-
-	const { audio, recording, ui, phrase, url_parameters, reset_all_states }: Props = $props()
+	const { audio, recording, ui, phrase, url_parameters, reset_all_states } = use_practice_state()
 
 	function handle_retry(): void {
 		reset_all_states()
