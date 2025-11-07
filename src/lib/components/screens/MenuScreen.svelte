@@ -48,7 +48,9 @@
 			focus_by_index(active_index + 1)
 		},
 		[keyboard.KEYS.SPACE]: () => {
-			buttons[active_index]?.click()
+			const button = buttons[active_index]
+			if (button === undefined) return
+			on_keydown.click_button(button)
 		},
 	}
 
