@@ -78,3 +78,4 @@ words:
   - redir
   - tonumber
   - tostring
+  - zstd
