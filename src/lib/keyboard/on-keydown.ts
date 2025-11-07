@@ -9,20 +9,23 @@ function normalize(event: KeyboardEvent): string {
 	return raw_key.length === 1 ? raw_key.toLowerCase() : raw_key
 }
 
+function click_button(button: HTMLButtonElement): void {
+	button.classList.add(UI.BUTTON_STYLES.KEYBOARD_PRESSED)
+
+	setTimeout(() => {
+		button.click()
+	}, UI.SHORTCUT_DELAY)
+
+	setTimeout(() => {
+		button.classList.remove(UI.BUTTON_STYLES.KEYBOARD_PRESSED)
+	}, UI.ANIMATION_DURATION)
+}
+
 function trigger_action(action_id: ActionName): void {
 	const selector = `[data-action="${action_id}"]`
 	const button = globalThis.document.querySelector<HTMLButtonElement>(selector)
 	if (button !== null) {
-		button.classList.add(UI.BUTTON_STYLES.KEYBOARD_PRESSED)
-
-		setTimeout(() => {
-			button.click()
-		}, UI.SHORTCUT_DELAY)
-
-		setTimeout(() => {
-			button.classList.remove(UI.BUTTON_STYLES.KEYBOARD_PRESSED)
-		}, UI.ANIMATION_DURATION)
-
+		click_button(button)
 		return
 	}
 	if (action_id === ACTIONS.MENU) {
@@ -61,4 +64,5 @@ function create(
 export const on_keydown = {
 	normalize,
 	create,
+	click_button,
 }
