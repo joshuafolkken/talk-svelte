@@ -23,6 +23,13 @@ talk.joshuafolkken.com {
                 # }
                 format json
         }
+
+        encode zstd gzip
+
+        header /_app/* Cache-Control "public, max-age=31536000, immutable"
+        header /.html Cache-Control "no-cache"
+        header / Cache-Control "no-cache"
+
         reverse_proxy localhost:3000
 }
 
