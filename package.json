@@ -1,7 +1,7 @@
 {
 	"name": "talk-svelte",
 	"private": true,
-	"version": "0.125.0",
+	"version": "0.126.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -14,7 +14,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint .",
+		"lint": "prettier --check . && eslint . --cache",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
