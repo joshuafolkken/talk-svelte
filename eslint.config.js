@@ -950,7 +950,13 @@ export default defineConfig(
 			'sonarjs/no-duplicate-string': 'off',
 		},
 	},
-	// {
+	{
+		files: ['src/params/**/*.ts'],
+		rules: {
+			'unicorn/filename-case': 'off',
+			'no-restricted-syntax': 'off',
+		},
+	}, // {
 	// 	// テストファイルではルールを緩和
 	// 	files: ['**/*.test.ts', '**/*.spec.ts', '**/*.test.svelte.ts', '**/*.spec.svelte.ts'],
 	// 	rules: {

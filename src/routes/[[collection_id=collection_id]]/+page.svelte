@@ -8,12 +8,7 @@
 	import { use_responsive_state } from '$lib/hooks/UseResponsive.svelte'
 
 	const responsive = use_responsive_state()
-
-	function is_collection_id_valid(): boolean {
-		return page.params.collection_id === undefined || page.params.collection_id === ''
-	}
-
-	const should_show_menu = $derived(is_collection_id_valid())
+	const should_show_practice = $derived(page.params.collection_id !== undefined)
 </script>
 
 <div class="relative min-h-screen overflow-hidden">
@@ -25,10 +20,10 @@
 			class="m-4 mx-auto max-w-sm transition-transform"
 			style="transform: scale({responsive.scale}); transform-origin: top center;"
 		>
-			{#if should_show_menu}
-				<MenuScreen />
-			{:else}
+			{#if should_show_practice}
 				<PracticeScreen />
+			{:else}
+				<MenuScreen />
 			{/if}
 			<div class="mt-4 flex justify-end">
 				<AppVersion />
