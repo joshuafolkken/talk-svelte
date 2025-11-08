@@ -24,16 +24,18 @@
 	}
 
 	let {
-		phrase, // eslint-disable-line prefer-const
-		is_playing, // eslint-disable-line prefer-const
-		is_transcript_visible, // eslint-disable-line prefer-const
-		is_translation_visible, // eslint-disable-line prefer-const
-		on_play_audio, // eslint-disable-line prefer-const
-		on_can_play_through, // eslint-disable-line prefer-const
-		on_toggle_transcript, // eslint-disable-line prefer-const
-		on_toggle_translation, // eslint-disable-line prefer-const
-		on_audio_ended, // eslint-disable-line prefer-const
-		audio_element = $bindable(),
+		/* eslint-disable prefer-const -- props are not reassigned */
+		phrase,
+		is_playing,
+		is_transcript_visible,
+		is_translation_visible,
+		on_play_audio,
+		on_can_play_through,
+		on_toggle_transcript,
+		on_toggle_translation,
+		on_audio_ended,
+		/* eslint-enable prefer-const -- props are not reassigned */
+		audio_element,
 	}: Props = $props()
 
 	const audio_path = $derived(asset(`/${AUDIO.PATH}/${phrase.key}.mp3`))
