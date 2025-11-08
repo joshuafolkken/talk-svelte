@@ -24,7 +24,7 @@ export function use_url_parameters(): {
 		video_id = get_query_parameter('v')
 		time = get_query_parameter('t')
 
-		collection_id = page.params.collection_id // eslint-disable-line prefer-destructuring -- collection_id is not destructured
+		collection_id = page.params.collection_id
 	})
 
 	// prettier-ignore

@@ -1,15 +1,16 @@
-/* eslint-disable @typescript-eslint/no-restricted-imports */
 import fs from 'node:fs'
 import path from 'node:path'
 import fetch from 'node-fetch'
+/* eslint-disable @typescript-eslint/no-restricted-imports */
 import { back_to_the_future } from '../src/lib/data/phrases/back-to-the-future.js'
 import { praise } from '../src/lib/data/phrases/praise.js'
 import { slug } from '../src/lib/utils/slug.js'
 
+/* eslint-enable @typescript-eslint/no-restricted-imports */
+
 const ARGV_SLICE_START = 2
 
 const API_KEY =
-	// eslint-disable-next-line dot-notation -- process.env requires bracket notation for type safety
 	process.env['ELEVENLABS_API_KEY'] ??
 	((): never => {
 		throw new Error(

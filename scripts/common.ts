@@ -17,8 +17,7 @@ function get_git_command(): string {
 function get_current_branch(): string {
 	try {
 		const git_command = get_git_command()
-		// eslint-disable-next-line sonarjs/os-command
-		return execSync(`${git_command} rev-parse --abbrev-ref HEAD`, { encoding: 'utf8' }).trim()
+		return execSync(`${git_command} rev-parse --abbrev-ref HEAD`, { encoding: 'utf8' }).trim() // eslint-disable-line sonarjs/os-command
 	} catch (error) {
 		throw new Error('Failed to get current branch', { cause: error })
 	}

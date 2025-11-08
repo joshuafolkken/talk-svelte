@@ -440,8 +440,14 @@ export default defineConfig(
 			'prefer-destructuring': [
 				'error',
 				{
-					array: true,
-					object: true,
+					VariableDeclarator: {
+						array: true,
+						object: true,
+					},
+					AssignmentExpression: {
+						array: false,
+						object: false,
+					},
 				},
 				{
 					enforceForRenamedProperties: false,
@@ -570,7 +576,7 @@ export default defineConfig(
 			'dot-notation': [
 				'error',
 				{
-					allowPattern: String.raw`^process\.env\.`,
+					allowPattern: String.raw`^[A-Z0-9_]+$`,
 				},
 			],
 			// 分割代入のデフォルト値を要求

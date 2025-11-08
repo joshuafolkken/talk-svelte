@@ -6,7 +6,7 @@ import { arrays } from '$lib/utils/arrays'
 import { slug } from '$lib/utils/slug'
 
 // audio_uri を自動生成するヘルパー関数
-/* eslint-disable-next-line id-length */
+// eslint-disable-next-line id-length
 function q(transcript: string, translation: string): Question {
 	return {
 		audio_uri: slug.to_slug(transcript),

@@ -133,6 +133,7 @@ AIは以下の手順で入力を解析すること：
 - [ ] **mainブランチの最新を取得**（対象ブランチにいない場合は必須）
 - [ ] **Issue番号とIssueタイトルがGitHub上に存在し、完全一致することを確認**（一致しない場合は停止）
 - [ ] ブランチ作成の要否を判定（mainブランチにいる場合のみ作成）
+- [ ] `package.json` の変更内容を確認（セクション4.5参照）
 
 ---
 
@@ -371,6 +372,26 @@ if [ "$GITHUB_TITLE" != "Add dark mode toggle" ]; then
   exit 1
 fi
 ```
+
+### 4.5 `package.json` の変更確認
+
+`package.json` がステージングされていない、または `version` フィールドが変更されていない場合は、ユーザーに処理続行の可否を必ず確認する。
+
+1. ステージング済みファイルを取得し、`package.json` が含まれるか確認する。
+2. 含まれていない場合は以下を表示し、ユーザーに yes/no で回答してもらう：
+
+   ```
+   ⚠️ package.json がステージング済みの変更に含まれていません。続行しますか？ (yes/no)
+   ```
+
+3. `package.json` が含まれている場合は、`git diff --cached package.json` で `version` フィールドに変更があるか確認する。
+4. `version` が変更されていない場合は以下を表示し、ユーザーに yes/no で回答してもらう：
+
+   ```
+   ⚠️ package.json の version が更新されていません。続行しますか？ (yes/no)
+   ```
+
+5. ユーザーが "no" と回答した場合は即座に処理を停止し、指示を待つこと。
 
 ---
 
@@ -1113,6 +1134,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 - [ ] **mainブランチの最新を取得した**（必要に応じて `git checkout main && git pull`）
 - [ ] **git pull のエラーハンドリングを実装した**（コンフリクト等）
 - [ ] **GitHub上のIssue情報と完全一致することを確認した**（`gh issue view`）
+- [ ] **`package.json` の変更有無とバージョン更新の可否を確認し、必要に応じてユーザーに承認を得る処理を実装した**
 - [ ] ユーザーに3つの確認項目（コミット/プッシュ/PR）を質問した
 - [ ] lefthook のエラーハンドリングを実装した
 - [ ] **AIの行動制限を理解した**（テスト失敗時は自動修正禁止）
