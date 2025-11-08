@@ -35,7 +35,7 @@
 		on_toggle_translation,
 		on_audio_ended,
 		/* eslint-enable prefer-const -- props are not reassigned */
-		audio_element,
+		audio_element = $bindable(),
 	}: Props = $props()
 
 	const audio_path = $derived(asset(`/${AUDIO.PATH}/${phrase.key}.mp3`))
