@@ -1,8 +1,6 @@
 version: '0.2'
 language: en
 files:
-  - "**/*.{js,jsx,ts,tsx,mjs,cjs,svelte,html,css,scss,md,mdx,json,jsonc,yaml,ym\
-    l}"
   - src/**/*
   - e2e/**/*
   - stories/**/*
@@ -79,3 +77,4 @@ words:
   - tonumber
   - tostring
   - zstd
+  - gsub
