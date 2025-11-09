@@ -1,4 +1,4 @@
-import type { Handle } from '@sveltejs/kit'
+import { error, type Handle } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
 import { paraglideMiddleware } from '$lib/paraglide/server'
 import * as auth from '$lib/server/auth'
@@ -34,4 +34,11 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	return resolve(event)
 }
 
-export const handle: Handle = sequence(handleParaglide, handleAuth)
+const handle_error: Handle = async ({ event, resolve }) => {
+	const response = await resolve(event)
+
+	if (response.status === 404) throw error(404, 'Not Found')
+	return response
+}
+
+export const handle: Handle = sequence(handleParaglide, handleAuth, handle_error)
