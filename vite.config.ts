@@ -21,7 +21,6 @@ export default defineConfig({
 		'import.meta.env.APP_VERSION': JSON.stringify(package_json.version),
 	},
 	build: {
-		cssCodeSplit: false, // CSSを1つのファイルに結合してクリティカルリクエストチェーンを短縮
 		cssMinify: true, // CSSの最小化を有効化
 		rollupOptions: {
 			output: {
