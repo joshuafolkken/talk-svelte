@@ -29,15 +29,16 @@ sudo tail -n 100 -f /var/log/caddy/access.log | jq -r '
     elif (ua | contains("Firefox")) then "Firefox"
     elif (ua | contains("Opera")) then "Opera"
     else "Other" end;
-  def format_ip(ip):
-    ip | split(".") | map(try tonumber catch 0 | tostring | if length == 1 then "0" + . else . end) | join(".");
+  def host_label:
+    (.request.host // (.request.headers.Host[0] // "-"))
+    | gsub("\\.joshuafolkken\\.com$"; "");
   "[\(.ts | . + 32400 | strftime("%H:%M:%S"))] " +
   status_symbol(.status) + " " +
   "\(.status) " +
   "\(.request.method) " +
   "\(.duration * 1000 | floor)ms " +
-  "\(format_ip(.request.remote_ip)) " +
-  "\(.request.uri) " +
+  "\(.request.remote_ip // "-") " +
+  host_label + "\(.request.uri) " +
   "(\(.size)) " +
   "[\(extract_os(.request.headers."User-Agent"[0]))/\(extract_browser(.request.headers."User-Agent"[0]))]"
 '

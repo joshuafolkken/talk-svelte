@@ -6,7 +6,6 @@ pre-commit:
       run: npm run prevent-main-commit
 
     cspell:
-      glob: '*.{js,jsx,ts,tsx,mjs,cjs,svelte,html,css,scss,md,mdx,json,jsonc,yaml,yml}'
       run: npx cspell {staged_files}
 
     prettier:
