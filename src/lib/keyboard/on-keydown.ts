@@ -29,7 +29,7 @@ function trigger_action(action_id: ActionName): void {
 		return
 	}
 	if (action_id === ACTIONS.MENU) {
-		void goto(resolve('../'))
+		goto(resolve('../')) // eslint-disable-line @typescript-eslint/no-floating-promises
 	}
 }
 

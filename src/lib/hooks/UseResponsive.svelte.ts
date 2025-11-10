@@ -24,10 +24,10 @@ export function use_responsive_state(): {
 
 		const debounced_update_scale = responsive.debounce(update_scale)
 
-		window.addEventListener('resize', debounced_update_scale)
+		globalThis.addEventListener('resize', debounced_update_scale)
 
 		return (): void => {
-			window.removeEventListener('resize', debounced_update_scale)
+			globalThis.removeEventListener('resize', debounced_update_scale)
 		}
 	})
 
