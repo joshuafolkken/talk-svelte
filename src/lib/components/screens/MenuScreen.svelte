@@ -15,7 +15,7 @@
 
 	function select_collection(index: number): void {
 		storage.set_number(LAST_SELECTED_COLLECTION_KEY, index)
-		void goto(resolve(`./${String(index)}`))
+		goto(resolve(`./${String(index)}`)) // eslint-disable-line @typescript-eslint/no-floating-promises
 	}
 
 	let active_index = 0

@@ -3,13 +3,13 @@
 	<head>
 		<!-- Google tag (gtag.js) - 遅延読み込みでパフォーマンス最適化 -->
 		<script>
-			window.dataLayer = window.dataLayer || []
+			globalThis.dataLayer = globalThis.dataLayer || []
 			function gtag() {
 				dataLayer.push(arguments)
 			}
 
 			// ページの主要コンテンツ読み込み後に読み込む
-			window.addEventListener('load', function () {
+			globalThis.addEventListener('load', function () {
 				const script = document.createElement('script')
 				script.async = true
 				script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HFJCYH2WYS'
