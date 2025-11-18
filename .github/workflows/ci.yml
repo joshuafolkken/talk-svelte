@@ -52,6 +52,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate paraglide files
+        run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide
+
       - name: Run spell check
         run: npx cspell . --dot
 
