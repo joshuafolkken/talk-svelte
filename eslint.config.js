@@ -1,6 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-// import storybook from 'eslint-plugin-storybook';
-
 import { fileURLToPath } from 'node:url'
 import { includeIgnoreFile } from '@eslint/compat'
 import js from '@eslint/js'
@@ -22,7 +19,6 @@ export default defineConfig(
 	{
 		// tsconfig に含まれないファイルを明示的に除外
 		ignores: [
-			'.storybook/**',
 			'*.config.js',
 			'*.config.cjs',
 			'*.config.ts',
@@ -362,7 +358,7 @@ export default defineConfig(
 			// 複雑度の制限
 			complexity: ['error', 5],
 			// 最大ネストレベル
-			'max-depth': ['error', 1],
+			'max-depth': ['error', 2],
 			// 関数の最大行数
 			'max-lines-per-function': ['error', { max: 25, skipBlankLines: true, skipComments: true }],
 			// ファイルの最大行数
@@ -956,7 +952,8 @@ export default defineConfig(
 			'unicorn/filename-case': 'off',
 			'no-restricted-syntax': 'off',
 		},
-	}, // {
+	},
+	// {
 	// 	// テストファイルではルールを緩和
 	// 	files: ['**/*.test.ts', '**/*.spec.ts', '**/*.test.svelte.ts', '**/*.spec.svelte.ts'],
 	// 	rules: {

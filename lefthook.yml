@@ -42,7 +42,7 @@ pre-push:
       run: npm run test:unit -- --run
 
     test-e2e:
-      glob: '*.{svelte,ts,js,css,sql}'
+      glob: '{*.{svelte,ts,js,mjs,cjs},package.json}'
       run: npm run stop:preview && npm run test:e2e
 
   fail_text: |

@@ -3,4 +3,3 @@
 </script>
 
 <a href={resolve('/demo/paraglide/')}>paraglide</a>
-<a href={resolve('/demo/lucia/')}>lucia</a>

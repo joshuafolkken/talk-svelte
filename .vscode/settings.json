@@ -3,7 +3,6 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit"
-		// "source.organizeImports": "explicit"
 	},
 	"[javascript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -35,5 +34,6 @@
 			"mode": "auto"
 		}
 	],
-	"playwright.reuseBrowser": false
+	"playwright.reuseBrowser": false,
+	"errorLens.gutterIconsEnabled": true
 }

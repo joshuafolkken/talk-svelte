@@ -1,5 +1,5 @@
 <script>
-	import { APP, JOSHUA_STUDIO } from '$lib/constants/app'
+	import { APP, AUTHOR } from '$lib/constants/app'
 </script>
 
 <div
@@ -8,7 +8,7 @@
 	aria-hidden="true"
 >
 	<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-	<a href={APP.GITHUB_URL} target="_blank">
-		{APP.NAME} v{APP.VERSION} &copy; {JOSHUA_STUDIO.NAME}
+	<a href={AUTHOR.WEBSITE_URL} target="_blank">
+		{APP.NAME} v{APP.VERSION} &copy; {AUTHOR.NAME}
 	</a>
 </div>

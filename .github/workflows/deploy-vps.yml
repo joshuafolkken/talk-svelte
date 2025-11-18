@@ -68,6 +68,7 @@ jobs:
               exit 1
             fi
 
-            pm2 restart talk-svelte || pm2 start ecosystem.config.cjs
+            APP_NAME=$(node -p "require('./package.json').name")
+            pm2 restart $APP_NAME || pm2 start ecosystem.config.cjs
 
             echo "✅ Deployment completed successfully"
