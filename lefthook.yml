@@ -43,7 +43,7 @@ pre-push:
 
     test-e2e:
       glob: '{*.{svelte,ts,js,mjs,cjs},package.json}'
-      run: npm run stop:preview && npm run test:e2e
+      run: npm run preview:stop && npm run test:e2e
 
   fail_text: |
     🚫 Push blocked due to build or test failures
