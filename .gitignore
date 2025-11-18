@@ -26,14 +26,5 @@ vite.config.ts.timestamp-*
 # Paraglide
 src/lib/paraglide
 
-*storybook.log
-storybook-static
-
 .scannerwork
 project.inlang/cache/
-
-# PM2
-/logs
-
-# eslint
-.eslintcache

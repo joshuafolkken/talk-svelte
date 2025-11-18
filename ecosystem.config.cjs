@@ -1,18 +1,17 @@
-const path = require('node:path')
-require('dotenv').config({ path: path.resolve(__dirname, '.env') })
+const package_info = require('./package.json')
+const name = package_info.name
+
+console.log('name:', name)
 
 module.exports = {
 	apps: [
 		{
-			name: 'talk-svelte',
+			name: name,
 			script: 'build/index.js',
-			// interpreter: 'node',
-			instances: 'max',
+			instances: '1',
 			exec_mode: 'cluster',
 			env: {
-				// NODE_ENV: 'production',
 				PORT: 3000,
-				DATABASE_URL: process.env.DATABASE_URL,
 			},
 			error_file: './logs/err.log',
 			out_file: './logs/out.log',

@@ -18,15 +18,16 @@ ignorePaths:
   - '**/*.min.js'
   - src/lib/paraglide/*.js
   - '**/*.svg'
-  - storybook-static/**/*
   - .git/**/*
   - .gitignore
   - .scannerwork/**/*
   - google*.html
 words:
+  - appleboy
   - autodocs
   - autorestart
   - bttf
+  - Caddyfile
   - customise
   - darkmode
   - decensor
@@ -36,18 +37,23 @@ words:
   - ELEVENLABS
   - elif
   - enablejsapi
+  - ENDSSH
+  - fastcgi
+  - FOLKKEN
   - Groot
+  - gsub
   - Gump
   - Hotspots
   - ianvs
   - inlang
   - isready
   - joshuafolkken
+  - joshuastudio
+  - keygen
   - LEFTHOOK
   - Lorean
   - Maguire
   - mcfly
-  - mdsvex
   - mischeck
   - modestbranding
   - mysecretpassword
@@ -58,23 +64,16 @@ words:
   - paraglide
   - pgdata
   - Qube
+  - redir
+  - Referer
   - scannerwork
   - sonarcloud
   - sonarjs
   - sonarqube
   - Stylesheet
+  - tonumber
+  - tostring
   - Vercel
   - vibing
   - Vite
-  - Caddyfile
-  - joshuastudio
-  - fastcgi
-  - ENDSSH
-  - keygen
-  - appleboy
-  - Referer
-  - redir
-  - tonumber
-  - tostring
   - zstd
-  - gsub

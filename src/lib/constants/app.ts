@@ -6,9 +6,9 @@ export const APP = {
 	DEFAULT_LANGUAGE: 'en-US',
 } as const
 
-export const JOSHUA_STUDIO = {
-	NAME: 'Joshua Studio',
-	WEBSITE_URL: 'https://joshuastudio.com/',
+export const AUTHOR = {
+	NAME: 'Joshua Folkken',
+	WEBSITE_URL: 'https://joshuafolkken.com/',
 	GITHUB_URL: 'https://github.com/joshuafolkken/',
 	EMAIL: 'joshuafolkken@gmail.com',
 } as const
