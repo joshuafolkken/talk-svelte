@@ -15,10 +15,16 @@ export class SpeechToText {
 	#interim_transcript = ''
 	readonly #on_transcript_update: TranscriptCallback
 	readonly #on_error: ErrorCallback
+	readonly #on_end: () => void
 
-	constructor(on_transcript_update: TranscriptCallback, on_error: ErrorCallback = console.error) {
+	constructor(
+		on_transcript_update: TranscriptCallback,
+		on_error: ErrorCallback = console.error,
+		on_end: () => void = console.info,
+	) {
 		this.#on_transcript_update = on_transcript_update
 		this.#on_error = on_error
+		this.#on_end = on_end
 		this.#recognition = this.#initialize_recognition()
 	}
 
@@ -52,8 +58,8 @@ export class SpeechToText {
 		if (speech_recognition === undefined) return undefined
 
 		const recognition = new speech_recognition()
-		recognition.continuous = true
-		recognition.interimResults = true
+		recognition.continuous = !device.is_ios()
+		recognition.interimResults = !device.is_ios()
 		this.#add_event_listener(recognition)
 
 		return recognition
@@ -123,7 +129,13 @@ export class SpeechToText {
 	}
 
 	#should_restart(): boolean {
-		return this.#is_active && this.#recognition !== undefined
+		const should_restart = this.#is_active && this.#recognition !== undefined && !device.is_ios()
+
+		if (!should_restart) {
+			this.#on_end()
+		}
+
+		return should_restart
 	}
 
 	#restart_recognition(): void {
@@ -179,15 +191,25 @@ export class SpeechToText {
 		this.#start_recognition(lang)
 	}
 
-	stop(): void {
-		if (this.#recognition === undefined) return
-		if (!this.#is_active) return
+	#should_stop_recognition(is_automatic: boolean): boolean {
+		return !(device.is_ios() && is_automatic)
+	}
 
+	#stop_recognition(): void {
 		try {
-			this.#is_active = false
-			this.#recognition.stop()
+			this.#recognition?.stop()
 		} catch (error: unknown) {
 			this.#on_error(`Failed to stop recognition: ${String(error)}`)
+		}
+	}
+
+	stop(is_automatic = true): void {
+		if (this.#recognition === undefined || !this.#is_active) return
+
+		this.#is_active = false
+
+		if (this.#should_stop_recognition(is_automatic)) {
+			this.#stop_recognition()
 		}
 	}
 
@@ -195,10 +217,13 @@ export class SpeechToText {
 		if (this.#recognition === undefined) return
 
 		this.#reset_transcripts()
+
+		if (device.is_ios()) return
 		this.#recognition.stop()
 	}
 
 	destroy(): void {
+		if (device.is_ios()) return
 		this.stop()
 	}
 }

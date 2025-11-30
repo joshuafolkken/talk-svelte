@@ -12,6 +12,9 @@
 
 	const { audio, recording, ui, phrase, url_parameters, reset_all_states } = use_practice_state()
 
+	const AUTOPLAY_TIMEOUT_IPHONE_MS = 1500
+	const AUTOPLAY_TIMEOUT_DEFAULT_MS = 200
+
 	function handle_retry(): void {
 		reset_all_states()
 		audio.toggle()
@@ -32,13 +35,16 @@
 	}
 
 	function autoplay(): void {
-		if (device.is_iphone()) return
-		void audio.play()
+		const timeout = device.is_iphone() ? AUTOPLAY_TIMEOUT_IPHONE_MS : AUTOPLAY_TIMEOUT_DEFAULT_MS
+
+		setTimeout(() => {
+			void audio.play()
+		}, timeout)
 	}
 
 	function handle_record(): void {
 		if (audio.is_playing) audio.reset()
-		if (!recording.toggle(url_parameters.lang)) autoplay()
+		if (!recording.toggle(url_parameters.lang, false)) autoplay()
 	}
 
 	function handle_play_audio(): void {

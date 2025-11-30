@@ -9,7 +9,7 @@ export function use_recording_state(): {
 	start: (lang: string) => void
 	stop: () => void
 	reset: () => void
-	toggle: (lang: string) => boolean
+	toggle: (lang: string, is_automatic?: boolean) => boolean
 	clear_transcript: () => void
 	mark_correct: (transcript: string) => void
 } {
@@ -23,8 +23,8 @@ export function use_recording_state(): {
 		is_correct = false
 	}
 
-	function stop(): void {
-		speech_to_text?.stop()
+	function stop(is_automatic = true): void {
+		speech_to_text?.stop(is_automatic)
 		is_recording = false
 	}
 
@@ -39,9 +39,9 @@ export function use_recording_state(): {
 		is_recording = true
 	}
 
-	function toggle(lang: string): boolean {
+	function toggle(lang: string, is_automatic = true): boolean {
 		if (is_recording) {
-			stop()
+			stop(is_automatic)
 		} else {
 			start(lang)
 		}
@@ -73,6 +73,9 @@ export function use_recording_state(): {
 			},
 			(error) => {
 				console.error('Speech recognition error:', error)
+				is_recording = false
+			},
+			() => {
 				is_recording = false
 			},
 		)

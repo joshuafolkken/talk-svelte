@@ -7,8 +7,10 @@ function redirect(): void {
 	const this_url = new URL(globalThis.location.href)
 	const target_url = new URL(APP.WEBSITE_URL)
 
-	if (this_url.hostname === target_url.hostname) return
-	if (this_url.hostname === 'localhost') return
+	if (!this_url.hostname.includes('github.io')) return
+
+	// if (this_url.hostname === target_url.hostname) return
+	// if (this_url.hostname === 'localhost') return
 
 	this_url.hostname = target_url.hostname
 	this_url.port = ''
