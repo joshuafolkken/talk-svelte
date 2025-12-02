@@ -42,10 +42,11 @@ export function use_recording_state(): {
 	function toggle(lang: string): boolean {
 		if (is_recording) {
 			stop()
-		} else {
-			start(lang)
+			return false
 		}
-		return is_recording
+
+		start(lang)
+		return true
 	}
 
 	function clear_transcript(): void {
