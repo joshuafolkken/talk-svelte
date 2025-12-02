@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test'
 import { back_to_the_future } from '$lib/data/phrases/back-to-the-future'
 
-test('audio src matches displayed phrase', async ({ page }) => {
+const STATUS_CODE_OK = 200
+
+test('audio file exists for displayed phrase', async ({ page }) => {
 	await page.goto('/0')
 	await page.getByTestId('toggle-script').click()
 
@@ -13,6 +15,7 @@ test('audio src matches displayed phrase', async ({ page }) => {
 		throw new Error(`Matching phrase not found for: ${displayed_transcript ?? ''}`)
 	}
 
-	const source = await page.getByTestId('phrase-audio').getAttribute('src')
-	expect(source).toContain(`/audio/${matching_phrase.key}.mp3`)
+	const response = await page.request.get(`audio/${matching_phrase.key}.mp3`)
+	expect(response.status()).toBe(STATUS_CODE_OK)
+	expect(response.headers()['content-type']).toContain('audio')
 })

@@ -1,30 +1,35 @@
 <script lang="ts">
+	import { asset } from '$app/paths'
 	import ActionButtons from '$lib/components/sections/ActionButtons.svelte'
 	import AudioSection from '$lib/components/sections/AudioSection.svelte'
 	import RecordingSection from '$lib/components/sections/RecordingSection.svelte'
 	import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
 	import { ACTIONS, type ActionName } from '$lib/constants/actions'
 	import { APP } from '$lib/constants/app'
+	import { AUDIO } from '$lib/constants/audio'
 	import { keyboard, type KeyName } from '$lib/keyboard/keyboard'
 	import { on_keydown } from '$lib/keyboard/on-keydown'
-	import { device } from '$lib/utils/device'
 	import { use_practice_state } from './UsePracticeState.svelte'
 
 	const { audio, recording, ui, phrase, url_parameters, reset_all_states } = use_practice_state()
 
+	const audio_url = $derived(asset(`/${AUDIO.PATH}/${phrase.current.key}.mp3`))
+
 	function handle_retry(): void {
 		reset_all_states()
-		audio.toggle()
+		setTimeout(() => {
+			void audio.play(audio_url)
+		}, AUDIO.PLAY_DELAY_MS)
 	}
 
 	function handle_next(): void {
 		phrase.next()
-		reset_all_states()
+		handle_retry()
 	}
 
 	function handle_preview(): void {
 		phrase.previous()
-		reset_all_states()
+		handle_retry()
 	}
 
 	function handle_clear_transcript(): void {
@@ -32,22 +37,40 @@
 	}
 
 	function autoplay(): void {
-		if (device.is_iphone()) return
-		void audio.play()
+		setTimeout(() => {
+			void audio.play(audio_url)
+		}, AUDIO.PLAY_DELAY_MS)
 	}
 
 	function handle_record(): void {
-		if (audio.is_playing) audio.reset()
-		if (!recording.toggle(url_parameters.lang)) autoplay()
+		const is_playing_before = audio.is_playing
+		const delay_ms = is_playing_before ? AUDIO.RECORD_DELAY_MS : 0
+
+		if (is_playing_before) {
+			audio.stop()
+		}
+
+		setTimeout(() => {
+			if (!recording.toggle(url_parameters.lang)) {
+				autoplay()
+			}
+		}, delay_ms)
 	}
 
 	function handle_play_audio(): void {
-		recording.stop()
-		audio.toggle()
-	}
+		const is_recording_before = recording.is_recording
+		const delay_ms = is_recording_before ? AUDIO.PLAY_DELAY_MS : 0
 
-	function handle_can_play_through(): void {
-		audio.can_play_through(recording.is_recording)
+		if (is_recording_before) {
+			recording.stop()
+		}
+
+		// 録音停止後の再生開始を遅延させる
+		setTimeout(() => {
+			if (!recording.is_recording) {
+				audio.toggle(audio_url)
+			}
+		}, delay_ms)
 	}
 
 	const action_by_key = new Map<KeyName, ActionName>([
@@ -85,11 +108,8 @@
 		is_transcript_visible={ui.is_transcript_visible}
 		is_translation_visible={ui.is_translation_visible}
 		on_play_audio={handle_play_audio}
-		on_can_play_through={handle_can_play_through}
 		on_toggle_transcript={ui.toggle_transcript}
 		on_toggle_translation={ui.toggle_translation}
-		on_audio_ended={audio.pause}
-		bind:audio_element={audio.audio_element}
 	/>
 
 	<RecordingSection

@@ -23,22 +23,22 @@ export function use_practice_state(): {
 	const praise_audio = use_praise_audio_state()
 
 	function reset_all_states(): void {
-		audio.reset()
+		audio.stop()
 		recording.reset()
 		ui.reset()
 	}
 
-	async function handle_correct_transcript(): Promise<void> {
+	function handle_correct_transcript(): void {
 		recording.mark_correct(phrase.current.script)
 		ui.toggle_completed()
-		await praise_audio.play()
+		praise_audio.play()
 	}
 
 	// Handle transcript correctness
 	$effect(() => {
 		if (recording.is_correct) return
 		if (transcript.is_included(phrase.current.script, recording.user_transcript)) {
-			void handle_correct_transcript()
+			handle_correct_transcript()
 		}
 	})
 
