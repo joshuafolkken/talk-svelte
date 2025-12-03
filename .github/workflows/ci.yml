@@ -27,8 +27,13 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Setup safe-chain
+        run: |
+          npm i -g @aikidosec/safe-chain
+          safe-chain setup-ci
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Run prettier check
         run: npx prettier --check .
@@ -49,8 +54,13 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Setup safe-chain
+        run: |
+          npm i -g @aikidosec/safe-chain
+          safe-chain setup-ci
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Generate paraglide files
         run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide
@@ -74,8 +84,13 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Setup safe-chain
+        run: |
+          npm i -g @aikidosec/safe-chain
+          safe-chain setup-ci
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Run unit tests
         run: npm run test:unit
@@ -93,8 +108,13 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Setup safe-chain
+        run: |
+          npm i -g @aikidosec/safe-chain
+          safe-chain setup-ci
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build application
         run: npm run build
@@ -112,8 +132,13 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Setup safe-chain
+        run: |
+          npm i -g @aikidosec/safe-chain
+          safe-chain setup-ci
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Cache Playwright browsers
         id: playwright-cache
@@ -152,8 +177,13 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Setup safe-chain
+        run: |
+          npm i -g @aikidosec/safe-chain
+          safe-chain setup-ci
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Run security audit
         run: npm audit --audit-level high

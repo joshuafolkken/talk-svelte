@@ -1,4 +1,7 @@
 {
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.codeActionsOnSave": {
@@ -35,5 +38,9 @@
 		}
 	],
 	"playwright.reuseBrowser": false,
-	"errorLens.gutterIconsEnabled": true
+	"errorLens.gutterIconsEnabled": true,
+	"sonarlint.connectedMode.project": {
+		"connectionId": "joshuafolkken",
+		"projectKey": "joshuafolkken_talk-svelte"
+	}
 }
