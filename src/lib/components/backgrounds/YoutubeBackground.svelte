@@ -9,7 +9,7 @@
 
 	// const { video_id = 'dQw4w9WgXcQ', time = '0' }: Props = $props()
 	const { video_id = 'FWG3Dfss3Jc', time = '0' }: Props = $props() // cspell:disable-line
-	const time_in_seconds = $state(time.endsWith('s') ? time.slice(0, -1) : time)
+	const time_in_seconds = $derived(time.endsWith('s') ? time.slice(0, -1) : time)
 	let youtube_parameters = $state('')
 	let should_load = $state(false)
 
