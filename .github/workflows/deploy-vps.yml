@@ -55,11 +55,18 @@ jobs:
             echo "Deploying tag: $LATEST_TAG"
             git checkout tags/$LATEST_TAG
 
-            npm i -g @aikidosec/safe-chain
-            safe-chain setup-ci
+            # pnpmをインストール（npm経由、または既にインストールされている場合はスキップ）
+            if ! command -v pnpm &> /dev/null; then
+              echo "Installing pnpm..."
+              npm install -g pnpm@10.24.0 || curl -fsSL https://get.pnpm.io/install.sh | sh -
+            fi
 
-            npm ci --ignore-scripts
-            NODE_ENV=production npm run build
+            # pnpmのバージョンを確認
+            pnpm --version
+
+            pnpm dlx @aikidosec/safe-chain setup-ci
+            pnpm install --frozen-lockfile --ignore-scripts
+            NODE_ENV=production pnpm run build
 
             mkdir -p logs
 
