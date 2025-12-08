@@ -22,6 +22,8 @@ ignorePaths:
   - .gitignore
   - .scannerwork/**/*
   - google*.html
+  - 'pnpm-lock.yaml'
+  - '.env*'
 words:
   - appleboy
   - autodocs
@@ -78,3 +80,7 @@ words:
   - Vite
   - zstd
   - aikidosec
+  - unrs
+  - esbuild
+  - lefthook
+  - cooldown

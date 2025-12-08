@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import fetch from 'node-fetch'
 /* eslint-disable @typescript-eslint/no-restricted-imports */
 import { back_to_the_future } from '../src/lib/data/phrases/back-to-the-future.js'
 import { praise } from '../src/lib/data/phrases/praise.js'
@@ -32,7 +31,7 @@ const should_show_help = command_line_arguments.has('--help') || command_line_ar
 if (should_show_help) {
 	console.info(
 		`
-Usage: npm run generate-voices [options]
+Usage: pnpm run generate-voices [options]
 
 Options:
   -f, --force    Overwrite existing files
