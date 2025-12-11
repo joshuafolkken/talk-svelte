@@ -43,12 +43,6 @@ function get_all(
 	return create(all_keys, en, ja)
 }
 
-// export interface PhrasesMeta {
-// 	id: string
-// 	title: string
-// 	message: string
-// }
-
 export interface PhrasesModule {
 	key_collections: Array<Array<string>>
 	get_phrases: (index: number) => Array<Phrase>
