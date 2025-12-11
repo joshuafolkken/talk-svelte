@@ -7,11 +7,20 @@
 	import { ACTIONS, type ActionName } from '$lib/constants/actions'
 	import { APP } from '$lib/constants/app'
 	import { AUDIO } from '$lib/constants/audio'
+	import type { PhrasesModule } from '$lib/data/phrases/phrases'
 	import { keyboard, type KeyName } from '$lib/keyboard/keyboard'
 	import { on_keydown } from '$lib/keyboard/on-keydown'
 	import { use_practice_state } from './UsePracticeState.svelte'
 
-	const { audio, recording, ui, phrase, url_parameters, reset_all_states } = use_practice_state()
+	interface Props {
+		phrases_module: PhrasesModule
+	}
+
+	const { phrases_module }: Props = $props()
+
+	const { audio, recording, ui, phrase, url_parameters, reset_all_states } = $derived(
+		use_practice_state(phrases_module),
+	)
 
 	const audio_url = $derived(asset(`/${AUDIO.PATH}/${phrase.current.key}.mp3`))
 

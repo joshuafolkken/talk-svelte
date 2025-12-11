@@ -43,6 +43,12 @@ function get_all(
 	return create(all_keys, en, ja)
 }
 
+export interface PhrasesModule {
+	key_collections: Array<Array<string>>
+	get_phrases: (index: number) => Array<Phrase>
+	get_all_phrases: () => Array<Phrase>
+}
+
 export type { Phrase }
 
 export const phrases = {

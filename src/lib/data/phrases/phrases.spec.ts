@@ -1,7 +1,7 @@
 import { existsSync, readdirSync } from 'node:fs'
 import path from 'node:path'
 import { expect, test } from 'vitest'
-import { back_to_the_future } from './back-to-the-future.js'
+import back_to_the_future from './collections/back-to-the-future.js'
 import { praise } from './praise.js'
 
 const STATIC_DIRECTORY = 'static'

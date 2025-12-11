@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 /* eslint-disable @typescript-eslint/no-restricted-imports */
-import { back_to_the_future } from '../src/lib/data/phrases/back-to-the-future.js'
+import back_to_the_future from '../src/lib/data/phrases/collections/back-to-the-future.js'
 import { praise } from '../src/lib/data/phrases/praise.js'
 import { slug } from '../src/lib/utils/slug.js'
 

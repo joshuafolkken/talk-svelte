@@ -1,3 +1,4 @@
+import type { PhrasesModule } from '$lib/data/phrases/phrases'
 import { use_audio_state } from '$lib/hooks/UseAudioState.svelte'
 import { use_phrase_state } from '$lib/hooks/UsePhraseState.svelte'
 import { use_praise_audio_state } from '$lib/hooks/UsePraiseAudioState.svelte'
@@ -6,7 +7,7 @@ import { use_ui_state } from '$lib/hooks/UseUiState.svelte'
 import { use_url_parameters } from '$lib/hooks/UseUrlParameters.svelte'
 import { transcript } from '$lib/utils/transcript'
 
-export function use_practice_state(): {
+export function use_practice_state(phrases_module: PhrasesModule): {
 	audio: ReturnType<typeof use_audio_state>
 	recording: ReturnType<typeof use_recording_state>
 	ui: ReturnType<typeof use_ui_state>
@@ -18,7 +19,7 @@ export function use_practice_state(): {
 	const audio = use_audio_state()
 	const recording = use_recording_state()
 	const ui = use_ui_state()
-	const phrase = use_phrase_state()
+	const phrase = use_phrase_state(phrases_module)
 	const url_parameters = use_url_parameters()
 	const praise_audio = use_praise_audio_state()
 
