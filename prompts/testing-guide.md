@@ -422,7 +422,7 @@ test('test description', async ({ page }) => {
 - 例:
   ```typescript
   import { expect, test } from '@playwright/test'
-  import { get_bttf_phrases } from '$lib/data/phrases/back-to-the-future'
+  import { get_bttf_phrases } from '$lib/data/phrases/collections/back-to-the-future'
   import type { Phrase } from '$lib/data/phrases/common'
   ```
 

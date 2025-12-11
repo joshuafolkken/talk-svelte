@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test'
-import { back_to_the_future } from '$lib/data/phrases/back-to-the-future'
+import back_to_the_future from '$lib/data/phrases/collections/back-to-the-future'
 
 const STATUS_CODE_OK = 200
 
 test('audio file exists for displayed phrase', async ({ page }) => {
-	await page.goto('/0')
+	await page.goto('/back-to-the-future/0')
 	await page.getByTestId('toggle-script').click()
 
 	const displayed_transcript = await page.getByTestId('script-content').textContent()

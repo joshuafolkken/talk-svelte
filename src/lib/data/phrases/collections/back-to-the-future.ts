@@ -1,4 +1,4 @@
-import { phrases, type Phrase } from './phrases'
+import { phrases, type Phrase, type PhrasesModule } from '$lib/data/phrases/phrases'
 
 const en = new Map<string, string>([
 	['mcfly-x', 'McFly!'],
@@ -479,8 +479,9 @@ function get_all_phrases(): Array<Phrase> {
 	return phrases.get_all(key_collections, en, ja)
 }
 
-export const back_to_the_future = {
+// eslint-disable-next-line import/no-default-export
+export default {
 	key_collections,
 	get_phrases,
 	get_all_phrases,
-}
+} satisfies PhrasesModule

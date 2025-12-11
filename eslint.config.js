@@ -940,7 +940,7 @@ export default defineConfig(
 		},
 	},
 	{
-		files: ['**/phrases/*.ts'],
+		files: ['**/phrases/collections/*.ts'],
 		rules: {
 			'max-lines': 'off',
 			'sonarjs/no-duplicate-string': 'off',
