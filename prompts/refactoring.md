@@ -28,6 +28,11 @@
    - このプロンプトの内容説明は不要
    - 直接リファクタリング提案に移る
 
+5. **実装時の品質保証（絶対遵守）**
+   - リファクタリングを実装する場合、**必ず `read_lints` ツールでエラーを確認する**
+   - エラーがある場合は **報告前に必ず修正する**
+   - **Lintエラーが残っている状態での完了報告は禁止**
+
 ---
 
 ## コーディング規約の参照
@@ -188,6 +193,12 @@
 - ステップバイステップの手順
 - 注意点
 
+#### サンプルコード
+
+- そのまま利用できる具体的なコード
+- 実装例を含む
+- **lintエラーがないことを確認済み**
+
 #### 関連ファイル
 
 - 影響を受けるファイル
@@ -268,14 +279,12 @@ const process_user_data = async (user_data: UserData): Promise<void> => {
 	await save_user_data(transformed_data)
 }
 ```
-````
 
 #### 関連ファイル
 
 - `src/lib/utils/user-utils.ts` - 新規作成
 - `src/lib/types/user.ts` - 型定義確認
 - `src/lib/data/user-data.ts` - データ処理確認
-
 ````
 
 ---
@@ -366,6 +375,7 @@ const process_user_data = async (user_data: UserData): Promise<void> => {
 2. **開いているファイルがない場合** → プロジェクト全体を分析し、最も改善が必要なファイルを特定（除外条件に該当するファイルは除外）
 
 **除外条件**:
+
 - `demo` フォルダ内のすべてのファイル
 - ファイル名に `demo` が含まれるファイル
 - `src/lib/server` フォルダ内のすべてのファイル
@@ -473,39 +483,39 @@ const process_user_data = async (user_data: UserData): Promise<void> => {
 ```typescript
 // Before: 長い関数
 const process_user_data = (user_data: UserData): ProcessedUserData => {
-  // 検証処理 (10行)
-  // 変換処理 (15行)
-  // 保存処理 (10行)
-  // 通知処理 (5行)
+	// 検証処理 (10行)
+	// 変換処理 (15行)
+	// 保存処理 (10行)
+	// 通知処理 (5行)
 }
 
 // After: 分割された関数
 const validate_user_data = (user_data: UserData): boolean => {
-  // 検証処理
+	// 検証処理
 }
 
 const transform_user_data = (user_data: UserData): TransformedUserData => {
-  // 変換処理
+	// 変換処理
 }
 
 const save_user_data = (user_data: TransformedUserData): void => {
-  // 保存処理
+	// 保存処理
 }
 
 const notify_user = (user_data: ProcessedUserData): void => {
-  // 通知処理
+	// 通知処理
 }
 
 const process_user_data = (user_data: UserData): ProcessedUserData => {
-  if (!validate_user_data(user_data)) {
-    throw new Error('Invalid user data')
-  }
+	if (!validate_user_data(user_data)) {
+		throw new Error('Invalid user data')
+	}
 
-  const transformed_data = transform_user_data(user_data)
-  save_user_data(transformed_data)
-  notify_user(transformed_data)
+	const transformed_data = transform_user_data(user_data)
+	save_user_data(transformed_data)
+	notify_user(transformed_data)
 
-  return transformed_data
+	return transformed_data
 }
 ```
 
@@ -515,31 +525,31 @@ const process_user_data = (user_data: UserData): ProcessedUserData => {
 // Before: 大きなファイル (400行)
 // user-service.ts
 export class UserService {
-  // 認証関連 (100行)
-  // データ処理関連 (150行)
-  // 通知関連 (100行)
-  // ユーティリティ関連 (50行)
+	// 認証関連 (100行)
+	// データ処理関連 (150行)
+	// 通知関連 (100行)
+	// ユーティリティ関連 (50行)
 }
 
 // After: 分割されたファイル
 // user-auth.ts
 export class UserAuth {
-  // 認証関連
+	// 認証関連
 }
 
 // user-data.ts
 export class UserData {
-  // データ処理関連
+	// データ処理関連
 }
 
 // user-notification.ts
 export class UserNotification {
-  // 通知関連
+	// 通知関連
 }
 
 // user-utils.ts
 export class UserUtils {
-  // ユーティリティ関連
+	// ユーティリティ関連
 }
 ```
 
@@ -548,10 +558,11 @@ export class UserUtils {
 ```typescript
 // Before: マジックナンバー
 const process_items = (items: Item[]): ProcessedItem[] => {
-  return items.filter(item => item.status === 1)
-    .map(item => ({ ...item, priority: 2 }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10)
+	return items
+		.filter((item) => item.status === 1)
+		.map((item) => ({ ...item, priority: 2 }))
+		.sort((a, b) => b.score - a.score)
+		.slice(0, 10)
 }
 
 // After: 定数抽出
@@ -560,10 +571,11 @@ const HIGH_PRIORITY = 2
 const MAX_RESULTS = 10
 
 const process_items = (items: Item[]): ProcessedItem[] => {
-  return items.filter(item => item.status === ACTIVE_STATUS)
-    .map(item => ({ ...item, priority: HIGH_PRIORITY }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, MAX_RESULTS)
+	return items
+		.filter((item) => item.status === ACTIVE_STATUS)
+		.map((item) => ({ ...item, priority: HIGH_PRIORITY }))
+		.sort((a, b) => b.score - a.score)
+		.slice(0, MAX_RESULTS)
 }
 ```
 
@@ -605,6 +617,7 @@ export { git_command }
 ```
 
 **使用例**:
+
 ```typescript
 // インポート
 import { git_command } from './git/git-command.js'
@@ -615,6 +628,7 @@ const status_output = await git_command.status()
 ```
 
 **ポイント**:
+
 - ファイル名と名前空間名で意図を明確にする（`git-command.ts` → `git_command`）
 - メソッド名は短く、名前空間で補完する（`exec_git_branch()` → `git_command.branch()`）
 - アロー関数は使わず、通常の`function`構文を使用する
@@ -677,23 +691,19 @@ const status_output = await git_command.status()
 
 ## 10. リファクタリング実装後の報告手順
 
-**重要**: ユーザーが「対応して」などと指示してリファクタリングを実装した場合、以下の手順で報告してください：
+**重要**: ユーザーが「対応して」などと指示してリファクタリングを実装した場合、**例外なく以下の手順を実行してください**：
 
-1. **実装後のlintエラーチェック（必須）**
-   - **リファクタリングを実装した後、報告する前に必ずlintエラーをチェックする**
-   - **すべての変更したファイルと新規作成したファイルのlintエラーを漏れなくチェックする**
-   - 関連ファイル（インポート/エクスポートされているファイル）もチェック
-   - `read_lints`ツールを使用して、変更・新規作成したすべてのファイルを明示的に指定してlintエラーを確認する
-   - 例: `read_lints({ paths: ['変更したファイル1', '変更したファイル2', '新規作成したファイル1'] })`
+1. **実装後のlintエラーチェック（絶対必須）**
+   - リファクタリング実装直後に、**必ず `read_lints` ツールを実行する**
+   - `read_lints({ paths: ['変更したファイル1', '変更したファイル2', '新規作成したファイル1'] })` のように、**すべての関与したファイルを指定して確認する**
+   - この手順を省略することは禁止されています
 
-2. **lintエラーの解決**
-   - lintエラーが存在する場合、先に解決してから報告する
-   - **すべてのlintエラーが解決されるまで報告しない**
-   - lintエラーを修正した後、再度 `read_lints` で確認してエラーが0件であることを確認する
+2. **lintエラーの即時修正（修正ループ）**
+   - lintエラーが1つでも見つかった場合、**ユーザーに報告する前に修正を行う**
+   - 修正後、再度 `read_lints` を実行し、エラーが0件になるまで繰り返す
+   - **Lintエラーが残っている状態での完了報告は禁止**
 
 3. **報告内容**
    - 実施した変更内容を説明
-   - 変更したファイルと新規作成したファイルを明記
-   - **すべてのlintエラーが解決されたことを明記**
-   - 変更による効果や改善点を説明
-````
+   - **「Lintエラーチェックを実施し、エラーがないことを確認しました」** と明記する
+   - もし自動修正できないエラーが残った場合のみ、その理由と共に報告する

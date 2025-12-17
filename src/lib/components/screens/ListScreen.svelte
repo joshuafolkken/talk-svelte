@@ -66,6 +66,9 @@
 			if (button === undefined) return
 			on_keydown.click_button(button)
 		},
+		[keyboard.KEYS.Z]: () => {
+			history.back()
+		},
 	}
 
 	function handle_keydown(event: KeyboardEvent): void {
