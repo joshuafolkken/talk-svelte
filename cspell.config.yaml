@@ -22,14 +22,17 @@ ignorePaths:
   - .gitignore
   - .scannerwork/**/*
   - google*.html
-  - 'pnpm-lock.yaml'
-  - '.env*'
+  - pnpm-lock.yaml
+  - .env*
 words:
+  - aikidosec
   - appleboy
+  - arrmageddon
   - autodocs
   - autorestart
   - bttf
   - Caddyfile
+  - cooldown
   - customise
   - darkmode
   - decensor
@@ -40,6 +43,7 @@ words:
   - elif
   - enablejsapi
   - ENDSSH
+  - esbuild
   - fastcgi
   - FOLKKEN
   - Groot
@@ -52,6 +56,7 @@ words:
   - joshuafolkken
   - joshuastudio
   - keygen
+  - lefthook
   - LEFTHOOK
   - Lorean
   - Maguire
@@ -75,12 +80,8 @@ words:
   - Stylesheet
   - tonumber
   - tostring
+  - unrs
   - Vercel
   - vibing
   - Vite
   - zstd
-  - aikidosec
-  - unrs
-  - esbuild
-  - lefthook
-  - cooldown
