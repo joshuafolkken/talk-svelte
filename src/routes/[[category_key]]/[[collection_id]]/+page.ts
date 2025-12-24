@@ -3,7 +3,6 @@ import { HTTP_STATUS } from '$lib/constants/http'
 import { phrase_module_loader } from '$lib/utils/phrase-module-loader'
 import type { PageLoad } from './$types'
 
-// eslint-disable-next-line no-restricted-syntax
 export const load: PageLoad = async ({ params }) => {
 	const { category_key, collection_id } = params
 
