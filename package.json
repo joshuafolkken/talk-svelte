@@ -1,7 +1,7 @@
 {
 	"name": "talk-svelte",
 	"private": true,
-	"version": "0.141.0",
+	"version": "0.141.1",
 	"type": "module",
 	"packageManager": "pnpm@10.26.2",
 	"scripts": {
@@ -12,8 +12,9 @@
 		"preview": "vite preview",
 		"preview:stop": "pnpm exec kill-port 4173 || true",
 		"prepare": "svelte-kit sync || echo '' && lefthook install",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"precheck": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
+		"check": "pnpm run precheck && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "pnpm run precheck && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint",
 		"test:unit": "vitest",
