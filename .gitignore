@@ -28,3 +28,6 @@ src/lib/paraglide
 
 .scannerwork
 project.inlang/cache/
+
+# Playwright
+playwright-report
