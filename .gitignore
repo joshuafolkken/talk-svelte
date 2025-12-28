@@ -31,3 +31,6 @@ project.inlang/cache/
 
 # Playwright
 playwright-report
+
+# ESLint
+.eslintcache
