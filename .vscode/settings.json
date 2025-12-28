@@ -39,6 +39,7 @@
 	],
 	"playwright.reuseBrowser": false,
 	"errorLens.gutterIconsEnabled": true,
+	"css.lint.unknownAtRules": "ignore",
 	"sonarlint.connectedMode.project": {
 		"connectionId": "joshuafolkken",
 		"projectKey": "joshuafolkken_talk-svelte"
