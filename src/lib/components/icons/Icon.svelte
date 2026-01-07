@@ -16,12 +16,15 @@
 			case UI.ICON_SIZES.LG: {
 				return 'h-8 w-8'
 			}
+
 			case UI.ICON_SIZES.MD: {
 				return 'h-6 w-6'
 			}
+
 			case UI.ICON_SIZES.SM: {
 				return 'h-4 w-4'
 			}
+
 			default: {
 				return 'h-4 w-4'
 			}

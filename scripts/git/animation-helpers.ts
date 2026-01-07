@@ -30,12 +30,15 @@ function handle_animation_error(
 	error_message: string | undefined,
 ): never {
 	animation.stop()
+
 	if (error_message === undefined || error_message.length === 0) {
 		if (error instanceof Error) {
 			throw error
 		}
+
 		throw new Error(String(error), { cause: error })
 	}
+
 	throw new Error(get_error_message(error_message), { cause: error })
 }
 
@@ -47,6 +50,7 @@ async function execute_with_animation<T>(
 	options?: AnimationOptions<T>,
 ): Promise<T> {
 	const animation = git_animation.create_animation(message)
+
 	try {
 		const result = await command_executor(() => {
 			animation.pause()

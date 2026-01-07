@@ -166,9 +166,11 @@ function print_summary(stats: ProcessingStats, lines: Array<string>, elapsed_tim
 	console.info('📊 Summary:')
 	console.info(`  ✅ Generated: ${String(stats.generated)}`)
 	console.info(`  ⏭️  Skipped:   ${String(stats.skipped)}`)
+
 	if (stats.failed > 0) {
 		console.info(`  ❌ Failed:    ${String(stats.failed)}`)
 	}
+
 	console.info(`  📝 Total:     ${String(lines.length)}`)
 	console.info(`  ⏱️  Time:      ${elapsed_time}s`)
 	console.info('━'.repeat(SEPARATOR_LENGTH))
@@ -219,14 +221,17 @@ function increment_stat(stats: ProcessingStats, result: 'generated' | 'skipped' 
 			stats.generated = stats.generated + 1
 			break
 		}
+
 		case 'skipped': {
 			stats.skipped = stats.skipped + 1
 			break
 		}
+
 		case 'failed': {
 			stats.failed = stats.failed + 1
 			break
 		}
+
 		default: {
 			// This case is unreachable due to type system, but default case is required
 			throw new Error('Unknown result type')
@@ -263,6 +268,7 @@ async function print_final_credit(initial_credit: SubscriptionInfo): Promise<voi
 	print_credit_info(final_credit, 'Final credit')
 
 	const consumed = final_credit.character_count - initial_credit.character_count
+
 	if (consumed > 0) {
 		console.info(`📉 Consumed characters: ${String(consumed)} chars`)
 		console.info()

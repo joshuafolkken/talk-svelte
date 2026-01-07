@@ -23,11 +23,13 @@ function create_pause_function(interval_id: NodeJS.Timeout, message: string): ()
 function create_stop_function(interval_id: NodeJS.Timeout, message: string): AnimationStopFunction {
 	return (result?: string, icon?: string) => {
 		clearInterval(interval_id)
+
 		if (result === undefined) {
 			const clear_length = message.length + CLEAR_PADDING
 			process.stdout.write(`\r${' '.repeat(clear_length)}\r`)
 			return
 		}
+
 		const display_icon = icon ?? SUCCESS_ICON
 		const icon_without_space = display_icon.trimEnd()
 		process.stdout.write(`\r${icon_without_space} ${message} ${result}\n`)

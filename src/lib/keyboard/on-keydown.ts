@@ -22,10 +22,12 @@ function click_button(button: HTMLButtonElement): void {
 function trigger_action(action_id: ActionName): void {
 	const selector = `[data-action="${action_id}"]`
 	const button = globalThis.document.querySelector<HTMLButtonElement>(selector)
+
 	if (button !== null) {
 		click_button(button)
 		return
 	}
+
 	if (action_id === ACTIONS.MENU) {
 		history.back()
 	}

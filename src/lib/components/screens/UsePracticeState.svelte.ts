@@ -38,6 +38,7 @@ export function use_practice_state(phrases_module: PhrasesModule): {
 	// Handle transcript correctness
 	$effect(() => {
 		if (recording.is_correct) return
+
 		if (transcript.is_included(phrase.current.script, recording.user_transcript)) {
 			handle_correct_transcript()
 		}
