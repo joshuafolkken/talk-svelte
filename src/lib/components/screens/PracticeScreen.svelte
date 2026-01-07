@@ -102,6 +102,7 @@
 
 	$effect(() => {
 		globalThis.addEventListener('keydown', handle_keydown)
+
 		return () => {
 			globalThis.removeEventListener('keydown', handle_keydown)
 		}

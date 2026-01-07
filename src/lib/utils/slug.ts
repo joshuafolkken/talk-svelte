@@ -4,9 +4,11 @@ function trim_hyphens(input: string): string {
 	while (result.startsWith('-')) {
 		result = result.slice(1)
 	}
+
 	while (result.endsWith('-')) {
 		result = result.slice(0, -1)
 	}
+
 	return result
 }
 
@@ -14,9 +16,11 @@ function add_suffix(slug: string, text: string): string {
 	if (text.endsWith('?')) {
 		return `${slug}-q`
 	}
+
 	if (text.endsWith('!')) {
 		return `${slug}-x`
 	}
+
 	return slug
 }
 

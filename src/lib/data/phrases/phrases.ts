@@ -18,7 +18,6 @@ function create(
 	}))
 }
 
-// eslint-disable-next-line max-params
 function get(
 	index: number,
 	phrase_key_groups: Array<Array<string>>,

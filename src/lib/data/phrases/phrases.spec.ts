@@ -30,6 +30,7 @@ test('bttf phrase keys should be unique', () => {
 	const unique_phrase_keys = [...new Set(phrase_keys)]
 
 	const duplicates = phrase_keys.filter((key, index) => phrase_keys.indexOf(key) !== index)
+
 	if (duplicates.length > 0) {
 		const unique_duplicates = [...new Set(duplicates)]
 
@@ -73,6 +74,7 @@ test('praise phrase keys should be unique', () => {
 	const unique_phrase_keys = [...new Set(phrase_keys)]
 
 	const duplicates = phrase_keys.filter((key, index) => phrase_keys.indexOf(key) !== index)
+
 	if (duplicates.length > 0) {
 		const unique_duplicates = [...new Set(duplicates)]
 

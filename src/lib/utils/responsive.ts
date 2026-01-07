@@ -8,6 +8,7 @@ function has_tablet_dimensions(viewport_width: number, viewport_height: number):
 		max_dimension >= DEVICE.VIEWPORT.TABLET_MIN_HEIGHT
 	)
 }
+
 function is_tablet_device(
 	viewport_width: number,
 	viewport_height: number,
@@ -28,6 +29,7 @@ function is_mobile_phone(
 
 	return (is_ios || is_android) && !is_tablet
 }
+
 function calculate_scale(): number {
 	if (typeof globalThis === 'undefined') return 1
 
