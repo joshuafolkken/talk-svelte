@@ -9,6 +9,7 @@ function get_git_command(): string {
 	if (platform() === 'win32') {
 		return String.raw`"C:\Program Files\Git\bin\git.exe"`
 	}
+
 	return '/usr/bin/git'
 }
 

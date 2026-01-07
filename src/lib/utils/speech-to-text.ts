@@ -93,6 +93,7 @@ export class SpeechToText {
 		this.#add_final_transcript(transcript)
 		return ''
 	}
+
 	#handle_result_common(event: SpeechRecognitionEvent, is_android_device: boolean): void {
 		let interim_transcript = ''
 

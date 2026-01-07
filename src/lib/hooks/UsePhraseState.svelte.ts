@@ -32,9 +32,11 @@ export function use_phrase_state(phrases_module: PhrasesModule): {
 	const current_number = $derived(current_index + 1)
 	const current = $derived.by(() => {
 		const phrase = phrases[current_index]
+
 		if (phrase === undefined) {
 			throw new Error(`Phrase at index ${String(current_index)} not found`)
 		}
+
 		return phrase
 	})
 
