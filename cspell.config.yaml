@@ -24,6 +24,7 @@ ignorePaths:
   - google*.html
   - pnpm-lock.yaml
   - .env*
+  - 'playwright-report/**'
 words:
   - aikidosec
   - appleboy
@@ -88,3 +89,4 @@ words:
   - turso
   - precheck
   - eslintcache
+  - workerd
