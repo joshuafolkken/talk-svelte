@@ -20,7 +20,7 @@ const API_KEY =
 // const VOICE_ID = 'Xb7hH8MSUJpSbSDYk0k2' // Alice
 const VOICE_ID = 'NDTYOmYEjbDIVCKB35i3' // Paige – Engaging Narrator // cspell:disable-line
 
-const OUTPUT_DIRECTORY = './static/audio'
+const OUTPUT_DIRECTORY = './static-source/audio'
 
 const command_line_arguments = new Set(process.argv.slice(ARGV_SLICE_START))
 const should_force_overwrite =

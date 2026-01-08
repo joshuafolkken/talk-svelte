@@ -15,7 +15,7 @@ test('audio file exists for displayed phrase', async ({ page }) => {
 		throw new Error(`Matching phrase not found for: ${displayed_transcript ?? ''}`)
 	}
 
-	const response = await page.request.get(`audio/${matching_phrase.key}.mp3`)
+	const response = await page.request.get(`/api/files/audio/${matching_phrase.key}.mp3`)
 	expect(response.status()).toBe(STATUS_CODE_OK)
 	expect(response.headers()['content-type']).toContain('audio')
 })
