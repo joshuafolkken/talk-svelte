@@ -10,6 +10,13 @@
 
 - Never say "it should pass" without actually running the commands.
 - Do not end the task while errors exist.
+- CRITICAL: These commands MUST be run in the real environment (not in sandbox). ALWAYS use required_permissions: ['all'] when running `pnpm run check` and `pnpm run lint`.
+- MANDATORY: Before finishing ANY code change, you MUST:
+  - Run `pnpm run check` with required_permissions: ['all'] and verify it passes
+  - Run `pnpm run lint` with required_permissions: ['all'] and verify it passes
+  - If either fails, fix the errors and repeat until both pass
+  - Only then can you finish the response
+- If sandbox restrictions prevent running these commands, you MUST request required_permissions: ['all'] and run them. Do NOT skip this step.
 
 # Git Rules
 
