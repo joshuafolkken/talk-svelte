@@ -2,6 +2,10 @@
 	"name": "talk-svelte",
 	"compatibility_date": "2026-01-08",
 	"main": "./build/server/index.js",
+	"assets": {
+		"directory": "./build/client",
+		"binding": "ASSETS"
+	},
 
 	"r2_buckets": [
 		{
