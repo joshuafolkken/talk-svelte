@@ -52,7 +52,9 @@ function upload_file_to_r2(file: string, object_path: string, r2_key: string): v
 
 function get_r2_paths(file: string, bucket_name: string): { r2_key: string; object_path: string } {
 	const relative_path = path.relative(STATIC_AUDIO_DIR, file)
-	const r2_key = `audio/${relative_path}`
+	// Normalize path separators to forward slashes for R2 (R2 uses forward slashes as path separator)
+	const normalized_path = relative_path.replaceAll('\\', '/')
+	const r2_key = `audio/${normalized_path}`
 	const object_path = `${bucket_name}/${r2_key}`
 
 	return { r2_key, object_path }
