@@ -14,19 +14,27 @@ class ApiError extends Error {
 }
 
 interface Environment {
-	talk_svelte_assets: R2Bucket
+	talk_svelte_assets?: R2Bucket
 }
 
 function get_environment(platform: App.Platform | undefined): Environment {
-	if (platform?.env === undefined || platform.env === null) {
+	const environment = platform?.env ?? undefined
+
+	if (environment === undefined) {
 		throw new ApiError('Platform not available', HTTP_STATUS.INTERNAL_SERVER_ERROR)
 	}
 
-	return platform.env as Environment
+	return environment
 }
 
 function get_bucket(environment: Environment): R2Bucket {
-	return environment.talk_svelte_assets
+	const bucket = environment.talk_svelte_assets
+
+	if (bucket === undefined) {
+		throw new ApiError('R2 bucket not configured', HTTP_STATUS.INTERNAL_SERVER_ERROR)
+	}
+
+	return bucket
 }
 
 function check_path_valid(path: string): boolean {

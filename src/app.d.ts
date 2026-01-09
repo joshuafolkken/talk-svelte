@@ -17,7 +17,7 @@ declare global {
 
 		interface Platform {
 			env: {
-				talk_svelte_assets: R2Bucket
+				talk_svelte_assets?: R2Bucket
 			}
 		}
 	}

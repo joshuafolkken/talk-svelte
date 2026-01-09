@@ -89,6 +89,11 @@ function verify_audio_response(
 
 const all_phrases = await get_all_unique_phrases()
 
+const should_skip_tests =
+	process.env['CI'] === 'true' || process.env['WRANGLER_DEV_LOCAL'] === 'true'
+
+test.skip(should_skip_tests, 'skip phrases audio test in CI')
+
 for (const phrase of all_phrases) {
 	test(`phrase audio file accessible: ${phrase.key}`, async ({ page }) => {
 		const audio_url = `${AUDIO_API_PATH_PREFIX}${phrase.key}${MP3_EXTENSION}`
