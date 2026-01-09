@@ -87,12 +87,10 @@ function verify_audio_response(
 	expect(cache_control, `${file_name} should have Cache-Control header`).toBeDefined()
 }
 
+const is_ci = Boolean(process.env['CI'])
+test.skip(is_ci, 'skip phrases audio test in CI')
+
 const all_phrases = await get_all_unique_phrases()
-
-const should_skip_tests =
-	process.env['CI'] === 'true' || process.env['WRANGLER_DEV_LOCAL'] === 'true'
-
-test.skip(should_skip_tests, 'skip phrases audio test in CI')
 
 for (const phrase of all_phrases) {
 	test(`phrase audio file accessible: ${phrase.key}`, async ({ page }) => {

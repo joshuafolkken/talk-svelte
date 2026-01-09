@@ -13,8 +13,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  WRANGLER_DEV_LOCAL: true
+# env:
 #   TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
 #   TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
 

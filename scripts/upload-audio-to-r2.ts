@@ -43,8 +43,9 @@ async function object_exists_in_r2(r2_key: string, _object_path: string): Promis
 function upload_file_to_r2(file: string, object_path: string, r2_key: string): void {
 	console.info(`Uploading ${file} -> r2://${object_path}`)
 
+	// execSync(`pnpm exec wrangler r2 object put "${object_path}" --file="${file}" --remote`, {
 	// eslint-disable-next-line sonarjs/os-command
-	execSync(`pnpm exec wrangler r2 object put "${object_path}" --file="${file}" --remote`, {
+	execSync(`pnpm exec wrangler r2 object put "${object_path}" --file="${file}"`, {
 		stdio: 'inherit',
 	})
 	console.info(`✓ Uploaded: ${r2_key}`)

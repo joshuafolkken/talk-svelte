@@ -25,6 +25,7 @@ ignorePaths:
   - pnpm-lock.yaml
   - .env*
   - 'playwright-report/**'
+  - '.pnpm-store/**'
 words:
   - aikidosec
   - appleboy

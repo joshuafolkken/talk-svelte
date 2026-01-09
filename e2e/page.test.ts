@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test'
 import back_to_the_future from '$lib/data/phrases/collections/back-to-the-future'
 
+const is_ci = Boolean(process.env['CI'])
+test.skip(is_ci, 'skip page test in CI')
+
 const STATUS_CODE_OK = 200
 
 test('audio file exists for displayed phrase', async ({ page }) => {

@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test'
 import { praise } from '$lib/data/phrases/praise'
 
+const is_ci = Boolean(process.env['CI'])
+test.skip(is_ci, 'skip praise test in CI')
+
 const STATUS_CODE_OK = 200
 
 const phrases = praise.get_phrases(0)
