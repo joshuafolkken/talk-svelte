@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { sveltekit } from '@sveltejs/kit/vite'
 import tailwindcss from '@tailwindcss/vite'
+import devtoolsJson from 'vite-plugin-devtools-json'
 // import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
@@ -11,22 +12,24 @@ export default defineConfig({
 	define: {
 		'import.meta.env.APP_VERSION': JSON.stringify(package_json.version),
 	},
+
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
-		paraglideVitePlugin({
-			project: './project.inlang',
-			outdir: './src/lib/paraglide',
-		}),
+		paraglideVitePlugin({ project: './project.inlang', outdir: './src/lib/paraglide' }),
+		devtoolsJson(),
 	],
+
 	server: {
 		allowedHosts: [
 			'outspoken-angelique-sepulchrally.ngrok-free.dev',
 			'.ngrok-free.dev', // すべてのngrok-free.devサブドメインを許可
 		],
 	},
+
 	test: {
 		expect: { requireAssertions: true },
+
 		projects: [
 			// {
 			// 	extends: './vite.config.ts',
@@ -45,6 +48,7 @@ export default defineConfig({
 			// },
 			{
 				extends: './vite.config.ts',
+
 				test: {
 					name: 'server',
 					environment: 'node',
