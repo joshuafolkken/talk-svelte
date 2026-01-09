@@ -59,6 +59,7 @@ export default defineConfig(
 			'src/routes/**/+layout.ts',
 			'src/routes/demo/**/+page.svelte',
 			'src/hooks.ts',
+			'src/lib/paraglide/**',
 		],
 	},
 	js.configs.recommended,

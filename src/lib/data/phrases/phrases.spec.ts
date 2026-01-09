@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 import back_to_the_future from './collections/back-to-the-future.js'
 import { praise } from './praise.js'
 
-const STATIC_DIRECTORY = 'static'
+const STATIC_DIRECTORY = 'static-source'
 const AUDIO_DIRECTORY = 'audio'
 const MP3_EXTENSION = '.mp3'
 const MIN_PHRASES_COUNT = 0
