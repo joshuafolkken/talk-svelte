@@ -67,7 +67,7 @@ export default defineConfig({
 		},
 	],
 	// レポート設定
-	reporter: isCI ? [['html'], ['github']] : [['html'], ['list']],
+	reporter: isCI ? [['html'], ['github']] : [['list']],
 	// グローバル設定
 	use: {
 		// アクションのタイムアウト

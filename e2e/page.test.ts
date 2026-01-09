@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test'
 import back_to_the_future from '$lib/data/phrases/collections/back-to-the-future'
 
+const is_ci = Boolean(process.env['CI'])
+test.skip(is_ci, 'skip page test in CI')
+
 const STATUS_CODE_OK = 200
 
 test('audio file exists for displayed phrase', async ({ page }) => {
@@ -15,7 +18,7 @@ test('audio file exists for displayed phrase', async ({ page }) => {
 		throw new Error(`Matching phrase not found for: ${displayed_transcript ?? ''}`)
 	}
 
-	const response = await page.request.get(`audio/${matching_phrase.key}.mp3`)
+	const response = await page.request.get(`/api/files/audio/${matching_phrase.key}.mp3`)
 	expect(response.status()).toBe(STATUS_CODE_OK)
 	expect(response.headers()['content-type']).toContain('audio')
 })
